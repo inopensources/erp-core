@@ -4,6 +4,8 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -29,6 +31,9 @@ public class PessoaJuridica extends Participante implements Serializable {
     
     @Column(name="inscricao_estadual")
     private String inscricaoEstadual;
+    
+    @Column(name="inscricao_suframa")
+    private String inscricaoSuframa;
     
     // Consulte: http://www.anvisa.gov.br/servicos/arrecadacao/porte.htm
     private String porte;
@@ -73,11 +78,20 @@ public class PessoaJuridica extends Participante implements Serializable {
         this.porte = porte;
     }
 
+    public String getInscricaoSuframa() {
+        return inscricaoSuframa;
+    }
+
+    public void setInscricaoSuframa(String inscricaoSuframa) {
+        this.inscricaoSuframa = inscricaoSuframa;
+    }
+
     @Override
     public String toString() {
         return "PessoaJuridica{" + "cnpj=" + cnpj + ", razaoSocial=" 
                 + razaoSocial + ", nomeFantasia=" + nomeFantasia 
                 + ", inscricaoEstadual=" + inscricaoEstadual 
+                + ", inscricaoSuframa=" + inscricaoSuframa 
                 + ", porte=" + porte + '}';
     }
     

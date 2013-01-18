@@ -1,5 +1,6 @@
 package br.com.ono.erp.entidade;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -27,7 +29,7 @@ public class Fornecedor {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
-    
+
     private String codigo;
     
     @OneToOne(optional=false)
@@ -55,6 +57,9 @@ public class Fornecedor {
     
     @Column(name="prazo_entrega_dias")
     private int prazoEntregaDias;
+    
+    @ManyToMany(mappedBy="fornecedores")
+    private List<Produto> produtos = new ArrayList<Produto>();
     
     public Long getId() {
         return id;
@@ -136,16 +141,25 @@ public class Fornecedor {
         this.prazoEntregaDias = prazoEntregaDias;
     }
 
+    public List<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(List<Produto> produtos) {
+        this.produtos = produtos;
+    }
+
     @Override
     public String toString() {
         return "Fornecedor{" + "id=" + id + ", codigo=" + codigo 
                 + ", participante=" + participante + ", situacao=" 
                 + situacao + ", dataCadastro=" + dataCadastro 
                 + ", dataUltimaAtualizacao=" + dataUltimaAtualizacao 
-                + ", representantes=" + representantes + ", aceitaDevolucao=" 
-                + aceitaDevolucao + ", prazoPagamentoDias=" 
-                + prazoPagamentoDias + ", prazoEntregaDias=" 
-                + prazoEntregaDias + '}';
+                + ", representantes=" + representantes 
+                + ", aceitaDevolucao=" + aceitaDevolucao 
+                + ", prazoPagamentoDias=" + prazoPagamentoDias 
+                + ", prazoEntregaDias=" + prazoEntregaDias 
+                + ", produtos=" + produtos + '}';
     }
     
 }

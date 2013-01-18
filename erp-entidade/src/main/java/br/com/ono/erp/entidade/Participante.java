@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -48,6 +49,21 @@ public abstract class Participante implements Serializable {
     @JoinColumn(name="id_participante", referencedColumnName="id")
     private List<EmailParticipante> emails = new ArrayList<EmailParticipante>();
 
+    // Endereco que sera utilizado para emissao da NFe
+    @ManyToOne
+    @JoinColumn(name="id_endereco_nfe")
+    private EnderecoParticipante enderecoNFe;
+    
+    // Email que sera utilizado para emissao da NFe
+    @ManyToOne
+    @JoinColumn(name="id_email_nfe")
+    private EmailParticipante emailNFe;
+
+    // Telefone que sera utilizado para emissao da NFe
+    @ManyToOne
+    @JoinColumn(name="id_telefone_nfe")
+    private TelefoneParticipante telefoneNFe;
+    
     public Long getId() {
         return id;
     }
