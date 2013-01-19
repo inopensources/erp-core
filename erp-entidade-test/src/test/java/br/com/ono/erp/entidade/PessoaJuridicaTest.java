@@ -1,6 +1,8 @@
 package br.com.ono.erp.entidade;
 
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
@@ -102,6 +104,11 @@ public class PessoaJuridicaTest {
             em.persist(estado);
         }
         
+        // Obtem a lista de municipios do Brasil e salva no banco
+        for (Municipio municipio : getMunicipiosBrasil()) {
+            em.persist(municipio);
+        }        
+        
         em.getTransaction().commit();
     }
   
@@ -162,6 +169,31 @@ public class PessoaJuridicaTest {
         estado.setSigla(sigla);
         estado.setNome(nome);
         return estado;
+    }
+    
+    // Cria todos municipios do Brasil. Pega os dados de /municipios.txt
+    private static List<Municipio> getMunicipiosBrasil() {
+        List<Municipio> municipios = new ArrayList<Municipio>();
+        try {
+            Municipio municipio = null;
+            InputStream is = PessoaJuridicaTest.class.getResourceAsStream("/municipios.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+            String linha = null;
+            while ((linha = br.readLine()) != null) {
+                String uf = linha.split(",")[0];
+                String codigoIbge = linha.split(",")[1];
+                String nomeMunicipio = linha.split(",")[2].toUpperCase();
+                municipio = new Municipio();
+                municipio.setCodigoIbge(codigoIbge);
+                municipio.setNome(nomeMunicipio);
+                municipio.setUf(uf);
+                municipios.add(municipio);
+            }
+            br.close();
+        } catch (IOException ex) {
+            throw new RuntimeException(ex);
+        }
+        return municipios;
     }
     
 }

@@ -14,11 +14,12 @@
     <class>br.com.ono.erp.entidade.Produto</class>
     <class>br.com.ono.erp.entidade.Pais</class>
     <class>br.com.ono.erp.entidade.Estado</class>
+    <class>br.com.ono.erp.entidade.Municipio</class>
     <properties>
-      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/teste"/>
-      <property name="javax.persistence.jdbc.password" value="leo"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/erp"/>
+      <property name="javax.persistence.jdbc.password" value="erp"/>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
-      <property name="javax.persistence.jdbc.user" value="leo"/>
+      <property name="javax.persistence.jdbc.user" value="erp"/>
       <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
     </properties>
   </persistence-unit>
