@@ -1,4 +1,6 @@
-ERP-Referencias
-===============
+erp-core
+========
 
-ERP Referencias
+Parte core do ERP.
+Desenvolvido por Leonardo Ono (ono.leo@gmail.com)
+

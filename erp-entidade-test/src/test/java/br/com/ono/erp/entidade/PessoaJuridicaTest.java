@@ -79,9 +79,22 @@ public class PessoaJuridicaTest {
         tp.setNumero("26930418");
         pj.getTelefones().add(tp);
         
+        // Cria uns paises para teste
+        Pais pais = new Pais();
+        pais.setCodigoBacen("01058");
+        pais.setNome("BRASIL");
+        pais.setSigla2("BR");
+
+        Pais pais2 = new Pais();
+        pais2.setCodigoBacen("05860");
+        pais2.setNome("PARAGUAI");
+        pais2.setSigla2("PY");
+        
         em.getTransaction().begin();
         em.persist(pj);
+        em.persist(pais);
+        em.persist(pais2);
         em.getTransaction().commit();
     }
-    
+  
 }
