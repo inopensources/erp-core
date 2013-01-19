@@ -96,6 +96,11 @@ public class PessoaJuridicaTest {
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
+
+        // Obtem a lista de estados do Brasil e salva no banco
+        for (Estado estado : getEstadosBrasil()) {
+            em.persist(estado);
+        }
         
         em.getTransaction().commit();
     }
@@ -118,6 +123,45 @@ public class PessoaJuridicaTest {
         }
         br.close();
         return paises;
+    }
+    
+    // Cria todos estados do Brasil
+    private static List<Estado> getEstadosBrasil() {
+        List<Estado> estados = new ArrayList<Estado>();
+        estados.add(criarEstado("12","AC","ACRE"));
+        estados.add(criarEstado("27","AL","ALAGOAS"));        
+        estados.add(criarEstado("13","AM","AMAZONAS"));
+        estados.add(criarEstado("16","AP","AMAPA"));
+        estados.add(criarEstado("23","CE","CEARA"));
+        estados.add(criarEstado("53","DF","DISTRITO FEDERAL"));
+        estados.add(criarEstado("52","GO","GOIAS"));
+        estados.add(criarEstado("21","MA","MARANHAO"));
+        estados.add(criarEstado("31","MG","MINAS GERAIS"));
+        estados.add(criarEstado("50","MS","MATO GROSSO DO SUL"));
+        estados.add(criarEstado("51","MT","MATO GROSSO"));
+        estados.add(criarEstado("15","PA","PARA"));
+        estados.add(criarEstado("25","PB","PARAIBA"));
+        estados.add(criarEstado("26","PE","PERNAMBUCO"));
+        estados.add(criarEstado("22","PI","PIAUI"));
+        estados.add(criarEstado("41","PR","PARANA"));
+        estados.add(criarEstado("33","RJ","RIO DE JANEIRO"));
+        estados.add(criarEstado("24","RN","RIO GRANDE DO NORTE"));
+        estados.add(criarEstado("11","RO","RONDONIA"));
+        estados.add(criarEstado("14","RR","RORAIMA"));
+        estados.add(criarEstado("43","RS","RIO GRANDE DO SUL"));
+        estados.add(criarEstado("42","SC","SANTA CATARINA"));
+        estados.add(criarEstado("28","SE","SERGIPE"));
+        estados.add(criarEstado("35","SP","SAO PAULO"));
+        estados.add(criarEstado("17","TO","TOCANTIS"));        
+        return estados;
+    }
+    
+    private static Estado criarEstado(String codigoIbge, String sigla, String nome) {
+        Estado estado = new Estado();
+        estado.setCodigoIbge(codigoIbge);
+        estado.setSigla(sigla);
+        estado.setNome(nome);
+        return estado;
     }
     
 }

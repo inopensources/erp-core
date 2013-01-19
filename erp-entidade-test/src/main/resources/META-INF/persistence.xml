@@ -13,6 +13,7 @@
     <class>br.com.ono.erp.entidade.Fornecedor</class>
     <class>br.com.ono.erp.entidade.Produto</class>
     <class>br.com.ono.erp.entidade.Pais</class>
+    <class>br.com.ono.erp.entidade.Estado</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/teste"/>
       <property name="javax.persistence.jdbc.password" value="leo"/>
