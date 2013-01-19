@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -108,6 +109,18 @@ public class PessoaJuridicaTest {
         for (Municipio municipio : getMunicipiosBrasil()) {
             em.persist(municipio);
         }        
+
+        // Cria a empresa a ser gerenciada
+        Empresa empresa = new Empresa();
+        empresa.setDataCadastro(new Date());
+        empresa.setRegimeTributacao("LUCRO REAL");
+        empresa.setPessoaJuridica(pj);
+        em.persist(empresa);
+        
+        // Obtem a lista de natureza de operacoes de teste e salva no banco
+        for (NaturezaOperacao naturezaOperacao : getNaturezasOperacoes(empresa)) {
+            em.persist(naturezaOperacao);
+        }        
         
         em.getTransaction().commit();
     }
@@ -195,5 +208,32 @@ public class PessoaJuridicaTest {
         }
         return municipios;
     }
+    
+    // Cria as naturezas de operacoes de teste
+    private static List<NaturezaOperacao> getNaturezasOperacoes(Empresa empresa) {
+        List<NaturezaOperacao> naturezasDeOperacoes = new ArrayList<NaturezaOperacao>();
+        NaturezaOperacao naturezaDeOperacao = null;
+        naturezaDeOperacao = new NaturezaOperacao();
+        naturezaDeOperacao.setDescricao("COMPRA");
+        naturezaDeOperacao.setEmpresa(empresa);
+        naturezasDeOperacoes.add(naturezaDeOperacao);
+        naturezaDeOperacao = new NaturezaOperacao();
+        naturezaDeOperacao.setDescricao("VENDA");
+        naturezaDeOperacao.setEmpresa(empresa);
+        naturezasDeOperacoes.add(naturezaDeOperacao);
+        naturezaDeOperacao = new NaturezaOperacao();
+        naturezaDeOperacao.setDescricao("DEVOLUCAO DE VENDA");
+        naturezaDeOperacao.setEmpresa(empresa);
+        naturezasDeOperacoes.add(naturezaDeOperacao);
+        naturezaDeOperacao = new NaturezaOperacao();
+        naturezaDeOperacao.setDescricao("DEVOLUCAO DE COMPRA");
+        naturezaDeOperacao.setEmpresa(empresa);
+        naturezasDeOperacoes.add(naturezaDeOperacao);
+        naturezaDeOperacao = new NaturezaOperacao();
+        naturezaDeOperacao.setDescricao("SIMPLES REMESSA");
+        naturezaDeOperacao.setEmpresa(empresa);
+        naturezasDeOperacoes.add(naturezaDeOperacao);
+        return naturezasDeOperacoes;
+    }    
     
 }

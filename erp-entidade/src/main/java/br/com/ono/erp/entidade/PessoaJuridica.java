@@ -30,6 +30,9 @@ public class PessoaJuridica extends Participante implements Serializable {
     @Column(name="inscricao_estadual")
     private String inscricaoEstadual;
     
+    @Column(name="inscricao_municipal")
+    private String inscricaoMunicipal;
+    
     @Column(name="inscricao_suframa")
     private String inscricaoSuframa;
     
@@ -68,12 +71,12 @@ public class PessoaJuridica extends Participante implements Serializable {
         this.inscricaoEstadual = inscricaoEstadual;
     }
 
-    public String getPorte() {
-        return porte;
+    public String getInscricaoMunicipal() {
+        return inscricaoMunicipal;
     }
 
-    public void setPorte(String porte) {
-        this.porte = porte;
+    public void setInscricaoMunicipal(String inscricaoMunicipal) {
+        this.inscricaoMunicipal = inscricaoMunicipal;
     }
 
     public String getInscricaoSuframa() {
@@ -84,11 +87,20 @@ public class PessoaJuridica extends Participante implements Serializable {
         this.inscricaoSuframa = inscricaoSuframa;
     }
 
+    public String getPorte() {
+        return porte;
+    }
+
+    public void setPorte(String porte) {
+        this.porte = porte;
+    }
+    
     @Override
     public String toString() {
         return "PessoaJuridica{" + "cnpj=" + cnpj + ", razaoSocial=" 
                 + razaoSocial + ", nomeFantasia=" + nomeFantasia 
                 + ", inscricaoEstadual=" + inscricaoEstadual 
+                + ", inscricaoMunicipal=" + inscricaoMunicipal
                 + ", inscricaoSuframa=" + inscricaoSuframa 
                 + ", porte=" + porte + '}';
     }

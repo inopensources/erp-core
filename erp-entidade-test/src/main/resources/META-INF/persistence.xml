@@ -15,6 +15,8 @@
     <class>br.com.ono.erp.entidade.Pais</class>
     <class>br.com.ono.erp.entidade.Estado</class>
     <class>br.com.ono.erp.entidade.Municipio</class>
+    <class>br.com.ono.erp.entidade.NaturezaOperacao</class>
+    <class>br.com.ono.erp.entidade.Empresa</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/erp"/>
       <property name="javax.persistence.jdbc.password" value="erp"/>
