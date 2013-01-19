@@ -1,5 +1,10 @@
 package br.com.ono.erp.entidade;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
@@ -79,22 +84,40 @@ public class PessoaJuridicaTest {
         tp.setNumero("26930418");
         pj.getTelefones().add(tp);
         
-        // Cria uns paises para teste
-        Pais pais = new Pais();
-        pais.setCodigoBacen("01058");
-        pais.setNome("BRASIL");
-        pais.setSigla2("BR");
-
-        Pais pais2 = new Pais();
-        pais2.setCodigoBacen("05860");
-        pais2.setNome("PARAGUAI");
-        pais2.setSigla2("PY");
-        
         em.getTransaction().begin();
         em.persist(pj);
-        em.persist(pais);
-        em.persist(pais2);
+        
+        // Obtem a lista de paises diretamente do site do BACEN
+        // e salva no banco
+        try {
+            for (Pais pais : getPaisesSiteBacen()) {
+                em.persist(pais);
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
+        
         em.getTransaction().commit();
     }
   
+    // Obtem a lista de paises diretamente do site do BACEN
+    private static List<Pais> getPaisesSiteBacen() throws Exception {
+        List<Pais> paises = new ArrayList<Pais>();
+        Pais pais = null;
+        URL url = new URL("http://www.bcb.gov.br/Rex/TabPaises/Ftp/paises.txt");
+        BufferedReader br = new BufferedReader(new InputStreamReader(url.openStream()));
+        String linha = null;
+        while ((linha = br.readLine()) != null) {
+            linha = linha.trim();
+            String codigoBacen = linha.substring(0, linha.indexOf(" "));
+            String nomePais = linha.substring(linha.indexOf(" "));
+            pais = new Pais();
+            pais.setCodigoBacen(codigoBacen);
+            pais.setNome(nomePais);
+            paises.add(pais);
+        }
+        br.close();
+        return paises;
+    }
+    
 }
