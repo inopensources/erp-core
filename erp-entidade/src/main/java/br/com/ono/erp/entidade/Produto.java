@@ -5,10 +5,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 
@@ -26,9 +34,10 @@ public class Produto {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     
-    // define a identificacao de um grupo de produtos que sera utilizado por uma empresa
-    @Column(name="id_grupo")
-    private String idGrupo;
+    // indica a qual dominio este produto pertence
+    @ManyToOne
+    @JoinColumn(name="dominio_produto_id")
+    private DominioProduto dominioProduto;
     
     @Column(name="codigo_interno")
     private String codigoInterno;
@@ -73,6 +82,8 @@ public class Produto {
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date dataUltimaAtualizacao;
     
+    @OneToMany
+    @JoinTable(name = "fornecedor_produto")
     private List<Fornecedor> fornecedores = new ArrayList<Fornecedor>();
     
     public Long getId() {
@@ -83,12 +94,12 @@ public class Produto {
         this.id = id;
     }
 
-    public String getIdGrupo() {
-        return idGrupo;
+    public DominioProduto getDominioProduto() {
+        return dominioProduto;
     }
 
-    public void setIdGrupo(String idGrupo) {
-        this.idGrupo = idGrupo;
+    public void setDominioProduto(DominioProduto dominioProduto) {
+        this.dominioProduto = dominioProduto;
     }
 
     public List<Fornecedor> getFornecedores() {
@@ -213,19 +224,16 @@ public class Produto {
 
     @Override
     public String toString() {
-        return "Produto{" + "id=" + id + ", idGrupo=" + idGrupo 
-                + ", codigoInterno=" + codigoInterno + ", descricao=" 
-                + descricao + ", tipoItem=" + tipoItem + ", codigoNcm=" 
-                + codigoNcm + ", codigoGenero=" + codigoGenero 
-                + ", codigoServico=" + codigoServico + ", aliquotaIcms=" 
-                + aliquotaIcms + ", custoUnitario=" + custoUnitario 
-                + ", valorVenda=" + valorVenda + ", unidadeEstoque=" 
-                + unidadeEstoque + ", pesoUnitario=" + pesoUnitario 
-                + ", situacao=" + situacao + ", dataCadastro=" 
-                + dataCadastro + ", dataUltimaAtualizacao=" 
-                + dataUltimaAtualizacao + ", fornecedores=" 
-                + fornecedores + '}';
+        return "Produto{" + "id=" + id + ", dominioProduto=" + dominioProduto 
+                + ", codigoInterno=" + codigoInterno + ", descricao=" + descricao 
+                + ", tipoItem=" + tipoItem + ", codigoNcm=" + codigoNcm 
+                + ", codigoGenero=" + codigoGenero + ", codigoServico=" 
+                + codigoServico + ", aliquotaIcms=" + aliquotaIcms 
+                + ", custoUnitario=" + custoUnitario + ", valorVenda=" 
+                + valorVenda + ", unidadeEstoque=" + unidadeEstoque 
+                + ", pesoUnitario=" + pesoUnitario + ", situacao=" + situacao 
+                + ", dataCadastro=" + dataCadastro + ", dataUltimaAtualizacao=" 
+                + dataUltimaAtualizacao + ", fornecedores=" + fornecedores + '}';
     }
 
-    
 }

@@ -35,6 +35,12 @@ public class Movimento implements Serializable {
     @ManyToOne
     private Empresa empresa;
     
+    // Se o indicador do tipo de operacao for ENTRADA, considera-se como participante_origem (ex.: fornecedor)
+    // Se o indicador do tipo de operacao for SAIDA, considera-se como participante_destino (ex.: cliente)
+    @ManyToOne
+    @JoinColumn(name = "participante_origem_destino_id")
+    private Participante participanteOrigemDestino;
+    
     @ManyToOne
     @JoinColumn(name = "natureza_operacao_id")
     private NaturezaOperacao naturezaOperacao;
@@ -43,6 +49,8 @@ public class Movimento implements Serializable {
     @Column(name = "data_hora")
     private Date dataHora;
     
+    @Column(name = "quantidade_volumes")
+    private Integer quantidadeVolumes;
     
     public Long getId() {
         return id;
@@ -60,6 +68,14 @@ public class Movimento implements Serializable {
         this.empresa = empresa;
     }
 
+    public Participante getParticipanteOrigemDestino() {
+        return participanteOrigemDestino;
+    }
+
+    public void setParticipanteOrigemDestino(Participante participanteOrigemDestino) {
+        this.participanteOrigemDestino = participanteOrigemDestino;
+    }
+
     public NaturezaOperacao getNaturezaOperacao() {
         return naturezaOperacao;
     }
@@ -74,6 +90,14 @@ public class Movimento implements Serializable {
 
     public void setDataHora(Date dataHora) {
         this.dataHora = dataHora;
+    }
+
+    public Integer getQuantidadeVolumes() {
+        return quantidadeVolumes;
+    }
+
+    public void setQuantidadeVolumes(Integer quantidadeVolumes) {
+        this.quantidadeVolumes = quantidadeVolumes;
     }
 
     @Override
@@ -100,8 +124,9 @@ public class Movimento implements Serializable {
     @Override
     public String toString() {
         return "Movimento{" + "id=" + id + ", empresa=" + empresa 
-                + ", naturezaOperacao=" + naturezaOperacao 
-                + ", dataHora=" + dataHora + '}';
+                + ", participanteOrigemDestino=" + participanteOrigemDestino 
+                + ", naturezaOperacao=" + naturezaOperacao + ", dataHora=" 
+                + dataHora + ", quantidadeVolumes=" + quantidadeVolumes + '}';
     }
 
 }

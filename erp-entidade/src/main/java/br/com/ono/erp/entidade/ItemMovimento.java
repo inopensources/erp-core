@@ -5,7 +5,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -26,10 +28,18 @@ public class ItemMovimento extends DocumentoFiscal {
     private Movimento movimento;
     
     @ManyToOne
-    private Produto produto;
+    private ProdutoEan13 produtoEan13;
     
     private Integer quantidade;
     private BigDecimal valor;
+    
+    @OneToOne
+    @JoinColumn(name = "id_usuario1")
+    private Usuario usuario1;
+
+    @OneToOne
+    @JoinColumn(name = "id_usuario2")
+    private Usuario usuario2;
 
     public Movimento getMovimento() {
         return movimento;
@@ -39,12 +49,12 @@ public class ItemMovimento extends DocumentoFiscal {
         this.movimento = movimento;
     }
 
-    public Produto getProduto() {
-        return produto;
+    public ProdutoEan13 getProdutoEan13() {
+        return produtoEan13;
     }
 
-    public void setProduto(Produto produto) {
-        this.produto = produto;
+    public void setProdutoEan13(ProdutoEan13 produtoEan13) {
+        this.produtoEan13 = produtoEan13;
     }
 
     public Integer getQuantidade() {
@@ -63,11 +73,28 @@ public class ItemMovimento extends DocumentoFiscal {
         this.valor = valor;
     }
 
+    public Usuario getUsuario1() {
+        return usuario1;
+    }
+
+    public void setUsuario1(Usuario usuario1) {
+        this.usuario1 = usuario1;
+    }
+
+    public Usuario getUsuario2() {
+        return usuario2;
+    }
+
+    public void setUsuario2(Usuario usuario2) {
+        this.usuario2 = usuario2;
+    }
+
     @Override
     public String toString() {
         return "ItemMovimento{" + "id=" + id + ", movimento=" + movimento 
-                + ", produto=" + produto + ", quantidade=" 
-                + quantidade + ", valor=" + valor + '}';
+                + ", produtoEan13=" + produtoEan13 + ", quantidade=" 
+                + quantidade + ", valor=" + valor + ", usuario1=" 
+                + usuario1 + ", usuario2=" + usuario2 + '}';
     }
 
 }
