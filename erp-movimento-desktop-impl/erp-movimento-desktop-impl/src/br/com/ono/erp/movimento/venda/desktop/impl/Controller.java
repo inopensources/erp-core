@@ -3,6 +3,7 @@ package br.com.ono.erp.movimento.venda.desktop.impl;
 import br.com.ono.erp.entidade.ComandaVenda;
 import br.com.ono.erp.entidade.ItemSessaoMovimento;
 import br.com.ono.erp.entidade.ProdutoEan13;
+import br.com.ono.erp.movimento.model.desktop.impl.Model;
 import java.awt.event.ActionEvent;
 import java.util.Date;
 import javax.persistence.EntityManager;

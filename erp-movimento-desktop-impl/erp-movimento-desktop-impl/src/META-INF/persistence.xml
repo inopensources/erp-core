@@ -5,6 +5,7 @@
     <class>br.com.ono.erp.entidade.Cliente</class>
     <class>br.com.ono.erp.entidade.ComandaVenda</class>
     <class>br.com.ono.erp.entidade.DocumentoFiscal</class>
+    <class>br.com.ono.erp.entidade.DuplicataNfe</class>
     <class>br.com.ono.erp.entidade.DominioProduto</class>
     <class>br.com.ono.erp.entidade.EmailParticipante</class>
     <class>br.com.ono.erp.entidade.Empresa</class>

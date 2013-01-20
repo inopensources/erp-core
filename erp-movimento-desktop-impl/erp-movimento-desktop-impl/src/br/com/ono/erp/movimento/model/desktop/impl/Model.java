@@ -1,4 +1,4 @@
-package br.com.ono.erp.movimento.venda.desktop.impl;
+package br.com.ono.erp.movimento.model.desktop.impl;
 
 import br.com.ono.erp.entidade.ItemSessaoMovimento;
 import br.com.ono.erp.entidade.Movimento;
@@ -13,7 +13,7 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
 /**
- * Model para Balcao de Saida de Venda
+ * Model generico para movimentacao.
  * 
  * Implementacao desktop para MovimentoPassagemService.
  * 
