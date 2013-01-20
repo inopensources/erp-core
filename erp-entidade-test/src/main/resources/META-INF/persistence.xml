@@ -26,6 +26,8 @@
     <class>br.com.ono.erp.entidade.ProdutoEan13</class>
     <class>br.com.ono.erp.entidade.Usuario</class>
     <class>br.com.ono.erp.entidade.ComandaVenda</class>
+    <class>br.com.ono.erp.entidade.ItemSessaoMovimento</class>
+    <class>br.com.ono.erp.entidade.SessaoMovimento</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/erp"/>
       <property name="javax.persistence.jdbc.password" value="erp"/>

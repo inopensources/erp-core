@@ -1,7 +1,10 @@
 package br.com.ono.erp.entidade;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.DiscriminatorType;
@@ -13,6 +16,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -57,6 +61,9 @@ public class Movimento implements Serializable {
     
     @Column(name = "quantidade_volumes")
     private Integer quantidadeVolumes;
+    
+    @OneToMany(mappedBy = "movimento")
+    private List<SessaoMovimento> SessoesMovimento = new ArrayList<SessaoMovimento>();
     
     public Long getId() {
         return id;
@@ -106,6 +113,14 @@ public class Movimento implements Serializable {
         this.quantidadeVolumes = quantidadeVolumes;
     }
 
+    public List<SessaoMovimento> getSessoesMovimento() {
+        return SessoesMovimento;
+    }
+
+    public void setSessoesMovimento(List<SessaoMovimento> SessoesMovimento) {
+        this.SessoesMovimento = SessoesMovimento;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -132,7 +147,8 @@ public class Movimento implements Serializable {
         return "Movimento{" + "id=" + id + ", empresa=" + empresa 
                 + ", participanteOrigemDestino=" + participanteOrigemDestino 
                 + ", naturezaOperacao=" + naturezaOperacao + ", dataHora=" 
-                + dataHora + ", quantidadeVolumes=" + quantidadeVolumes + '}';
+                + dataHora + ", quantidadeVolumes=" + quantidadeVolumes 
+                + ", SessoesMovimento=" + SessoesMovimento + '}';
     }
 
 }

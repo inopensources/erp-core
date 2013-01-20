@@ -1,6 +1,8 @@
 package br.com.ono.erp.entidade;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,23 +11,26 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
- * Entidade ItemMovimento.
+ * Entidade ItemSessaoMovimento.
  * 
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.0 (19/01/2013 22:26)
  */
 @Entity
-@Table(name="item_movimento")
-public class ItemMovimento extends DocumentoFiscal {
+@Table(name="item_sessao_movimento")
+public class ItemSessaoMovimento {
     
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
     
     @ManyToOne
-    private Movimento movimento;
+    @JoinColumn(name = "id_sessao_movimento")
+    private SessaoMovimento sessaoMovimento;
     
     @ManyToOne
     private ProdutoEan13 produtoEan13;
@@ -40,13 +45,33 @@ public class ItemMovimento extends DocumentoFiscal {
     @OneToOne
     @JoinColumn(name = "id_usuario2")
     private Usuario usuario2;
+    
+    @Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "data_hora")
+    private Date dataHora;
 
-    public Movimento getMovimento() {
-        return movimento;
+    public Long getId() {
+        return id;
     }
 
-    public void setMovimento(Movimento movimento) {
-        this.movimento = movimento;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Date getDataHora() {
+        return dataHora;
+    }
+
+    public void setDataHora(Date dataHora) {
+        this.dataHora = dataHora;
+    }
+
+    public SessaoMovimento getSessaoMovimento() {
+        return sessaoMovimento;
+    }
+
+    public void setSessaoMovimento(SessaoMovimento sessaoMovimento) {
+        this.sessaoMovimento = sessaoMovimento;
     }
 
     public ProdutoEan13 getProdutoEan13() {
@@ -91,10 +116,11 @@ public class ItemMovimento extends DocumentoFiscal {
 
     @Override
     public String toString() {
-        return "ItemMovimento{" + "id=" + id + ", movimento=" + movimento 
-                + ", produtoEan13=" + produtoEan13 + ", quantidade=" 
-                + quantidade + ", valor=" + valor + ", usuario1=" 
-                + usuario1 + ", usuario2=" + usuario2 + '}';
+        return "ItemSessaoMovimento{" + "id=" + id + ", sessaoMovimento=" 
+                + sessaoMovimento + ", produtoEan13=" + produtoEan13 
+                + ", quantidade=" + quantidade + ", valor=" + valor 
+                + ", usuario1=" + usuario1 + ", usuario2=" 
+                + usuario2 + ", dataHora=" + dataHora + '}';
     }
 
 }

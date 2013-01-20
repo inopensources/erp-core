@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.math.BigDecimal;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
@@ -121,6 +122,26 @@ public class PessoaJuridicaTest {
         for (NaturezaOperacao naturezaOperacao : getNaturezasOperacoes(empresa)) {
             em.persist(naturezaOperacao);
         }        
+        
+        // Um produto de teste
+        Produto produto = new Produto();
+        produto.setDescricao("PRODUTO TESTE");
+        produto.setValorVenda(BigDecimal.TEN);
+        em.persist(produto);
+        
+        ProdutoEan13 produtoEan13 = new ProdutoEan13();
+        produtoEan13.setCodigoEan13("1234567890123");
+        produtoEan13.setProduto(produto);
+        produtoEan13.setCor("AZUL");
+        produtoEan13.setTamanho("M");        
+        em.persist(produtoEan13);
+
+        produtoEan13 = new ProdutoEan13();
+        produtoEan13.setCodigoEan13("1111111111111");
+        produtoEan13.setProduto(produto);
+        produtoEan13.setCor("VERDE");
+        produtoEan13.setTamanho("GG");        
+        em.persist(produtoEan13);
         
         em.getTransaction().commit();
     }

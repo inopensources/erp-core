@@ -2,10 +2,9 @@ package br.com.ono.erp.movimento;
 
 import br.com.ono.erp.entidade.Movimento;
 import br.com.ono.erp.entidade.ProdutoEan13;
+import br.com.ono.erp.entidade.SessaoMovimento;
 import br.com.ono.erp.entidade.Usuario;
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.List;
 
 /**
  * Interface MovimentoService.
@@ -13,10 +12,11 @@ import java.util.List;
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.0 (20/01/2013 01:35)
  */
-public interface MovimentoService {
+public interface MovimentoPassagemService {
     
-    Long getId();
-    void setId(Long id);
+    // Id da aplicacacao
+    Long getIdAplicacao();
+    void setIdAplicacao(Long id);
     
     void setPoliticaDePassagem(String politicaDePassagem);
     
@@ -31,7 +31,7 @@ public interface MovimentoService {
     Usuario getUsuario2();
     
     void iniciarPassagem(Movimento movimento) throws Exception;
-    Movimento getMovimento();
+    SessaoMovimento getSessaoMovimento();
     
     void passarProduto(ProdutoEan13 produtoEan13) throws Exception;
     
