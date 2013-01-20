@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.0" xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd">
+  <persistence-unit name="entidadePU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>br.com.ono.erp.entidade.Cliente</class>
+    <class>br.com.ono.erp.entidade.ComandaVenda</class>
+    <class>br.com.ono.erp.entidade.DocumentoFiscal</class>
+    <class>br.com.ono.erp.entidade.DominioProduto</class>
+    <class>br.com.ono.erp.entidade.EmailParticipante</class>
+    <class>br.com.ono.erp.entidade.Empresa</class>
+    <class>br.com.ono.erp.entidade.EnderecoParticipante</class>
+    <class>br.com.ono.erp.entidade.Estado</class>
+    <class>br.com.ono.erp.entidade.Fornecedor</class>
+    <class>br.com.ono.erp.entidade.ItemMovimento</class>
+    <class>br.com.ono.erp.entidade.ItemNfe</class>
+    <class>br.com.ono.erp.entidade.Movimento</class>
+    <class>br.com.ono.erp.entidade.Municipio</class>
+    <class>br.com.ono.erp.entidade.NaturezaOperacao</class>
+    <class>br.com.ono.erp.entidade.Nfe</class>
+    <class>br.com.ono.erp.entidade.Pais</class>
+    <class>br.com.ono.erp.entidade.Participante</class>
+    <class>br.com.ono.erp.entidade.PessoaEstrangeira</class>
+    <class>br.com.ono.erp.entidade.PessoaFisica</class>
+    <class>br.com.ono.erp.entidade.PessoaJuridica</class>
+    <class>br.com.ono.erp.entidade.Produto</class>
+    <class>br.com.ono.erp.entidade.ProdutoEan13</class>
+    <class>br.com.ono.erp.entidade.TelefoneParticipante</class>
+    <class>br.com.ono.erp.entidade.Usuario</class>
+    <class>br.com.ono.erp.entidade.ItemSessaoMovimento</class>
+    <class>br.com.ono.erp.entidade.SessaoMovimento</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/erp"/>
+      <property name="javax.persistence.jdbc.password" value="erp"/>
+      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
+      <property name="javax.persistence.jdbc.user" value="erp"/>
+    </properties>
+  </persistence-unit>
+</persistence>
