@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -28,6 +29,7 @@ public class Empresa {
     private Long id;
     
     @OneToOne(optional=false)
+    @JoinColumn(name = "pessoa_juridica_id")
     private PessoaJuridica pessoaJuridica;
 
     private int situacao;

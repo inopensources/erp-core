@@ -37,8 +37,8 @@ public class EnderecoParticipante implements Serializable {
     @Column(name="codigo_ibge_uf")
     private String codigoIbgeUf = "";
     private String pais = "";
-    @Column(name="codigo_bc_pais")
-    private String codigoBcPais = "";
+    @Column(name="codigo_bacen_pais")
+    private String codigoBacenPais = "";
 
     public Long getId() {
         return id;
@@ -136,12 +136,12 @@ public class EnderecoParticipante implements Serializable {
         this.pais = pais;
     }
 
-    public String getCodigoBcPais() {
-        return codigoBcPais;
+    public String getCodigoBacenPais() {
+        return codigoBacenPais;
     }
 
-    public void setCodigoBcPais(String codigoBcPais) {
-        this.codigoBcPais = codigoBcPais;
+    public void setCodigoBacenPais(String codigoBcPais) {
+        this.codigoBacenPais = codigoBcPais;
     }
 
     @Override
@@ -173,7 +173,7 @@ public class EnderecoParticipante implements Serializable {
                 + ", bairro=" + bairro + ", municipio=" + municipio 
                 + ", codigoIbgeMunicipio=" + codigoIbgeMunicipio + ", uf=" 
                 + uf + ", codigoIbgeUf=" + codigoIbgeUf + ", pais=" 
-                + pais + ", codigoBcPais=" + codigoBcPais + '}';
+                + pais + ", codigoBacenPais=" + codigoBacenPais + '}';
     }
 
     

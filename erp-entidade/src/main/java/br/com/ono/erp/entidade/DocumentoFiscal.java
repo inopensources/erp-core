@@ -1,61 +1,45 @@
 package br.com.ono.erp.entidade;
 
+import br.com.ono.erp.entidade.NaturezaOperacao.IndicadorTipoOperacao;
 import java.io.Serializable;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
- * Entidade NaturezaOperacao.
- * 
- * Equivale ao registro 0400 do efd-contribuicoes e  efd-sped.
- * 
- * Referencia: www.spedbrasil.net/forum/topics/2159846:Topic:10695?commentId=2159846%3AComment%3A97066
- * 
- * Conforme art. 19 do Convenio SINIEF S/N de 1970:
- * "Art. 19. A nota fiscal conterá, nos quadros e campos próprios, 
- *  observada a disposição gráfica dos modelos 1 e 1-A, as seguintes indicações:
- * 
- *  I - no quadro “EMITENTE”:
- *  ...
- *  i) a natureza da operação de que decorrer a saída ou a entrada, 
- *   tais como: venda, compra, transferência, devolução, importação, 
- *   consignação, remessa (para fins de demonstração, 
- *   de industrialização ou outra);"
+ * Entidade abstrata DocumentoFiscal.
  * 
  * @author Leonardo Ono (ono.leo@gmail.com)
- * @since 1.0 (19/01/2013 15:31)
+ * @since 1.0 (19/01/2013 20:58)
  */
 @Entity
-@Table(name="natureza_operacao")
-public class NaturezaOperacao implements Serializable {
+@Table(name="documento_fiscal")
+@Inheritance(strategy= InheritanceType.JOINED)
+@DiscriminatorColumn(name="codigo_modelo", discriminatorType= DiscriminatorType.STRING, length=2)
+public abstract class DocumentoFiscal implements Serializable {
     
     private static final long serialVersionUID = 1L;
-
-    // Entrada ou Saida
-    public enum IndicadorTipoOperacao { E, S }
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
-    // Codigo da natureza de operacao deve ser indicado manualmente
-    private Long codigo;
-    
     @ManyToOne
     private Empresa empresa;
-
-    private String descricao;
     
     @Enumerated
     @Column(name = "indicador_tipo_operacao")
     private IndicadorTipoOperacao indicadorTipoOperacao;
-    
+
     public Long getId() {
         return id;
     }
@@ -64,28 +48,12 @@ public class NaturezaOperacao implements Serializable {
         this.id = id;
     }
 
-    public Long getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(Long codigo) {
-        this.codigo = codigo;
-    }
-
     public Empresa getEmpresa() {
         return empresa;
     }
 
     public void setEmpresa(Empresa empresa) {
         this.empresa = empresa;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
     }
 
     public IndicadorTipoOperacao getIndicadorTipoOperacao() {
@@ -105,10 +73,10 @@ public class NaturezaOperacao implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        if (object==null || !(object instanceof NaturezaOperacao)) {
+        if (object==null || !(object instanceof DocumentoFiscal)) {
             return false;
         }
-        NaturezaOperacao other = (NaturezaOperacao) object;
+        DocumentoFiscal other = (DocumentoFiscal) object;
         if ((this.id == null && other.id != null) 
                 || (this.id != null && !this.id.equals(other.id))) {
             
@@ -119,9 +87,8 @@ public class NaturezaOperacao implements Serializable {
 
     @Override
     public String toString() {
-        return "NaturezaOperacao{" + "id=" + id + ", codigo=" + codigo 
-                + ", empresa=" + empresa + ", descricao=" + descricao 
-                + ", indicadorTipoOperacao=" + indicadorTipoOperacao + '}';
+        return "DocumentoFiscal{" + "id=" + id + ", empresa=" 
+                + empresa + ", indicadorTipoOperacao=" + indicadorTipoOperacao + '}';
     }
 
 }

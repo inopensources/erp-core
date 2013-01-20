@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -48,7 +49,7 @@ public class Cliente {
     private Date dataUltimaAtualizacao;
     
     @OneToMany
-    @JoinTable(name="autorizados_cliente")
+    @JoinTable(name="autorizado_cliente")
     private List<PessoaFisica> autorizados;
 
     public Long getId() {

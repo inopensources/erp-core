@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -46,7 +47,7 @@ public class Fornecedor {
     private Date dataUltimaAtualizacao;
     
     @OneToMany
-    @JoinTable(name="representantes_fornecedor")
+    @JoinTable(name="representante_fornecedor")
     private List<PessoaFisica> representantes;
 
     @Column(name="aceita_devolucao")

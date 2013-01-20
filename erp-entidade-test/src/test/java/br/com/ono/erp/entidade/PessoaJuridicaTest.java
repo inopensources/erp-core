@@ -60,7 +60,7 @@ public class PessoaJuridicaTest {
         endp.setUf("SP");
         endp.setCodigoIbgeUf("35");
         endp.setPais("Brasil");
-        endp.setCodigoBcPais("235");
+        endp.setCodigoBacenPais("235");
         pj.getEnderecos().add(endp);
         
         EmailParticipante emlp = null;
@@ -214,22 +214,27 @@ public class PessoaJuridicaTest {
         List<NaturezaOperacao> naturezasDeOperacoes = new ArrayList<NaturezaOperacao>();
         NaturezaOperacao naturezaDeOperacao = null;
         naturezaDeOperacao = new NaturezaOperacao();
+        naturezaDeOperacao.setCodigo(1L);
         naturezaDeOperacao.setDescricao("COMPRA");
         naturezaDeOperacao.setEmpresa(empresa);
         naturezasDeOperacoes.add(naturezaDeOperacao);
         naturezaDeOperacao = new NaturezaOperacao();
+        naturezaDeOperacao.setCodigo(2L);
         naturezaDeOperacao.setDescricao("VENDA");
         naturezaDeOperacao.setEmpresa(empresa);
         naturezasDeOperacoes.add(naturezaDeOperacao);
         naturezaDeOperacao = new NaturezaOperacao();
+        naturezaDeOperacao.setCodigo(3L);
         naturezaDeOperacao.setDescricao("DEVOLUCAO DE VENDA");
         naturezaDeOperacao.setEmpresa(empresa);
         naturezasDeOperacoes.add(naturezaDeOperacao);
         naturezaDeOperacao = new NaturezaOperacao();
+        naturezaDeOperacao.setCodigo(4L);
         naturezaDeOperacao.setDescricao("DEVOLUCAO DE COMPRA");
         naturezaDeOperacao.setEmpresa(empresa);
         naturezasDeOperacoes.add(naturezaDeOperacao);
         naturezaDeOperacao = new NaturezaOperacao();
+        naturezaDeOperacao.setCodigo(5L);
         naturezaDeOperacao.setDescricao("SIMPLES REMESSA");
         naturezaDeOperacao.setEmpresa(empresa);
         naturezasDeOperacoes.add(naturezaDeOperacao);
