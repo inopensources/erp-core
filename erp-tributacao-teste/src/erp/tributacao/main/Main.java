@@ -62,6 +62,7 @@ public class Main {
         try {
             documentoFiscal.calcularImpostosItens();
         } catch (Exception ex) {
+            ex.printStackTrace();
             System.err.println(ex.getMessage());
             System.exit(-1);
         }

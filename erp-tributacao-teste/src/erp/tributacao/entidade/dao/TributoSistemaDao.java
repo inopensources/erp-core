@@ -35,7 +35,7 @@ public class TributoSistemaDao extends DaoGenerico<TributoSistema> {
         selecionadorValoresTributo = new SelecionadorValoresTributo(4L, "true", valoresTributoDao.find(5L));
         tributoSistemaCofins.getSelecionadorValoresTributos().add(selecionadorValoresTributo);
         
-        //save(new TributoSistema(1L, "IPI", "IMPOSTO SOBRE PRODUTOS INDUSTRIALIZADOS"));
+        // save(new TributoSistema(1L, "IPI", "IMPOSTO SOBRE PRODUTOS INDUSTRIALIZADOS"));
         save(tributoSistemaIcms);
         save(tributoSistemaPis);
         save(tributoSistemaCofins);

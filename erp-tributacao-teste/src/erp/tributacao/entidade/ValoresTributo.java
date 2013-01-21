@@ -25,6 +25,8 @@ public class ValoresTributo implements Entidade {
     private BigDecimal valorBaseCalculo = BigDecimal.ZERO;
     private BigDecimal valorTributo = BigDecimal.ZERO;
     
+    private List<ApuracaoTributo> apuracoesTributo = new ArrayList<ApuracaoTributo>();
+    
     public ValoresTributo() {
     }
 
@@ -93,6 +95,20 @@ public class ValoresTributo implements Entidade {
         this.valorTributo = valorTributo;
     }
 
+    public List<ApuracaoTributo> getApuracoesTributo() {
+        return apuracoesTributo;
+    }
+
+    public void setApuracoesTributo(List<ApuracaoTributo> apuracoesTributo) {
+        this.apuracoesTributo = apuracoesTributo;
+    }
+
+    public void executarTodasApuracoesTributo(ContextoTributacao contexto) throws Exception {
+        for (ApuracaoTributo apuracaoTributo : apuracoesTributo) {
+            apuracaoTributo.executar(contexto);
+        }
+    }
+    
     @Override
     public String toString() {
         return "ValoresTributo{" + "id=" + id + ", nomeTributo=" + nomeTributo + ", cst=" + cst + ", aliquota=" + aliquota + ", valorTotal=" + valorTotal + ", valorBaseCalculo=" + valorBaseCalculo + ", valorTributo=" + valorTributo + '}';

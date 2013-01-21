@@ -15,6 +15,9 @@ public class Emitente implements Entidade {
     private String razao;
     private String porte;
     private String uf;
+    
+    // TODO incluir campos que indicam os tributos
+    // que este emitente eh contribuinte
 
     public Emitente() {
     }

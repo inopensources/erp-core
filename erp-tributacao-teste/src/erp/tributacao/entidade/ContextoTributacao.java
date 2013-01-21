@@ -24,6 +24,7 @@ public class ContextoTributacao {
     private OperacaoSistema operacaoSistema;
     private NaturezaOperacao naturezaOperacao;
     private String cfop;
+    private ValoresTributo valoresTributo;
     private List<ValoresTributo> valoresTributos = new ArrayList<ValoresTributo>();
 
     public ContextoTributacao() {
@@ -37,13 +38,15 @@ public class ContextoTributacao {
         this.naturezaOperacao = null;
         valoresTributos.clear();
 
-            this.itemDocumentoFiscal = itemDocumentoFiscal;
+        this.itemDocumentoFiscal = itemDocumentoFiscal;
         this.tributacaoProduto = itemDocumentoFiscal.getProduto().getTributacaoProduto();
         this.operacaoSistema = this.tributacaoProduto.getOperacoesDoSistema().get(documentoFiscal.getCodigoOperacaoSistema());
         this.naturezaOperacao = this.operacaoSistema.selecionarNaturezaDeOperacao(this);
         this.cfop = this.naturezaOperacao.selecionarCfop(this);
         for (TributoSistema tributoSistema : this.naturezaOperacao.getTributosSistema().values()) {
-            valoresTributos.add(tributoSistema.selecionarValoresTributo(this));
+            this.valoresTributo = tributoSistema.selecionarValoresTributo(this);
+            valoresTributos.add(this.valoresTributo);
+            this.valoresTributo.executarTodasApuracoesTributo(this);
         }
     }
 
@@ -82,8 +85,9 @@ public class ContextoTributacao {
     public void setPropriedadesNoScriptEngine(ScriptEngine se) {
         se.put("emit", documentoFiscal.getEmitente());
         se.put("dest", documentoFiscal.getDestinatario());
-        se.put("item", itemDocumentoFiscal);
         se.put("docfisc", documentoFiscal);
+        se.put("item", itemDocumentoFiscal);
+        se.put("valtrib", valoresTributo);
     }
 
 }
