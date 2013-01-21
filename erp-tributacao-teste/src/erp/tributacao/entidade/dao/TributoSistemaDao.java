@@ -20,11 +20,13 @@ public class TributoSistemaDao extends DaoGenerico<TributoSistema> {
         TributoSistema tributoSistemaIcms = new TributoSistema(2L, "ICMS", "IMPOSTO SOBRE CIRCULACAO DE MERCADORIAS");
         
         SelecionadorValoresTributo selecionadorValoresTributo = null;
-        selecionadorValoresTributo = new SelecionadorValoresTributo(1L, "item.produto.ncm.indexOf('33') != 0", valoresTributoDao.find(2L));
+        //selecionadorValoresTributo = new SelecionadorValoresTributo(1L, "item.produto.ncm.indexOf('33') != 0", valoresTributoDao.find(2L));
+        selecionadorValoresTributo = new SelecionadorValoresTributo(1L, "item.produto.propriedades.get('ICMS25') != 'true'", valoresTributoDao.find(2L));
         tributoSistemaIcms.getSelecionadorValoresTributos().add(selecionadorValoresTributo);
 
         // Produtos como perfume, aliquota 25%
-        selecionadorValoresTributo = new SelecionadorValoresTributo(2L, "item.produto.ncm.indexOf('33') == 0", valoresTributoDao.find(3L));
+        //selecionadorValoresTributo = new SelecionadorValoresTributo(2L, "item.produto.ncm.indexOf('33') == 0", valoresTributoDao.find(3L));
+        selecionadorValoresTributo = new SelecionadorValoresTributo(2L, "item.produto.propriedades.get('ICMS25') == 'true'", valoresTributoDao.find(3L));
         tributoSistemaIcms.getSelecionadorValoresTributos().add(selecionadorValoresTributo);
 
         TributoSistema tributoSistemaPis = new TributoSistema(3L, "PIS", "PROGRAMA DE INTEGRACAO SOCIAL");
