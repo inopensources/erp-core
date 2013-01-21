@@ -8,15 +8,37 @@ package erp.tributacao.entidade;
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.0 (21/01/2013 00:22)
  */
-public class Destinatario {
-    
+public class Destinatario implements Entidade {
+
+    private Long id;
     private String cnpj;
     private String razao;
     private String porte;
     private String uf;
 
+    public Destinatario() {
+    }
+
+    public Destinatario(Long id, String cnpj, String razao, String porte, String uf) {
+        this.id = id;
+        this.cnpj = cnpj;
+        this.razao = razao;
+        this.porte = porte;
+        this.uf = uf;
+    }
+
     public String getCnpj() {
         return cnpj;
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setCnpj(String cnpj) {
@@ -49,7 +71,7 @@ public class Destinatario {
 
     @Override
     public String toString() {
-        return "Emitente{" + "cnpj=" + cnpj + ", razao=" + razao + ", porte=" + porte + ", uf=" + uf + '}';
+        return "\nDestinatario{" + "id=" + id + ", cnpj=" + cnpj + ", razao=" + razao + ", porte=" + porte + ", uf=" + uf + '}';
     }
-    
+
 }

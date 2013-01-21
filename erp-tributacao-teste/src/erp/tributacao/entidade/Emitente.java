@@ -8,12 +8,34 @@ package erp.tributacao.entidade;
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.0 (21/01/2013 00:23)
  */
-public class Emitente {
+public class Emitente implements Entidade {
     
+    private Long id;
     private String cnpj;
     private String razao;
     private String porte;
     private String uf;
+
+    public Emitente() {
+    }
+
+    public Emitente(Long id, String cnpj, String razao, String porte, String uf) {
+        this.id = id;
+        this.cnpj = cnpj;
+        this.razao = razao;
+        this.porte = porte;
+        this.uf = uf;
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getCnpj() {
         return cnpj;
@@ -49,7 +71,7 @@ public class Emitente {
 
     @Override
     public String toString() {
-        return "Emitente{" + "cnpj=" + cnpj + ", razao=" + razao + ", porte=" + porte + ", uf=" + uf + '}';
+        return "\nEmitente{" + "id=" + id + ", cnpj=" + cnpj + ", razao=" + razao + ", porte=" + porte + ", uf=" + uf + '}';
     }
     
 }

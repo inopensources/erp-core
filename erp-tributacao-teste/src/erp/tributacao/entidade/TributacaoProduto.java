@@ -1,7 +1,8 @@
 package erp.tributacao.entidade;
 
-import java.util.HashSet;
-import java.util.Set;
+import erp.tributacao.entidade.dao.OperacaoSistemaDao;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Entidade TributacaoProduto
@@ -11,10 +12,36 @@ import java.util.Set;
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.0 (21/01/2013 00:28)
  */
-public class TributacaoProduto {
+public class TributacaoProduto implements Entidade {
     
+    private Long id;
     private String codigo;
-    private Set<NaturezaOperacao> naturezasDeOperacoes = new HashSet<NaturezaOperacao>();
+    private Map<String, OperacaoSistema> operacoesDoSistema = new HashMap<String, OperacaoSistema>();
+    
+    private OperacaoSistemaDao operacaoSistemaDao = new OperacaoSistemaDao();
+    
+    public TributacaoProduto() {
+        // Adiciona todos possiveis operacoes do sistema
+        for (OperacaoSistema operacaoSistema : operacaoSistemaDao.list()) {
+            operacoesDoSistema.put(operacaoSistema.getOperacao(), operacaoSistema);
+        }
+    }
+
+    public TributacaoProduto(Long id, String codigo) {
+        this();
+        this.id = id;
+        this.codigo = codigo;
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getCodigo() {
         return codigo;
@@ -24,17 +51,17 @@ public class TributacaoProduto {
         this.codigo = codigo;
     }
 
-    public Set<NaturezaOperacao> getNaturezasDeOperacoes() {
-        return naturezasDeOperacoes;
+    public Map<String, OperacaoSistema> getOperacoesDoSistema() {
+        return operacoesDoSistema;
     }
 
-    public void setNaturezasDeOperacoes(Set<NaturezaOperacao> naturezasDeOperacoes) {
-        this.naturezasDeOperacoes = naturezasDeOperacoes;
+    public void setOperacoesDoSistema(Map<String, OperacaoSistema> operacoesDoSistema) {
+        this.operacoesDoSistema = operacoesDoSistema;
     }
 
     @Override
     public String toString() {
-        return "TributacaoProduto{" + "codigo=" + codigo + ", naturezasDeOperacoes=" + naturezasDeOperacoes + '}';
+        return "\nTributacaoProduto{" + "id=" + id + ", codigo=" + codigo + ", operacoesDoSistema=" + operacoesDoSistema + '}';
     }
     
 }
