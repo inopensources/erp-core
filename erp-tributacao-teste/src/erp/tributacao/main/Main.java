@@ -1,7 +1,7 @@
 package erp.tributacao.main;
 
-import erp.tributacao.entidade.ContextoTributacao;
 import erp.tributacao.entidade.Destinatario;
+import erp.tributacao.entidade.DocumentoFiscal;
 import erp.tributacao.entidade.Emitente;
 import erp.tributacao.entidade.Produto;
 import erp.tributacao.entidade.TributacaoProduto;
@@ -20,8 +20,6 @@ import erp.tributacao.entidade.dao.TributacaoProdutoDao;
  */
 public class Main {
 
-    private ContextoTributacao contexto;
-    
     private DestinatarioDao destinatarioDao = new DestinatarioDao();
     private EmitenteDao emitenteDao = new EmitenteDao();
     
@@ -33,30 +31,42 @@ public class Main {
     }
     
     public void init() {
-        contexto = new ContextoTributacao("VENDA");
         
         Emitente emitente = emitenteDao.find(13L);
         System.out.println(emitente);
-        contexto.setEmitente(emitente);
         
         Destinatario destinatario = destinatarioDao.find(6L);
         System.out.println(destinatario);
-        contexto.setDestinatario(destinatario);
+        
+        DocumentoFiscal documentoFiscal = new DocumentoFiscal("VENDA", emitente, destinatario);
         
         // Seta a tributacao de um produto
-        Produto produto = produtoDao.find(4L);
-        TributacaoProduto tributacaoProduto = tributacaoProdutoDao.find(1L);            
+        Produto produto = null;
+        TributacaoProduto tributacaoProduto = null;
+        
+        produto = produtoDao.find(4L);
+        tributacaoProduto = tributacaoProdutoDao.find(1L);            
         produto.setTributacaoProduto(tributacaoProduto);
+        documentoFiscal.addItem(produto, 5);
+
+        produto = produtoDao.find(1L);
+        tributacaoProduto = tributacaoProdutoDao.find(1L);
+        produto.setTributacaoProduto(tributacaoProduto);
+        documentoFiscal.addItem(produto, 15);
+
+        produto = produtoDao.find(2L);
+        tributacaoProduto = tributacaoProdutoDao.find(1L);
+        produto.setTributacaoProduto(tributacaoProduto);
+        documentoFiscal.addItem(produto, 3);
         
         try {
-            contexto.setProduto(produto);
+            documentoFiscal.calcularImpostosItens();
         } catch (Exception ex) {
             System.err.println(ex.getMessage());
             System.exit(-1);
         }
         
-        System.out.println(contexto.getNaturezaOperacao());
-        System.out.println(contexto.getValoresTributos());
+        System.out.println(documentoFiscal);
     }
     
 }

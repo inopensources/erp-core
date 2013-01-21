@@ -17,56 +17,46 @@ import javax.script.ScriptEngine;
  */
 public class ContextoTributacao {
     
-    private String codigoOperacaoSistema;
+    private DocumentoFiscal documentoFiscal;
+    private ItemDocumentoFiscal itemDocumentoFiscal;
     
-    private Emitente emitente;
-    private Destinatario destinatario;
-    private Produto produto;
     private TributacaoProduto tributacaoProduto;
     private OperacaoSistema operacaoSistema;
     private NaturezaOperacao naturezaOperacao;
+    private String cfop;
     private List<ValoresTributo> valoresTributos = new ArrayList<ValoresTributo>();
-    
-    public ContextoTributacao(String codigoOperacaoSistema) {
-        this.codigoOperacaoSistema = codigoOperacaoSistema;
+
+    public ContextoTributacao() {
     }
 
-    public String getCodigoOperacaoSistema() {
-        return codigoOperacaoSistema;
-    }
+    public void calcularImpostosItem(ItemDocumentoFiscal itemDocumentoFiscal) throws Exception {
+        // Limpa tudo antes apenas por garantia
+        this.itemDocumentoFiscal = null;
+        this.tributacaoProduto = null;
+        this.operacaoSistema = null;
+        this.naturezaOperacao = null;
+        valoresTributos.clear();
 
-    public void setCodigoOperacaoSistema(String codigoOperacaoSistema) {
-        this.codigoOperacaoSistema = codigoOperacaoSistema;
-    }
-
-    public Emitente getEmitente() {
-        return emitente;
-    }
-
-    public void setEmitente(Emitente emitente) {
-        this.emitente = emitente;
-    }
-
-    public Destinatario getDestinatario() {
-        return destinatario;
-    }
-
-    public void setDestinatario(Destinatario destinatario) {
-        this.destinatario = destinatario;
-    }
-
-    public Produto getProduto() {
-        return produto;
-    }
-
-    public void setProduto(Produto produto) throws Exception {
-        this.produto = produto;
-        this.tributacaoProduto = produto.getTributacaoProduto();
-        this.operacaoSistema = this.tributacaoProduto.getOperacoesDoSistema().get(codigoOperacaoSistema);
+            this.itemDocumentoFiscal = itemDocumentoFiscal;
+        this.tributacaoProduto = itemDocumentoFiscal.getProduto().getTributacaoProduto();
+        this.operacaoSistema = this.tributacaoProduto.getOperacoesDoSistema().get(documentoFiscal.getCodigoOperacaoSistema());
         this.naturezaOperacao = this.operacaoSistema.selecionarNaturezaDeOperacao(this);
+        this.cfop = this.naturezaOperacao.selecionarCfop(this);
         for (TributoSistema tributoSistema : this.naturezaOperacao.getTributosSistema().values()) {
             valoresTributos.add(tributoSistema.selecionarValoresTributo(this));
         }
+    }
+
+    public DocumentoFiscal getDocumentoFiscal() {
+        return documentoFiscal;
+    }
+
+    public void setDocumentoFiscal(DocumentoFiscal documentoFiscal) {
+        this.documentoFiscal = documentoFiscal;
+    }
+
+    public ItemDocumentoFiscal getItemDocumentoFiscal() {
+        return itemDocumentoFiscal;
     }
 
     public TributacaoProduto getTributacaoProduto() {
@@ -81,14 +71,19 @@ public class ContextoTributacao {
         return naturezaOperacao;
     }
 
+    public String getCfop() {
+        return cfop;
+    }
+
     public List<ValoresTributo> getValoresTributos() {
         return valoresTributos;
     }
 
     public void setPropriedadesNoScriptEngine(ScriptEngine se) {
-        se.put("emit", emitente);
-        se.put("dest", destinatario);
-        se.put("prod", produto);
+        se.put("emit", documentoFiscal.getEmitente());
+        se.put("dest", documentoFiscal.getDestinatario());
+        se.put("item", itemDocumentoFiscal);
+        se.put("docfisc", documentoFiscal);
     }
 
 }

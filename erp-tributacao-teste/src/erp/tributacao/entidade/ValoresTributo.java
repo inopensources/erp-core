@@ -17,10 +17,14 @@ import java.util.List;
 public class ValoresTributo implements Entidade {
     
     private Long id;
-    private String nomeTributo;
-    private String cst;
-    private BigDecimal aliquota;
+    private String nomeTributo = "";
+    private String cst = "";
+    private BigDecimal aliquota = BigDecimal.ZERO;
 
+    private BigDecimal valorTotal = BigDecimal.ZERO;
+    private BigDecimal valorBaseCalculo = BigDecimal.ZERO;
+    private BigDecimal valorTributo = BigDecimal.ZERO;
+    
     public ValoresTributo() {
     }
 
@@ -65,9 +69,33 @@ public class ValoresTributo implements Entidade {
         this.cst = cst;
     }
 
+    public BigDecimal getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(BigDecimal valorTotal) {
+        this.valorTotal = valorTotal;
+    }
+
+    public BigDecimal getValorBaseCalculo() {
+        return valorBaseCalculo;
+    }
+
+    public void setValorBaseCalculo(BigDecimal valorBaseCalculo) {
+        this.valorBaseCalculo = valorBaseCalculo;
+    }
+
+    public BigDecimal getValorTributo() {
+        return valorTributo;
+    }
+
+    public void setValorTributo(BigDecimal valorTributo) {
+        this.valorTributo = valorTributo;
+    }
+
     @Override
     public String toString() {
-        return "\nValoresTributo{" + "id=" + id + ", nomeTributo=" + nomeTributo + ", cst=" + cst + ", aliquota=" + aliquota + '}';
+        return "ValoresTributo{" + "id=" + id + ", nomeTributo=" + nomeTributo + ", cst=" + cst + ", aliquota=" + aliquota + ", valorTotal=" + valorTotal + ", valorBaseCalculo=" + valorBaseCalculo + ", valorTributo=" + valorTributo + '}';
     }
 
 }

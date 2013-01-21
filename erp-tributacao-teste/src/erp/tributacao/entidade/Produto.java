@@ -1,6 +1,8 @@
 package erp.tributacao.entidade;
 
 import java.math.BigDecimal;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Entidade Produto
@@ -17,7 +19,9 @@ public class Produto implements Entidade {
     private String ncm;
     private BigDecimal valorUnitario;
     private TributacaoProduto tributacaoProduto;
-
+    
+    private Map<String, String> propriedades = new HashMap<String, String>();
+    
     public Produto() {
     }
 
@@ -70,9 +74,17 @@ public class Produto implements Entidade {
         this.tributacaoProduto = tributacaoProduto;
     }
 
+    public Map<String, String> getPropriedades() {
+        return propriedades;
+    }
+
+    public void setPropriedades(Map<String, String> propriedades) {
+        this.propriedades = propriedades;
+    }
+
     @Override
     public String toString() {
-        return "\nProduto{" + "id=" + id + ", descricao=" + descricao + ", ncm=" + ncm + ", valorUnitario=" + valorUnitario + ", tributacaoProduto=" + tributacaoProduto + '}';
+        return "\nProduto{" + "id=" + id + ", descricao=" + descricao + ", ncm=" + ncm + ", valorUnitario=" + valorUnitario + ", tributacaoProduto=" + tributacaoProduto + ", propriedades=" + propriedades + '}';
     }
     
 }

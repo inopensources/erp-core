@@ -1,7 +1,9 @@
 package erp.tributacao.entidade;
 
 import erp.tributacao.entidade.dao.TributoSistemaDao;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,10 +29,11 @@ public class NaturezaOperacao implements Entidade {
     // "E" ou "S"
     private char entradaSaida;
     
-    private String cfop;
-    
     private Map<String, TributoSistema> tributosSistema = new HashMap<String, TributoSistema>();
 
+    private List<SelecionadorCfop> selecionadorCfops
+            = new ArrayList<SelecionadorCfop>();
+    
     public NaturezaOperacao() {
         // Adiciona todos possiveis TributoSistema's
         // de acordo com o cadastro do emitente se contribuinte para este tributo
@@ -39,13 +42,12 @@ public class NaturezaOperacao implements Entidade {
         }
     }
 
-    public NaturezaOperacao(Long id, String codigo, String descricao, char entradaSaida, String cfop) {
+    public NaturezaOperacao(Long id, String codigo, String descricao, char entradaSaida) {
         this();
         this.id = id;
         this.codigo = codigo;
         this.descricao = descricao;
         this.entradaSaida = entradaSaida;
-        this.cfop = cfop;
     }
 
     @Override
@@ -82,14 +84,6 @@ public class NaturezaOperacao implements Entidade {
         this.entradaSaida = entradaSaida;
     }
 
-    public String getCfop() {
-        return cfop;
-    }
-
-    public void setCfop(String cfop) {
-        this.cfop = cfop;
-    }
-
     public Map<String, TributoSistema> getTributosSistema() {
         return tributosSistema;
     }
@@ -98,9 +92,33 @@ public class NaturezaOperacao implements Entidade {
         this.tributosSistema = tributosSistema;
     }
 
+    public List<SelecionadorCfop> getSelecionadorCfops() {
+        return selecionadorCfops;
+    }
+
+    public void setSelecionadorCfops(List<SelecionadorCfop> selecionadorCfops) {
+        this.selecionadorCfops = selecionadorCfops;
+    }
+    
+    public String selecionarCfop(ContextoTributacao contexto) throws Exception {
+        List<String> cfops = new ArrayList<String>();
+        for (SelecionadorCfop selecionador : selecionadorCfops) {
+            if (selecionador.conferir(contexto)) {
+                cfops.add(selecionador.getCfop());
+            }
+        }
+        if (cfops.isEmpty()) {
+            throw new Exception("Nao foi possivel obter nenhum CFOP para a operacao atual !");
+        }
+        else if (cfops.size() > 1) {
+            throw new Exception("A condicao configurada no sistema retornou mais de um CFOP !");
+        }
+        return cfops.get(0);        
+    }    
+
     @Override
     public String toString() {
-        return "\nNaturezaOperacao{" + "tributoSistemaDao=" + tributoSistemaDao + ", id=" + id + ", codigo=" + codigo + ", descricao=" + descricao + ", entradaSaida=" + entradaSaida + ", cfop=" + cfop + ", tributosSistema=" + tributosSistema + '}';
+        return "\nNaturezaOperacao{" + "tributoSistemaDao=" + tributoSistemaDao + ", id=" + id + ", codigo=" + codigo + ", descricao=" + descricao + ", entradaSaida=" + entradaSaida + ", tributosSistema=" + tributosSistema + ", selecionadorCfops=" + selecionadorCfops + '}';
     }
     
 }

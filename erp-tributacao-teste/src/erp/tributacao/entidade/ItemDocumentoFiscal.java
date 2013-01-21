@@ -14,26 +14,40 @@ public class ItemDocumentoFiscal implements Entidade {
 
     private Long id;
     private Produto produto;
+    private int quantidade;
     
-    private BigDecimal cstIpi;
-    private BigDecimal baseCalculoIpi;
-    private BigDecimal aliquotaIpi;
-    private BigDecimal valorIpi;
+    private String cfop = "";
+    
+    private BigDecimal valorUnitario = BigDecimal.ZERO;
+    private BigDecimal valorTotal = BigDecimal.ZERO;
+    
+    private String cstIpi = "";
+    private BigDecimal baseCalculoIpi = BigDecimal.ZERO;
+    private BigDecimal aliquotaIpi = BigDecimal.ZERO;
+    private BigDecimal valorIpi = BigDecimal.ZERO;
 
-    private BigDecimal cstIcms;
-    private BigDecimal baseCalculoIcms;
-    private BigDecimal aliquotaIcms;
-    private BigDecimal valorIcms;
+    private String cstIcms = "";
+    private BigDecimal baseCalculoIcms = BigDecimal.ZERO;
+    private BigDecimal aliquotaIcms = BigDecimal.ZERO;
+    private BigDecimal valorIcms = BigDecimal.ZERO;
 
-    private BigDecimal cstPis;
-    private BigDecimal baseCalculoPis;
-    private BigDecimal aliquotaPis;
-    private BigDecimal valorPis;
+    private String cstPis = "";
+    private BigDecimal baseCalculoPis = BigDecimal.ZERO;
+    private BigDecimal aliquotaPis = BigDecimal.ZERO;
+    private BigDecimal valorPis = BigDecimal.ZERO;
 
-    private BigDecimal cstCofins;
-    private BigDecimal baseCalculoCofins;
-    private BigDecimal aliquotaCofins;
-    private BigDecimal valorCofins;
+    private String cstCofins = "";
+    private BigDecimal baseCalculoCofins = BigDecimal.ZERO;
+    private BigDecimal aliquotaCofins = BigDecimal.ZERO;
+    private BigDecimal valorCofins = BigDecimal.ZERO;
+
+    public ItemDocumentoFiscal(Long id, Produto produto, int quantidade) {
+        this.id = id;
+        this.produto = produto;
+        this.quantidade = quantidade;
+        this.valorUnitario = produto.getValorUnitario();
+        this.valorTotal = produto.getValorUnitario().multiply(new BigDecimal(quantidade));
+    }
     
     @Override
     public void setId(Long id) {
@@ -53,11 +67,43 @@ public class ItemDocumentoFiscal implements Entidade {
         this.produto = produto;
     }
 
-    public BigDecimal getCstIpi() {
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public String getCfop() {
+        return cfop;
+    }
+
+    public void setCfop(String cfop) {
+        this.cfop = cfop;
+    }
+
+    public BigDecimal getValorUnitario() {
+        return valorUnitario;
+    }
+
+    public void setValorUnitario(BigDecimal valorUnitario) {
+        this.valorUnitario = valorUnitario;
+    }
+
+    public BigDecimal getValorTotal() {
+        return valorTotal;
+    }
+
+    public void setValorTotal(BigDecimal valorTotal) {
+        this.valorTotal = valorTotal;
+    }
+
+    public String getCstIpi() {
         return cstIpi;
     }
 
-    public void setCstIpi(BigDecimal cstIpi) {
+    public void setCstIpi(String cstIpi) {
         this.cstIpi = cstIpi;
     }
 
@@ -85,11 +131,11 @@ public class ItemDocumentoFiscal implements Entidade {
         this.valorIpi = valorIpi;
     }
 
-    public BigDecimal getCstIcms() {
+    public String getCstIcms() {
         return cstIcms;
     }
 
-    public void setCstIcms(BigDecimal cstIcms) {
+    public void setCstIcms(String cstIcms) {
         this.cstIcms = cstIcms;
     }
 
@@ -117,11 +163,11 @@ public class ItemDocumentoFiscal implements Entidade {
         this.valorIcms = valorIcms;
     }
 
-    public BigDecimal getCstPis() {
+    public String getCstPis() {
         return cstPis;
     }
 
-    public void setCstPis(BigDecimal cstPis) {
+    public void setCstPis(String cstPis) {
         this.cstPis = cstPis;
     }
 
@@ -149,11 +195,11 @@ public class ItemDocumentoFiscal implements Entidade {
         this.valorPis = valorPis;
     }
 
-    public BigDecimal getCstCofins() {
+    public String getCstCofins() {
         return cstCofins;
     }
 
-    public void setCstCofins(BigDecimal cstCofins) {
+    public void setCstCofins(String cstCofins) {
         this.cstCofins = cstCofins;
     }
 
@@ -181,9 +227,41 @@ public class ItemDocumentoFiscal implements Entidade {
         this.valorCofins = valorCofins;
     }
 
+    public void preencherImpostos(ContextoTributacao contexto) {
+        cfop = contexto.getCfop();
+        for (ValoresTributo valoresTributo : contexto.getValoresTributos()) {
+            if (valoresTributo.getNomeTributo().equals("ICMS")) {
+                cstIcms = valoresTributo.getCst();
+                baseCalculoIcms = valoresTributo.getValorBaseCalculo();
+                aliquotaIcms = valoresTributo.getAliquota();
+                valorIcms = valoresTributo.getValorTributo();
+            }
+            if (valoresTributo.getNomeTributo().equals("IPI")) {
+                cstIpi = valoresTributo.getCst();
+                baseCalculoIpi = valoresTributo.getValorBaseCalculo();
+                aliquotaIpi = valoresTributo.getAliquota();
+                valorIpi = valoresTributo.getValorTributo();
+            }
+            if (valoresTributo.getNomeTributo().equals("PIS")) {
+                cstPis = valoresTributo.getCst();
+                baseCalculoPis = valoresTributo.getValorBaseCalculo();
+                aliquotaPis = valoresTributo.getAliquota();
+                valorPis = valoresTributo.getValorTributo();
+            }
+            if (valoresTributo.getNomeTributo().equals("COFINS")) {
+                cstCofins = valoresTributo.getCst();
+                baseCalculoCofins = valoresTributo.getValorBaseCalculo();
+                aliquotaCofins = valoresTributo.getAliquota();
+                valorCofins = valoresTributo.getValorTributo();
+            }
+        }
+    }
+
     @Override
     public String toString() {
-        return "ItemDocumentoFiscal{" + "id=" + id + ", produto=" + produto + ", cstIpi=" + cstIpi + ", baseCalculoIpi=" + baseCalculoIpi + ", aliquotaIpi=" + aliquotaIpi + ", valorIpi=" + valorIpi + ", cstIcms=" + cstIcms + ", baseCalculoIcms=" + baseCalculoIcms + ", aliquotaIcms=" + aliquotaIcms + ", valorIcms=" + valorIcms + ", cstPis=" + cstPis + ", baseCalculoPis=" + baseCalculoPis + ", aliquotaPis=" + aliquotaPis + ", valorPis=" + valorPis + ", cstCofins=" + cstCofins + ", baseCalculoCofins=" + baseCalculoCofins + ", aliquotaCofins=" + aliquotaCofins + ", valorCofins=" + valorCofins + '}';
+        return "\nItemDocumentoFiscal{" + "id=" + id + ", produto.descricao=" + produto.getDescricao() + ", quantidade=" + quantidade + ", cfop=" + cfop + ", valorUnitario=" + valorUnitario + ", valorTotal=" + valorTotal + ", cstIpi=" + cstIpi + ", baseCalculoIpi=" + baseCalculoIpi + ", aliquotaIpi=" + aliquotaIpi + ", valorIpi=" + valorIpi + ", cstIcms=" + cstIcms + ", baseCalculoIcms=" + baseCalculoIcms + ", aliquotaIcms=" + aliquotaIcms + ", valorIcms=" + valorIcms + ", cstPis=" + cstPis + ", baseCalculoPis=" + baseCalculoPis + ", aliquotaPis=" + aliquotaPis + ", valorPis=" + valorPis + ", cstCofins=" + cstCofins + ", baseCalculoCofins=" + baseCalculoCofins + ", aliquotaCofins=" + aliquotaCofins + ", valorCofins=" + valorCofins + '}';
     }
     
+
+
 }
