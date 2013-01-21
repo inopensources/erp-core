@@ -2,14 +2,14 @@ package erp.tributacao.entidade.dao;
 
 import erp.tributacao.entidade.Entidade;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Classe DaoGenerico
+ * 
+ * Para fins de teste, vai criar e salvar as entidades na memoria.
  * 
  * Teste para tributacao.
  * 
