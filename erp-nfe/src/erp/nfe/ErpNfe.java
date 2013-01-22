@@ -4,6 +4,8 @@ import br.inf.portalfiscal.nfe.TNfeProc;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
 import javax.xml.bind.JAXB;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
@@ -17,6 +19,20 @@ import javax.xml.bind.Marshaller;
 public class ErpNfe {
 
     public static void main(String[] args) throws Exception {
+        ScriptEngineManager factory = new ScriptEngineManager();
+        ScriptEngine se = factory.getEngineByName("JavaScript");
+        se.eval("importPackage(Packages.br.inf.portalfiscal.nfe); var nfe = new TNFe(); var infNFe = new TNFe.InfNFe();");
+        
+        //TNFe nfe = new TNFe();
+        
+        //nfe.setInfNFe(null);
+        
+        se.eval("nfe.infNFe = infNFe");
+        
+        System.out.println(se.eval("nfe.infNFe"));
+    }
+    
+    private static void testeLerProcNFe() throws Exception {
         TNfeProc nfe = JAXB.unmarshal(new File("c:/NFe35130162236146000198550020000557241000557240-procNFe.xml"), TNfeProc.class);
         JAXBContext context = JAXBContext.newInstance("br.inf.portalfiscal.nfe");
         Marshaller m = context.createMarshaller();
@@ -33,10 +49,8 @@ public class ErpNfe {
         PrintWriter pw = new PrintWriter("c:/out.xml");
         pw.print(xml);
         pw.close();
-        
         //m.marshal(nfe, new File("c:/copiaprocnfe.xml"));
-        
-        
-//        System.out.println(nfe.getInfNFe().getDet().get(0).getProd().getComb().getCIDE());
+        //System.out.println(nfe.getInfNFe().getDet().get(0).getProd().getComb().getCIDE());
     }
+    
 }
