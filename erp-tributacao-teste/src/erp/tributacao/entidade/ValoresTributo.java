@@ -18,12 +18,19 @@ public class ValoresTributo implements Entidade {
     
     private Long id;
     private String nomeTributo = "";
+    
+    private String origemDaMercadoria;
     private String cst = "";
-    private BigDecimal aliquota = BigDecimal.ZERO;
 
     private BigDecimal valorTotal = BigDecimal.ZERO;
+    
+    private BigDecimal aliquota = BigDecimal.ZERO;
     private BigDecimal valorBaseCalculo = BigDecimal.ZERO;
     private BigDecimal valorTributo = BigDecimal.ZERO;
+
+    private BigDecimal aliquotaST = BigDecimal.ZERO;
+    private BigDecimal valorBaseCalculoST = BigDecimal.ZERO;
+    private BigDecimal valorTributoST = BigDecimal.ZERO;
     
     private List<ApuracaoTributo> apuracoesTributo = new ArrayList<ApuracaoTributo>();
     
@@ -103,15 +110,47 @@ public class ValoresTributo implements Entidade {
         this.apuracoesTributo = apuracoesTributo;
     }
 
+    public String getOrigemDaMercadoria() {
+        return origemDaMercadoria;
+    }
+
+    public void setOrigemDaMercadoria(String origemDaMercadoria) {
+        this.origemDaMercadoria = origemDaMercadoria;
+    }
+
+    public BigDecimal getAliquotaST() {
+        return aliquotaST;
+    }
+
+    public void setAliquotaST(BigDecimal aliquotaST) {
+        this.aliquotaST = aliquotaST;
+    }
+
+    public BigDecimal getValorBaseCalculoST() {
+        return valorBaseCalculoST;
+    }
+
+    public void setValorBaseCalculoST(BigDecimal valorBaseCalculoST) {
+        this.valorBaseCalculoST = valorBaseCalculoST;
+    }
+
+    public BigDecimal getValorTributoST() {
+        return valorTributoST;
+    }
+
+    public void setValorTributoST(BigDecimal valorTributoST) {
+        this.valorTributoST = valorTributoST;
+    }
+
     public void executarTodasApuracoesTributo(ContextoTributacao contexto) throws Exception {
         for (ApuracaoTributo apuracaoTributo : apuracoesTributo) {
             apuracaoTributo.executar(contexto);
         }
     }
-    
+
     @Override
     public String toString() {
-        return "ValoresTributo{" + "id=" + id + ", nomeTributo=" + nomeTributo + ", cst=" + cst + ", aliquota=" + aliquota + ", valorTotal=" + valorTotal + ", valorBaseCalculo=" + valorBaseCalculo + ", valorTributo=" + valorTributo + '}';
+        return "ValoresTributo{" + "id=" + id + ", nomeTributo=" + nomeTributo + ", origemDaMercadoria=" + origemDaMercadoria + ", cst=" + cst + ", valorTotal=" + valorTotal + ", aliquota=" + aliquota + ", valorBaseCalculo=" + valorBaseCalculo + ", valorTributo=" + valorTributo + ", aliquotaST=" + aliquotaST + ", valorBaseCalculoST=" + valorBaseCalculoST + ", valorTributoST=" + valorTributoST + ", apuracoesTributo=" + apuracoesTributo + '}';
     }
 
 }

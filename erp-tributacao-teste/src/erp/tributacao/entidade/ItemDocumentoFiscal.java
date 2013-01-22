@@ -31,6 +31,10 @@ public class ItemDocumentoFiscal implements Entidade {
     private BigDecimal aliquotaIcms = BigDecimal.ZERO;
     private BigDecimal valorIcms = BigDecimal.ZERO;
 
+    private BigDecimal baseCalculoIcmsST = BigDecimal.ZERO;
+    private BigDecimal aliquotaIcmsST = BigDecimal.ZERO;
+    private BigDecimal valorIcmsST = BigDecimal.ZERO;
+
     private String cstPis = "";
     private BigDecimal baseCalculoPis = BigDecimal.ZERO;
     private BigDecimal aliquotaPis = BigDecimal.ZERO;
@@ -163,6 +167,30 @@ public class ItemDocumentoFiscal implements Entidade {
         this.valorIcms = valorIcms;
     }
 
+    public BigDecimal getBaseCalculoIcmsST() {
+        return baseCalculoIcmsST;
+    }
+
+    public void setBaseCalculoIcmsST(BigDecimal baseCalculoIcmsST) {
+        this.baseCalculoIcmsST = baseCalculoIcmsST;
+    }
+
+    public BigDecimal getAliquotaIcmsST() {
+        return aliquotaIcmsST;
+    }
+
+    public void setAliquotaIcmsST(BigDecimal aliquotaIcmsST) {
+        this.aliquotaIcmsST = aliquotaIcmsST;
+    }
+
+    public BigDecimal getValorIcmsST() {
+        return valorIcmsST;
+    }
+
+    public void setValorIcmsST(BigDecimal valorIcmsST) {
+        this.valorIcmsST = valorIcmsST;
+    }
+
     public String getCstPis() {
         return cstPis;
     }
@@ -235,6 +263,9 @@ public class ItemDocumentoFiscal implements Entidade {
                 baseCalculoIcms = valoresTributo.getValorBaseCalculo();
                 aliquotaIcms = valoresTributo.getAliquota();
                 valorIcms = valoresTributo.getValorTributo();
+                baseCalculoIcmsST = valoresTributo.getValorBaseCalculoST();
+                aliquotaIcmsST = valoresTributo.getAliquotaST();
+                valorIcmsST = valoresTributo.getValorTributoST();
             }
             if (valoresTributo.getNomeTributo().equals("IPI")) {
                 cstIpi = valoresTributo.getCst();
@@ -259,9 +290,7 @@ public class ItemDocumentoFiscal implements Entidade {
 
     @Override
     public String toString() {
-        return "\nItemDocumentoFiscal{" + "id=" + id + ", produto.descricao=" + produto.getDescricao() + ", quantidade=" + quantidade + ", cfop=" + cfop + ", valorUnitario=" + valorUnitario + ", valorTotal=" + valorTotal + ", cstIpi=" + cstIpi + ", baseCalculoIpi=" + baseCalculoIpi + ", aliquotaIpi=" + aliquotaIpi + ", valorIpi=" + valorIpi + ", cstIcms=" + cstIcms + ", baseCalculoIcms=" + baseCalculoIcms + ", aliquotaIcms=" + aliquotaIcms + ", valorIcms=" + valorIcms + ", cstPis=" + cstPis + ", baseCalculoPis=" + baseCalculoPis + ", aliquotaPis=" + aliquotaPis + ", valorPis=" + valorPis + ", cstCofins=" + cstCofins + ", baseCalculoCofins=" + baseCalculoCofins + ", aliquotaCofins=" + aliquotaCofins + ", valorCofins=" + valorCofins + '}';
+        return "\nItemDocumentoFiscal{" + "id=" + id + ", produto.descricao=" + produto.getDescricao() + ", quantidade=" + quantidade + ", cfop=" + cfop + ", valorUnitario=" + valorUnitario + ", valorTotal=" + valorTotal + ", cstIpi=" + cstIpi + ", baseCalculoIpi=" + baseCalculoIpi + ", aliquotaIpi=" + aliquotaIpi + ", valorIpi=" + valorIpi + ", cstIcms=" + cstIcms + ", baseCalculoIcms=" + baseCalculoIcms + ", aliquotaIcms=" + aliquotaIcms + ", valorIcms=" + valorIcms + ", baseCalculoIcmsST=" + baseCalculoIcmsST + ", aliquotaIcmsST=" + aliquotaIcmsST + ", valorIcmsST=" + valorIcmsST + ", cstPis=" + cstPis + ", baseCalculoPis=" + baseCalculoPis + ", aliquotaPis=" + aliquotaPis + ", valorPis=" + valorPis + ", cstCofins=" + cstCofins + ", baseCalculoCofins=" + baseCalculoCofins + ", aliquotaCofins=" + aliquotaCofins + ", valorCofins=" + valorCofins + '}';
     }
-    
-
 
 }
