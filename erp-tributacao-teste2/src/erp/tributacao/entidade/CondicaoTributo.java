@@ -22,12 +22,8 @@ public class CondicaoTributo {
     private ContextoTributo contexto;
 
     private Long id;
-    
-    private String condicao = ""; // exemplo: "dest.uf=='SP'"
-    private String descricao = ""; // exemplo: "Se destinatario for de SP"
-    private String script = ""; // Script a ser executado se condicao for verdadeira
+    private ScriptCondicaoTributo scriptCondicaoTributo;
     private List<CondicaoTributo> proximasCondicoes = new ArrayList<CondicaoTributo>(); // Verificar a proxima situacao, caso existir
-    
     private Date validade; // validade desta condicao. null vale para sempre
     
     // Reservado para definir a posicao e tamanho do componente grafico
@@ -49,11 +45,9 @@ public class CondicaoTributo {
         this.contexto = contexto;
     }
 
-    public CondicaoTributo(ContextoTributo contexto, String condicao, String descricao, String script) {
+    public CondicaoTributo(ContextoTributo contexto, ScriptCondicaoTributo scriptCondicaoTributo) {
         this.contexto = contexto;
-        this.condicao = condicao;
-        this.descricao = descricao;
-        this.script = script;
+        this.scriptCondicaoTributo = scriptCondicaoTributo;
     }
 
     public Long getId() {
@@ -62,30 +56,6 @@ public class CondicaoTributo {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getCondicao() {
-        return condicao;
-    }
-
-    public void setCondicao(String condicao) {
-        this.condicao = condicao;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public String getScript() {
-        return script;
-    }
-
-    public void setScript(String script) {
-        this.script = script;
     }
 
     public List<CondicaoTributo> getProximasCondicoes() {
@@ -102,6 +72,10 @@ public class CondicaoTributo {
 
     public void setValidade(Date validade) {
         this.validade = validade;
+    }
+
+    public ScriptCondicaoTributo getScriptCondicaoTributo() {
+        return scriptCondicaoTributo;
     }
 
     public ContextoTributo getContexto() {
@@ -124,20 +98,25 @@ public class CondicaoTributo {
         ScriptEngine js = contexto.getJs();
         for (CondicaoTributo proximaCondicao : proximasCondicoes) {
             // TODO verifica validade da proximaCondicao
-            if ((Boolean) js.eval(proximaCondicao.getCondicao())) {
-                if (proximaCondicao.getScript() != null 
-                        && proximaCondicao.getScript().trim().length()>0) {
-                    js.eval(proximaCondicao.getScript());
+            if ((Boolean) js.eval(proximaCondicao.getScriptCondicaoTributo().getCondicao())) {
+                if (proximaCondicao.getScriptCondicaoTributo().getScript() != null 
+                        && proximaCondicao.getScriptCondicaoTributo().getScript().trim().length()>0) {
+                    js.eval(proximaCondicao.getScriptCondicaoTributo().getScript());
                 }
                 proximaCondicao.executar();
-                break;
+                // TODO poder selecionar entre:
+                // - Executar todos que retornarem condicao verdadeira
+                // - Executar apenas o primeiro que retornar verdadeira
+                // [ ] - Retornar excessao se tiver mais de uma condicao que retorna verdadeiro
+                // [ ] - Retornar excessao se nao tiver nenhuma condicao que retorna verdadeiro
+                // break;
             }
         }
     }
 
     @Override
     public String toString() {
-        return "CondicaoTributo{" + "contexto=" + contexto + ", descricao=" + descricao + ", script=" + script + ", validade=" + validade + '}';
+        return "CondicaoTributo{" + "id=" + id + ", scriptCondicaoTributo=" + scriptCondicaoTributo + ", validade=" + validade + ", viewComponent=" + viewComponent + ", bounds=" + bounds + '}';
     }
-    
+
 }

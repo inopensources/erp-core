@@ -42,7 +42,7 @@ public class CondicaoTributoView extends javax.swing.JPanel {
     public CondicaoTributoView(CondicaoTributo condicaoTributo) {
         this();
         this.condicaoTributo = condicaoTributo;
-        this.label.setText(condicaoTributo.getDescricao());
+        this.label.setText(condicaoTributo.getScriptCondicaoTributo().getDescricao());
         setBounds(condicaoTributo.getBounds());
     }
 
