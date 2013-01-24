@@ -29,12 +29,12 @@ public class CondicaoTributoView extends javax.swing.JPanel {
         return condicaoTributo;
     }
 
-    public JButton getButtonEditarCondicao() {
-        return buttonEditarCondicao;
+    public JButton getButtonAdicionarCondicao() {
+        return buttonAdicionarCondicao;
     }
 
     public JButton getButtonEditarScript() {
-        return buttonEditarScript;
+        return buttonAdicionarCondicao;
     }
 
     public JLabel getLabel() {
@@ -65,8 +65,7 @@ public class CondicaoTributoView extends javax.swing.JPanel {
     private void initComponents() {
 
         label = new javax.swing.JLabel();
-        buttonEditarCondicao = new javax.swing.JButton();
-        buttonEditarScript = new javax.swing.JButton();
+        buttonAdicionarCondicao = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
@@ -83,11 +82,13 @@ public class CondicaoTributoView extends javax.swing.JPanel {
             }
         });
 
-        buttonEditarCondicao.setText("c");
-        buttonEditarCondicao.setBorder(null);
-
-        buttonEditarScript.setText("s");
-        buttonEditarScript.setBorder(null);
+        buttonAdicionarCondicao.setText("+");
+        buttonAdicionarCondicao.setBorder(null);
+        buttonAdicionarCondicao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAdicionarCondicaoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -96,18 +97,14 @@ public class CondicaoTributoView extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(label, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
-                .addGap(24, 24, 24)
-                .addComponent(buttonEditarCondicao, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(buttonEditarScript, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
+                .addComponent(buttonAdicionarCondicao, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(label, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                .addComponent(buttonEditarScript)
-                .addComponent(buttonEditarCondicao))
+            .addComponent(buttonAdicionarCondicao, javax.swing.GroupLayout.Alignment.TRAILING)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -129,9 +126,14 @@ public class CondicaoTributoView extends javax.swing.JPanel {
         y = evt.getYOnScreen() - getLocation().y;
     }//GEN-LAST:event_labelMousePressed
 
+    private void buttonAdicionarCondicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAdicionarCondicaoActionPerformed
+        AdicaoCondicaoView acView = new AdicaoCondicaoView();
+        acView.setCondicaoTributo(condicaoTributo);
+        acView.setVisible(true);
+    }//GEN-LAST:event_buttonAdicionarCondicaoActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonEditarCondicao;
-    private javax.swing.JButton buttonEditarScript;
+    private javax.swing.JButton buttonAdicionarCondicao;
     private javax.swing.JLabel label;
     // End of variables declaration//GEN-END:variables
 }

@@ -31,10 +31,8 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="label" pref="119" max="32767" attributes="0"/>
-              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-              <Component id="buttonEditarCondicao" min="-2" pref="12" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="buttonEditarScript" min="-2" pref="12" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+              <Component id="buttonAdicionarCondicao" min="-2" pref="12" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -42,10 +40,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Component id="label" alignment="1" min="-2" pref="15" max="-2" attributes="0"/>
-          <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-              <Component id="buttonEditarScript" alignment="3" min="-2" max="-2" attributes="0"/>
-              <Component id="buttonEditarCondicao" alignment="3" min="-2" max="-2" attributes="0"/>
-          </Group>
+          <Component id="buttonAdicionarCondicao" alignment="1" min="-2" max="-2" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -59,21 +54,16 @@
         <EventHandler event="mouseDragged" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="labelMouseDragged"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="buttonEditarCondicao">
+    <Component class="javax.swing.JButton" name="buttonAdicionarCondicao">
       <Properties>
-        <Property name="text" type="java.lang.String" value="c"/>
+        <Property name="text" type="java.lang.String" value="+"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="null"/>
         </Property>
       </Properties>
-    </Component>
-    <Component class="javax.swing.JButton" name="buttonEditarScript">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="s"/>
-        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="null"/>
-        </Property>
-      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonAdicionarCondicaoActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>
