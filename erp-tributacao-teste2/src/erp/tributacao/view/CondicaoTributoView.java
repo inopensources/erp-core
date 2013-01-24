@@ -123,6 +123,7 @@ public class CondicaoTributoView extends javax.swing.JPanel implements DropTarge
         label = new javax.swing.JLabel();
         buttonAdicionarCondicao = new javax.swing.JButton();
         buttonLinkar = new javax.swing.JButton();
+        buttonEditarCondicao = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(51, 51, 51)));
@@ -170,13 +171,28 @@ public class CondicaoTributoView extends javax.swing.JPanel implements DropTarge
             }
         });
 
+        buttonEditarCondicao.setText("e");
+        buttonEditarCondicao.setBorder(null);
+        buttonEditarCondicao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                buttonEditarCondicaoMousePressed(evt);
+            }
+        });
+        buttonEditarCondicao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonEditarCondicaoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(label, javax.swing.GroupLayout.DEFAULT_SIZE, 181, Short.MAX_VALUE)
+                .addComponent(label, javax.swing.GroupLayout.DEFAULT_SIZE, 193, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonEditarCondicao, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonAdicionarCondicao, javax.swing.GroupLayout.PREFERRED_SIZE, 12, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -187,7 +203,8 @@ public class CondicaoTributoView extends javax.swing.JPanel implements DropTarge
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                 .addComponent(buttonAdicionarCondicao)
                 .addComponent(buttonLinkar)
-                .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(label, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(buttonEditarCondicao))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -213,8 +230,9 @@ public class CondicaoTributoView extends javax.swing.JPanel implements DropTarge
     }//GEN-LAST:event_labelMousePressed
 
     private void buttonAdicionarCondicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAdicionarCondicaoActionPerformed
-        AdicaoCondicaoView acView = new AdicaoCondicaoView();
+        EdicaoCondicaoView acView = new EdicaoCondicaoView();
         acView.setCondicaoTributo(condicaoTributo);
+        acView.getButtonAlterar().setVisible(false);
         acView.setVisible(true);
     }//GEN-LAST:event_buttonAdicionarCondicaoActionPerformed
 
@@ -237,8 +255,20 @@ public class CondicaoTributoView extends javax.swing.JPanel implements DropTarge
         System.out.println("buttonLinkarMouseDragged " + evt);
     }//GEN-LAST:event_buttonLinkarMouseDragged
 
+    private void buttonEditarCondicaoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonEditarCondicaoMousePressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_buttonEditarCondicaoMousePressed
+
+    private void buttonEditarCondicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditarCondicaoActionPerformed
+        EdicaoCondicaoView acView = new EdicaoCondicaoView();
+        acView.setCondicaoTributo(condicaoTributo);
+        acView.getButtonAdicionar().setVisible(false);
+        acView.setVisible(true);
+    }//GEN-LAST:event_buttonEditarCondicaoActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAdicionarCondicao;
+    private javax.swing.JButton buttonEditarCondicao;
     private javax.swing.JButton buttonLinkar;
     private javax.swing.JLabel label;
     // End of variables declaration//GEN-END:variables

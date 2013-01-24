@@ -23,8 +23,8 @@ import javax.swing.SwingUtilities;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        Emitente emit = new Emitente(13L, "00000000000013", "EMI_CCC", "MEDIA", "SP");
-        Destinatario dest = new Destinatario(3L, "00000000000003", "DEST_CCC", "LTDA", "SP");
+        Emitente emit = new Emitente(13L, "00000000000013", "EMI_CCC", "LTDA", "SP");
+        Destinatario dest = new Destinatario(3L, "00000000000003", "DEST_CCC", "ME", "SP");
         Produto prod = new Produto(3L, "DESCRICAO CCC", "61000002", new BigDecimal("12.00"));
         ContextoTributo ctx = new ContextoTributo(emit, dest, prod);
 

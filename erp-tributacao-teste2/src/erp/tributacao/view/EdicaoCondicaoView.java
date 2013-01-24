@@ -12,14 +12,14 @@ import javax.swing.JTextField;
  *
  * @author leonardo
  */
-public class AdicaoCondicaoView extends javax.swing.JFrame {
+public class EdicaoCondicaoView extends javax.swing.JFrame {
 
     private CondicaoTributo condicaoTributo;
     
     /**
-     * Creates new form AdicaoCondicaoView
+     * Creates new form EdicaoCondicaoView
      */
-    public AdicaoCondicaoView() {
+    public EdicaoCondicaoView() {
         initComponents();
         setLocationRelativeTo(null);
     }
@@ -30,10 +30,23 @@ public class AdicaoCondicaoView extends javax.swing.JFrame {
 
     public void setCondicaoTributo(CondicaoTributo condicaoTributo) {
         this.condicaoTributo = condicaoTributo;
+        if (condicaoTributo.getScriptCondicaoTributo() == null) return;
+        txtDescricao.setText(condicaoTributo.getScriptCondicaoTributo().getDescricao());
+        txtScript.setText(condicaoTributo.getScriptCondicaoTributo().getScript());
+        if (condicaoTributo.getScriptCondicaoTributo().getTipo() == Tipo.CONDICAO) {
+            radioCondicao.setSelected(true);
+        }
+        else {
+            radioAplicacao.setSelected(true);
+        }
     }
 
     public JButton getButtonAdicionar() {
         return buttonAdicionar;
+    }
+
+    public JButton getButtonAlterar() {
+        return buttonAlterar;
     }
 
     public JButton getButtonCancelar() {
@@ -67,6 +80,8 @@ public class AdicaoCondicaoView extends javax.swing.JFrame {
         buttonCancelar = new javax.swing.JButton();
         radioCondicao = new javax.swing.JRadioButton();
         radioAplicacao = new javax.swing.JRadioButton();
+        buttonAlterar = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -99,6 +114,15 @@ public class AdicaoCondicaoView extends javax.swing.JFrame {
         radioAplicacao.setSelected(true);
         radioAplicacao.setText("Aplicacao");
 
+        buttonAlterar.setText("Alterar");
+        buttonAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAlterarActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("Tipo:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -108,14 +132,18 @@ public class AdicaoCondicaoView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(buttonCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 183, Short.MAX_VALUE)
+                        .addComponent(buttonAlterar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonAdicionar))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -136,16 +164,19 @@ public class AdicaoCondicaoView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(radioCondicao)
-                    .addComponent(radioAplicacao))
-                .addGap(19, 19, 19)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(147, 147, 147)))
+                    .addComponent(radioAplicacao)
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(buttonAdicionar)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(buttonAdicionar)
+                        .addComponent(buttonAlterar))
                     .addComponent(buttonCancelar))
                 .addContainerGap())
         );
@@ -176,6 +207,19 @@ public class AdicaoCondicaoView extends javax.swing.JFrame {
         setVisible(false);
     }//GEN-LAST:event_buttonCancelarActionPerformed
 
+    private void buttonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAlterarActionPerformed
+        ScriptTributacao script = condicaoTributo.getScriptCondicaoTributo();
+        script.setDescricao(txtDescricao.getText());
+        script.setScript(txtScript.getText());
+        if (radioCondicao.isSelected()) {
+            script.setTipo(Tipo.CONDICAO);
+        }
+        else {
+            script.setTipo(Tipo.APLICACAO);
+        }
+        setVisible(false);
+    }//GEN-LAST:event_buttonAlterarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -193,28 +237,30 @@ public class AdicaoCondicaoView extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(AdicaoCondicaoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EdicaoCondicaoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(AdicaoCondicaoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EdicaoCondicaoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(AdicaoCondicaoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EdicaoCondicaoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(AdicaoCondicaoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(EdicaoCondicaoView.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AdicaoCondicaoView().setVisible(true);
+                new EdicaoCondicaoView().setVisible(true);
             }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAdicionar;
+    private javax.swing.JButton buttonAlterar;
     private javax.swing.JButton buttonCancelar;
     private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JRadioButton radioAplicacao;

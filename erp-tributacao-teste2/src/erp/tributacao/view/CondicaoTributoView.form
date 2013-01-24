@@ -30,7 +30,9 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="label" pref="181" max="32767" attributes="0"/>
+              <Component id="label" pref="193" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="buttonEditarCondicao" min="-2" pref="12" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="buttonAdicionarCondicao" min="-2" pref="12" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -44,6 +46,7 @@
               <Component id="buttonAdicionarCondicao" alignment="3" min="-2" max="-2" attributes="0"/>
               <Component id="buttonLinkar" alignment="3" min="-2" max="-2" attributes="0"/>
               <Component id="label" alignment="3" min="-2" pref="15" max="-2" attributes="0"/>
+              <Component id="buttonEditarCondicao" alignment="3" min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -81,6 +84,18 @@
         <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonLinkarMousePressed"/>
         <EventHandler event="mouseDragged" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="buttonLinkarMouseDragged"/>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonLinkarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="buttonEditarCondicao">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="e"/>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="null"/>
+        </Property>
+      </Properties>
+      <Events>
+        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="buttonEditarCondicaoMousePressed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonEditarCondicaoActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
