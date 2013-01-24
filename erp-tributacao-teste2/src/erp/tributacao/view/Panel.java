@@ -11,6 +11,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.geom.Line2D;
 
 /**
  *
@@ -55,6 +56,11 @@ public class Panel extends javax.swing.JPanel {
     private void initComponents() {
 
         setBackground(new java.awt.Color(102, 102, 102));
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -67,6 +73,32 @@ public class Panel extends javax.swing.JPanel {
             .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    // Ao clicar na linha que associa a condicao pai ao filho,
+    // essa associacao e removida. Porem os objetos em si ainda permanecem.
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        int x = evt.getX();
+        int y = evt.getY();
+        fora:
+        for (Component c : getComponents()) {
+            CondicaoTributoView ctv = (CondicaoTributoView) c;
+            int xini = ctv.getX() + ctv.getWidth();
+            int yini = ctv.getY() + (ctv.getHeight()/2);
+            CondicaoTributo ct = ctv.getCondicaoTributo();
+            for (CondicaoTributo ctl : ct.getProximasCondicoes()) {
+                int xfin = ctl.getBounds().x;
+                int yfin = ctl.getBounds().y + (ctl.getBounds().height/2);
+                Line2D.Float line = new Line2D.Float(xini, yini, xfin, yfin);
+                boolean contains = (line.ptLineDist(x, y) < 2);
+                if (contains) {
+                    System.out.println("Removendo: " + contains);
+                    ct.getProximasCondicoes().remove(ctl);
+                    return;
+                }
+            }
+        }
+    }//GEN-LAST:event_formMouseClicked
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 

@@ -7,6 +7,7 @@ package erp.tributacao.view;
 import erp.tributacao.entidade.CondicaoTributo;
 import erp.tributacao.entidade.NaturezaOperacao;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -48,12 +49,11 @@ public class CondicaoTributoView extends javax.swing.JPanel implements DropTarge
         dragSource = new DragSource();
         dropTarget = new DropTarget(this, this);
         dragSource.addDragSourceListener(this);
-        dragSource.createDefaultDragGestureRecognizer(buttonLinkar, DnDConstants.ACTION_COPY, this);
         
         TransferHandler transfer = new TransferHandler("text") {
             
             @Override
-            protected Transferable createTransferable(JComponent c) {
+            public Transferable createTransferable(JComponent c) {
                 return new Transferable() {
 
                     @Override
@@ -159,6 +159,11 @@ public class CondicaoTributoView extends javax.swing.JPanel implements DropTarge
                 buttonLinkarMousePressed(evt);
             }
         });
+        buttonLinkar.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                buttonLinkarMouseDragged(evt);
+            }
+        });
         buttonLinkar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 buttonLinkarActionPerformed(evt);
@@ -220,11 +225,17 @@ public class CondicaoTributoView extends javax.swing.JPanel implements DropTarge
         JButton button = (JButton)evt.getSource();
         TransferHandler handle = button.getTransferHandler();
         handle.exportAsDrag(button, evt, TransferHandler.COPY);
+        dragSource.createDefaultDragGestureRecognizer(buttonLinkar, DnDConstants.ACTION_COPY, this);
     }//GEN-LAST:event_buttonLinkarMousePressed
 
     private void buttonLinkarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonLinkarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_buttonLinkarActionPerformed
+
+    private void buttonLinkarMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_buttonLinkarMouseDragged
+        // TODO add your handling code here:
+        System.out.println("buttonLinkarMouseDragged " + evt);
+    }//GEN-LAST:event_buttonLinkarMouseDragged
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAdicionarCondicao;
