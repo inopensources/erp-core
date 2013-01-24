@@ -1,7 +1,7 @@
 package erp.tributacao.core;
 
 /**
- * Entidade TributoSistema
+ * Entidade Tributo
  * 
  * Indica os tributos com os quais o sistema esta preparado para trabalhar.
  * 
@@ -10,16 +10,16 @@ package erp.tributacao.core;
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.0 (21/01/2013 12:33)
  */
-public class TributoSistema {
+public class Tributo {
     
     private Long id;
     private String nome;
     private String descricao;
     
-    public TributoSistema() {
+    public Tributo() {
     }
 
-    public TributoSistema(Long id, String nome, String descricao) {
+    public Tributo(Long id, String nome, String descricao) {
         this.id = id;
         this.nome = nome;
         this.descricao = descricao;
