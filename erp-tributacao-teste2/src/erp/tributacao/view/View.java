@@ -5,8 +5,12 @@
 package erp.tributacao.view;
 
 import erp.tributacao.entidade.CondicaoTributo;
+import erp.tributacao.entidade.NaturezaOperacao;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -14,16 +18,29 @@ import java.util.Set;
  */
 public class View extends javax.swing.JFrame {
 
+    private NaturezaOperacao naturezaOperacao;
+    
     /**
      * Creates new form View
      */
     public View() {
         initComponents();
     }
+
+    public NaturezaOperacao getNaturezaOperacao() {
+        return naturezaOperacao;
+    }
+
+    public void setNaturezaOperacao(NaturezaOperacao naturezaOperacao) {
+        this.naturezaOperacao = naturezaOperacao;
+    }
     
     private Set<CondicaoTributo> condicoesTributos = new HashSet<CondicaoTributo>();
     
     public void addCondicaoTributo(CondicaoTributo condicaoTributo) {
+        if (condicaoTributo instanceof NaturezaOperacao) {
+            this.naturezaOperacao = (NaturezaOperacao) condicaoTributo;
+        }
         if (condicoesTributos.contains(condicaoTributo)) return;
         condicoesTributos.add(condicaoTributo);
         
@@ -47,31 +64,53 @@ public class View extends javax.swing.JFrame {
 
         scrollPane = new javax.swing.JScrollPane();
         panel = new erp.tributacao.view.Panel();
+        jToolBar1 = new javax.swing.JToolBar();
+        buttonExecutar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         panel.setLayout(null);
         scrollPane.setViewportView(panel);
 
+        jToolBar1.setRollover(true);
+
+        buttonExecutar.setText("Executar");
+        buttonExecutar.setFocusable(false);
+        buttonExecutar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        buttonExecutar.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buttonExecutar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonExecutarActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(buttonExecutar);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 911, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)
+            .addComponent(scrollPane)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 565, Short.MAX_VALUE)
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void buttonExecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExecutarActionPerformed
+        try {
+            naturezaOperacao.executar();
+        } catch (Exception ex) {
+            Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage(), ":: Excecao:", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_buttonExecutarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -108,6 +147,8 @@ public class View extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonExecutar;
+    private javax.swing.JToolBar jToolBar1;
     private erp.tributacao.view.Panel panel;
     private javax.swing.JScrollPane scrollPane;
     // End of variables declaration//GEN-END:variables

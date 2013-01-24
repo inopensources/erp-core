@@ -6,7 +6,8 @@ import erp.tributacao.entidade.Destinatario;
 import erp.tributacao.entidade.Emitente;
 import erp.tributacao.entidade.NaturezaOperacao;
 import erp.tributacao.entidade.Produto;
-import erp.tributacao.entidade.ScriptCondicaoTributo;
+import erp.tributacao.entidade.ScriptTributacao;
+import erp.tributacao.entidade.ScriptTributacao.Tipo;
 import erp.tributacao.view.View;
 import java.math.BigDecimal;
 import javax.swing.SwingUtilities;
@@ -27,29 +28,29 @@ public class Main {
         Produto prod = new Produto(3L, "DESCRICAO CCC", "61000002", new BigDecimal("12.00"));
         ContextoTributo ctx = new ContextoTributo(emit, dest, prod);
 
-        ScriptCondicaoTributo sctInicio = new ScriptCondicaoTributo("true", "Venda de mercadorias", "");
-        ScriptCondicaoTributo sctDest1 = new ScriptCondicaoTributo("dest.porte == 'ME'", "p/ dest. ME", "println('venda para empresa ME !');");
-        ScriptCondicaoTributo sctDest2 = new ScriptCondicaoTributo("dest.porte != 'ME'", "p/ dest. nao ME", "println('venda para empresa nao ME !');");
-        ScriptCondicaoTributo sctProd1 = new ScriptCondicaoTributo("prod.ncm.indexOf('33') == 0", "prod. = perfume", "println('produto perfume !');");
-        ScriptCondicaoTributo sctProd2 = new ScriptCondicaoTributo("prod.ncm.indexOf('33') != 0", "prod. <> perfume", "println('produto nao perfume !');");
-        ScriptCondicaoTributo sctProd3 = new ScriptCondicaoTributo("true", "p/ qualquer prod", "println('qualquer produto !');");
-        ScriptCondicaoTributo sctIcms7 = new ScriptCondicaoTributo("true", "Aplica alíq. ICMS 7%", "aliquota = 7.00; println('aplicando icms aliq. 7%');");
-        ScriptCondicaoTributo sctIcms18 = new ScriptCondicaoTributo("true", "Aplica alíq.ICMS 18%", "aliquota = 18.00; println('aplicando icms aliq. 18%');");
-        ScriptCondicaoTributo sctIcms25 = new ScriptCondicaoTributo("true", "Aplica alíq. ICMS 25%", "aliquota = 25.00; println('aplicando icms aliq. 25%');");
-        ScriptCondicaoTributo sctPis = new ScriptCondicaoTributo("true", "Aplica PIS 1,65%", "aliquota = 1.65; println('aplicando pis aliq. 1,65%');");
-        ScriptCondicaoTributo sctCofins = new ScriptCondicaoTributo("true", "Aplica COFINS 7,60%", "aliquota = 7.60; println('aplicando cofins aliq. 7,60%');");
+        ScriptTributacao sctInicio = new ScriptTributacao("Venda de mercadorias", "", Tipo.APLICACAO);
+        ScriptTributacao sctDest1 = new ScriptTributacao("p/ dest. ME", "dest.porte == 'ME'", Tipo.CONDICAO);
+        ScriptTributacao sctDest2 = new ScriptTributacao("p/ dest. nao ME", "dest.porte != 'ME'", Tipo.CONDICAO);
+        ScriptTributacao sctProd1 = new ScriptTributacao("prod. = perfume", "prod.ncm.indexOf('33') == 0", Tipo.CONDICAO);
+        ScriptTributacao sctProd2 = new ScriptTributacao("prod. <> perfume", "prod.ncm.indexOf('33') != 0", Tipo.CONDICAO);
+        ScriptTributacao sctProd3 = new ScriptTributacao("p/ qualquer prod", "true", Tipo.CONDICAO);
+        ScriptTributacao sctIcms7 = new ScriptTributacao("Aplica alíq. ICMS 7%", "aliquota = 7.00; println('aplicando icms aliq. 7%');", Tipo.APLICACAO);
+        ScriptTributacao sctIcms18 = new ScriptTributacao("Aplica alíq.ICMS 18%", "aliquota = 18.00; println('aplicando icms aliq. 18%');", Tipo.APLICACAO);
+        ScriptTributacao sctIcms25 = new ScriptTributacao("Aplica alíq. ICMS 25%", "aliquota = 25.00; println('aplicando icms aliq. 25%');", Tipo.APLICACAO);
+        ScriptTributacao sctPis = new ScriptTributacao("Aplica PIS 1,65%", "aliquota = 1.65; println('aplicando pis aliq. 1,65%');", Tipo.APLICACAO);
+        ScriptTributacao sctCofins = new ScriptTributacao("Aplica COFINS 7,60%", "aliquota = 7.60; println('aplicando cofins aliq. 7,60%');", Tipo.APLICACAO);
         
-        final NaturezaOperacao inicio = new NaturezaOperacao();
-        inicio.setDescricao("Venda de mercadorias");
-        inicio.setContexto(ctx);
-        inicio.setBounds(10, 200, 230, 20);
+        final NaturezaOperacao naturezaOperacaoVendas = new NaturezaOperacao();
+        naturezaOperacaoVendas.setDescricao("Venda de mercadorias");
+        naturezaOperacaoVendas.setContexto(ctx);
+        naturezaOperacaoVendas.setBounds(10, 200, 230, 20);
         
         CondicaoTributo dest1 = new CondicaoTributo(ctx, sctDest1);
         CondicaoTributo dest2 = new CondicaoTributo(ctx, sctDest2);
         dest1.setBounds(250, 180, 230, 20);
         dest2.setBounds(250, 220, 230, 20);
-        inicio.getProximasCondicoes().add(dest1);
-        inicio.getProximasCondicoes().add(dest2);
+        naturezaOperacaoVendas.getProximasCondicoes().add(dest1);
+        naturezaOperacaoVendas.getProximasCondicoes().add(dest2);
 
         CondicaoTributo dest1Prod1 = new CondicaoTributo(ctx, sctProd1);
         CondicaoTributo dest1Prod2 = new CondicaoTributo(ctx, sctProd2);
@@ -82,7 +83,7 @@ public class Main {
         dest2Prod3.getProximasCondicoes().add(pis);
         dest2Prod3.getProximasCondicoes().add(cofins);
         
-        inicio.executar();
+        naturezaOperacaoVendas.executar();
         
         System.out.println("Aliquota aplicada: " + ctx.getJs().get("aliquota"));
         
@@ -92,7 +93,7 @@ public class Main {
             @Override
             public void run() {
                 view.setVisible(true);
-                view.addCondicaoTributo(inicio);
+                view.addCondicaoTributo(naturezaOperacaoVendas);
             }
         });
     }

@@ -1,7 +1,8 @@
 package erp.tributacao.view;
 
 import erp.tributacao.entidade.CondicaoTributo;
-import erp.tributacao.entidade.ScriptCondicaoTributo;
+import erp.tributacao.entidade.ScriptTributacao;
+import erp.tributacao.entidade.ScriptTributacao.Tipo;
 import java.awt.Container;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
@@ -38,10 +39,6 @@ public class AdicaoCondicaoView extends javax.swing.JFrame {
         return buttonCancelar;
     }
 
-    public JTextArea getTxtCondicao() {
-        return txtCondicao;
-    }
-
     public JTextField getTxtDescricao() {
         return txtDescricao;
     }
@@ -59,26 +56,20 @@ public class AdicaoCondicaoView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup = new javax.swing.ButtonGroup();
         txtDescricao = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        txtCondicao = new javax.swing.JTextArea();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtScript = new javax.swing.JTextArea();
         buttonAdicionar = new javax.swing.JButton();
         buttonCancelar = new javax.swing.JButton();
+        radioCondicao = new javax.swing.JRadioButton();
+        radioAplicacao = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Descricao:");
-
-        jLabel2.setText("Condicao:");
-
-        txtCondicao.setColumns(20);
-        txtCondicao.setRows(5);
-        jScrollPane1.setViewportView(txtCondicao);
 
         jLabel3.setText("Script:");
 
@@ -100,6 +91,13 @@ public class AdicaoCondicaoView extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup.add(radioCondicao);
+        radioCondicao.setText("Condicao");
+
+        buttonGroup.add(radioAplicacao);
+        radioAplicacao.setSelected(true);
+        radioAplicacao.setText("Aplicacao");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -108,21 +106,23 @@ public class AdicaoCondicaoView extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDescricao))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(4, 4, 4)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 401, Short.MAX_VALUE)
-                            .addComponent(jScrollPane2)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(buttonCancelar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(buttonAdicionar)))
+                        .addComponent(buttonAdicionar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 449, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(radioCondicao)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(radioAplicacao)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtDescricao))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -132,18 +132,18 @@ public class AdicaoCondicaoView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDescricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(radioCondicao)
+                    .addComponent(radioAplicacao))
+                .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane2)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel3)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2))
+                        .addGap(147, 147, 147)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(buttonAdicionar)
                     .addComponent(buttonCancelar))
                 .addContainerGap())
@@ -154,7 +154,11 @@ public class AdicaoCondicaoView extends javax.swing.JFrame {
 
     private void buttonAdicionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAdicionarActionPerformed
         CondicaoTributoView ctView = (CondicaoTributoView) condicaoTributo.getViewComponent();
-        ScriptCondicaoTributo script = new ScriptCondicaoTributo(txtCondicao.getText(), txtDescricao.getText(), txtScript.getText());
+        Tipo tipo = Tipo.CONDICAO;
+        if (radioAplicacao.isSelected()) {
+            tipo = Tipo.APLICACAO;
+        }
+        ScriptTributacao script = new ScriptTributacao(txtDescricao.getText(), txtScript.getText(), tipo);
         CondicaoTributo novaCondicao = new CondicaoTributo(condicaoTributo.getContexto(), script);
         novaCondicao.setBounds(ctView.getX() + ctView.getWidth() + 20, ctView.getY() + ctView.getHeight(), ctView.getWidth(), ctView.getHeight());
         condicaoTributo.getProximasCondicoes().add(novaCondicao);
@@ -208,12 +212,12 @@ public class AdicaoCondicaoView extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAdicionar;
     private javax.swing.JButton buttonCancelar;
+    private javax.swing.ButtonGroup buttonGroup;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea txtCondicao;
+    private javax.swing.JRadioButton radioAplicacao;
+    private javax.swing.JRadioButton radioCondicao;
     private javax.swing.JTextField txtDescricao;
     private javax.swing.JTextArea txtScript;
     // End of variables declaration//GEN-END:variables
