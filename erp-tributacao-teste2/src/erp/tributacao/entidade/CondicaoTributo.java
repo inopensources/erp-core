@@ -104,6 +104,14 @@ public class CondicaoTributo {
             String script = proximaCondicao.getScriptCondicaoTributo().getScript();
             Tipo scriptTipo = proximaCondicao.getScriptCondicaoTributo().getTipo();
             if (scriptTipo == Tipo.CONDICAO) {
+                
+                // TODO - politica de verificacao de condicoes (implementar ?)
+                // [ ] - executar somente a primeira condicao verdadeira (neste caso, precisaria definir uma ordem).
+                //       [ ] - se nao tiver nenhuma condicao verdadeira, retornar excecao
+                //       [ ] - se tiver mais de uma condicao verdadeira, retornar excecao 
+                // [ ] - executar todas condicoes verdadeiras.
+                //       [ ] - se nao tiver nenhuma condicao verdadeira, retornar excecao
+                
                 System.out.println("condicao: " + script);
                 Boolean retCondicao = (Boolean) js.eval(script);
                 if (retCondicao) {

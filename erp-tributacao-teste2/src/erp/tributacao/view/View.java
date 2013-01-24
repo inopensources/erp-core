@@ -25,6 +25,7 @@ public class View extends javax.swing.JFrame {
      */
     public View() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     public NaturezaOperacao getNaturezaOperacao() {
@@ -89,7 +90,7 @@ public class View extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, 1095, Short.MAX_VALUE)
             .addComponent(scrollPane)
         );
         layout.setVerticalGroup(
@@ -97,7 +98,7 @@ public class View extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 414, Short.MAX_VALUE))
+                .addComponent(scrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 536, Short.MAX_VALUE))
         );
 
         pack();
@@ -105,7 +106,9 @@ public class View extends javax.swing.JFrame {
 
     private void buttonExecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExecutarActionPerformed
         try {
+            System.out.println("--- Inicio da execucao ---");
             naturezaOperacao.executar();
+            System.out.println("--- Fim da execucao ---");
         } catch (Exception ex) {
             Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, ex.getMessage(), ":: Excecao:", JOptionPane.ERROR_MESSAGE);

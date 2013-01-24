@@ -21,6 +21,7 @@ public class AdicaoCondicaoView extends javax.swing.JFrame {
      */
     public AdicaoCondicaoView() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     public CondicaoTributo getCondicaoTributo() {
