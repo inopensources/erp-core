@@ -1,4 +1,4 @@
-package erp.tributacao.entidade;
+package erp.tributacao.core;
 
 /**
  * Entidade OperacaoSistema.
@@ -13,7 +13,7 @@ package erp.tributacao.entidade;
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.0 (21/01/2013 11:30)
  */
-public class OperacaoSistema implements Entidade {
+public class OperacaoSistema {
     
     private Long id;
     

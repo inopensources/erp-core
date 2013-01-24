@@ -1,4 +1,4 @@
-package erp.tributacao.entidade;
+package erp.tributacao.core;
 
 /**
  * Entidade NaturezaOperacao
@@ -8,7 +8,7 @@ package erp.tributacao.entidade;
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.0 (21/01/2013 00:28)
  */
-public class NaturezaOperacao extends CondicaoTributo implements Entidade {
+public class NaturezaOperacao extends FluxoTributacao {
     
     private Long id;
     
@@ -32,12 +32,10 @@ public class NaturezaOperacao extends CondicaoTributo implements Entidade {
         this.entradaSaida = entradaSaida;
     }
 
-    @Override
     public Long getId() {
         return id;
     }
 
-    @Override
     public void setId(Long id) {
         this.id = id;
     }

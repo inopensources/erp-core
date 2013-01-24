@@ -1,4 +1,4 @@
-package erp.tributacao.entidade;
+package erp.cadastro;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
@@ -12,7 +12,7 @@ import java.util.Map;
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.0 (21/01/2013 00:22)
  */
-public class Produto implements Entidade {
+public class Produto {
     
     private Long id;
     private String descricao;
@@ -31,12 +31,10 @@ public class Produto implements Entidade {
         this.valorUnitario = valorUnitario;
     }
 
-    @Override
     public Long getId() {
         return id;
     }
 
-    @Override
     public void setId(Long id) {
         this.id = id;
     }

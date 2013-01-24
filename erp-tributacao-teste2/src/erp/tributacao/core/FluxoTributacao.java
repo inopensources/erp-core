@@ -1,6 +1,6 @@
-package erp.tributacao.entidade;
+package erp.tributacao.core;
 
-import erp.tributacao.entidade.ScriptTributacao.Tipo;
+import erp.tributacao.core.LogicaTributacao.Tipo;
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,7 +8,7 @@ import java.util.List;
 import javax.script.ScriptEngine;
 
 /**
- * Classe CondicaoTributo
+ * Classe FluxoTributacao
  *
  * Indica uma determinada situacao que influencia na escolha de uma determinada
  * aliquota de um tributo.
@@ -18,18 +18,18 @@ import javax.script.ScriptEngine;
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.0 (21/01/2013 12:33)
  */
-public class CondicaoTributo {
+public class FluxoTributacao {
 
-    private ContextoTributo contexto;
+    private ContextoTributacao contexto;
     private Long id;
-    private ScriptTributacao scriptCondicaoTributo;
-    private List<CondicaoTributo> proximasCondicoes = new ArrayList<CondicaoTributo>(); // Verificar a proxima situacao, caso existir
+    private LogicaTributacao scriptCondicaoTributo;
+    private List<FluxoTributacao> proximasCondicoes = new ArrayList<FluxoTributacao>(); // Verificar a proxima situacao, caso existir
     private Date validade; // validade desta condicao. null vale para sempre
     // Reservado para definir a posicao e tamanho do componente grafico
     private Object viewComponent;
     private Rectangle bounds = new Rectangle();
 
-    public CondicaoTributo() {
+    public FluxoTributacao() {
     }
 
     public Object getViewComponent() {
@@ -40,11 +40,11 @@ public class CondicaoTributo {
         this.viewComponent = viewComponent;
     }
 
-    public CondicaoTributo(ContextoTributo contexto) {
+    public FluxoTributacao(ContextoTributacao contexto) {
         this.contexto = contexto;
     }
 
-    public CondicaoTributo(ContextoTributo contexto, ScriptTributacao scriptCondicaoTributo) {
+    public FluxoTributacao(ContextoTributacao contexto, LogicaTributacao scriptCondicaoTributo) {
         this.contexto = contexto;
         this.scriptCondicaoTributo = scriptCondicaoTributo;
     }
@@ -57,11 +57,11 @@ public class CondicaoTributo {
         this.id = id;
     }
 
-    public List<CondicaoTributo> getProximasCondicoes() {
+    public List<FluxoTributacao> getProximasCondicoes() {
         return proximasCondicoes;
     }
 
-    public void setProximasCondicoes(List<CondicaoTributo> proximasCondicoes) {
+    public void setProximasCondicoes(List<FluxoTributacao> proximasCondicoes) {
         this.proximasCondicoes = proximasCondicoes;
     }
 
@@ -73,15 +73,15 @@ public class CondicaoTributo {
         this.validade = validade;
     }
 
-    public ScriptTributacao getScriptCondicaoTributo() {
+    public LogicaTributacao getScriptCondicaoTributo() {
         return scriptCondicaoTributo;
     }
 
-    public void setContexto(ContextoTributo contexto) {
+    public void setContexto(ContextoTributacao contexto) {
         this.contexto = contexto;
     }
 
-    public ContextoTributo getContexto() {
+    public ContextoTributacao getContexto() {
         return contexto;
     }
 
@@ -97,29 +97,29 @@ public class CondicaoTributo {
         bounds.setBounds(x, y, width, height);
     }
 
-    public void executar() throws Exception {
+    public void apurarTributos() throws Exception {
         ScriptEngine js = contexto.getJs();
-        for (CondicaoTributo proximaCondicao : proximasCondicoes) {
+        for (FluxoTributacao proximaCondicao : proximasCondicoes) {
             // TODO verifica validade da proximaCondicao
             String script = proximaCondicao.getScriptCondicaoTributo().getScript();
             Tipo scriptTipo = proximaCondicao.getScriptCondicaoTributo().getTipo();
             if (scriptTipo == Tipo.CONDICAO) {
                 
                 // TODO - politica de verificacao de condicoes (implementar ?)
-                // [ ] - executar somente a primeira condicao verdadeira (neste caso, precisaria definir uma ordem).
+                // [ ] - apurarTributos somente a primeira condicao verdadeira (neste caso, precisaria definir uma ordem).
                 //       [ ] - se nao tiver nenhuma condicao verdadeira, retornar excecao
                 //       [ ] - se tiver mais de uma condicao verdadeira, retornar excecao 
-                // [ ] - executar todas condicoes verdadeiras.
+                // [ ] - apurarTributos todas condicoes verdadeiras.
                 //       [ ] - se nao tiver nenhuma condicao verdadeira, retornar excecao
                 
                 System.out.println("condicao: " + script);
                 Boolean retCondicao = (Boolean) js.eval(script);
                 if (retCondicao) {
-                    proximaCondicao.executar();
+                    proximaCondicao.apurarTributos();
                 }
             } else if (scriptTipo == Tipo.APLICACAO) {
                 js.eval(script);
-                proximaCondicao.executar();
+                proximaCondicao.apurarTributos();
             }
         }
     }

@@ -4,8 +4,8 @@
  */
 package erp.tributacao.view;
 
-import erp.tributacao.entidade.CondicaoTributo;
-import erp.tributacao.entidade.NaturezaOperacao;
+import erp.tributacao.core.FluxoTributacao;
+import erp.tributacao.core.NaturezaOperacao;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
@@ -84,8 +84,8 @@ public class Panel extends javax.swing.JPanel {
             CondicaoTributoView ctv = (CondicaoTributoView) c;
             int xini = ctv.getX() + ctv.getWidth();
             int yini = ctv.getY() + (ctv.getHeight()/2);
-            CondicaoTributo ct = ctv.getCondicaoTributo();
-            for (CondicaoTributo ctl : ct.getProximasCondicoes()) {
+            FluxoTributacao ct = ctv.getCondicaoTributo();
+            for (FluxoTributacao ctl : ct.getProximasCondicoes()) {
                 int xfin = ctl.getBounds().x;
                 int yfin = ctl.getBounds().y + (ctl.getBounds().height/2);
                 Line2D.Float line = new Line2D.Float(xini, yini, xfin, yfin);
@@ -116,8 +116,8 @@ public class Panel extends javax.swing.JPanel {
             CondicaoTributoView ctv = (CondicaoTributoView) c;
             int xini = ctv.getX() + ctv.getWidth();
             int yini = ctv.getY() + (ctv.getHeight()/2);
-            CondicaoTributo ct = ctv.getCondicaoTributo();
-            for (CondicaoTributo ctl : ct.getProximasCondicoes()) {
+            FluxoTributacao ct = ctv.getCondicaoTributo();
+            for (FluxoTributacao ctl : ct.getProximasCondicoes()) {
                 int xfin = ctl.getBounds().x;
                 int yfin = ctl.getBounds().y + (ctl.getBounds().height/2);
                 g.drawLine(xini, yini-1, xfin, yfin-1);

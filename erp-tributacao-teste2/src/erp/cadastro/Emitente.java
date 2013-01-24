@@ -1,25 +1,28 @@
-package erp.tributacao.entidade;
+package erp.cadastro;
 
 /**
- * Entidade Destinatario do documento fiscal
+ * Entidade Emitente do documento fiscal
  * 
  * Teste para tributacao.
  * 
  * @author Leonardo Ono (ono.leo@gmail.com)
- * @since 1.0 (21/01/2013 00:22)
+ * @since 1.0 (21/01/2013 00:23)
  */
-public class Destinatario implements Entidade {
-
+public class Emitente {
+    
     private Long id;
     private String cnpj;
     private String razao;
     private String porte;
     private String uf;
+    
+    // TODO incluir campos que indicam os tributos
+    // que este emitente eh contribuinte
 
-    public Destinatario() {
+    public Emitente() {
     }
 
-    public Destinatario(Long id, String cnpj, String razao, String porte, String uf) {
+    public Emitente(Long id, String cnpj, String razao, String porte, String uf) {
         this.id = id;
         this.cnpj = cnpj;
         this.razao = razao;
@@ -27,18 +30,16 @@ public class Destinatario implements Entidade {
         this.uf = uf;
     }
 
-    public String getCnpj() {
-        return cnpj;
-    }
-
-    @Override
     public Long getId() {
         return id;
     }
 
-    @Override
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getCnpj() {
+        return cnpj;
     }
 
     public void setCnpj(String cnpj) {
@@ -71,7 +72,7 @@ public class Destinatario implements Entidade {
 
     @Override
     public String toString() {
-        return "\nDestinatario{" + "id=" + id + ", cnpj=" + cnpj + ", razao=" + razao + ", porte=" + porte + ", uf=" + uf + '}';
+        return "\nEmitente{" + "id=" + id + ", cnpj=" + cnpj + ", razao=" + razao + ", porte=" + porte + ", uf=" + uf + '}';
     }
-
+    
 }

@@ -1,4 +1,4 @@
-package erp.tributacao.entidade;
+package erp.tributacao.core;
 
 /**
  * Entidade TributoSistema
@@ -10,7 +10,7 @@ package erp.tributacao.entidade;
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.0 (21/01/2013 12:33)
  */
-public class TributoSistema implements Entidade {
+public class TributoSistema {
     
     private Long id;
     private String nome;
@@ -25,12 +25,10 @@ public class TributoSistema implements Entidade {
         this.descricao = descricao;
     }
 
-    @Override
     public Long getId() {
         return id;
     }
 
-    @Override
     public void setId(Long id) {
         this.id = id;
     }

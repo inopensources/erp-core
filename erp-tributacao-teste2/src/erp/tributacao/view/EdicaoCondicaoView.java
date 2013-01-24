@@ -1,8 +1,8 @@
 package erp.tributacao.view;
 
-import erp.tributacao.entidade.CondicaoTributo;
-import erp.tributacao.entidade.ScriptTributacao;
-import erp.tributacao.entidade.ScriptTributacao.Tipo;
+import erp.tributacao.core.FluxoTributacao;
+import erp.tributacao.core.LogicaTributacao;
+import erp.tributacao.core.LogicaTributacao.Tipo;
 import java.awt.Container;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
@@ -14,7 +14,7 @@ import javax.swing.JTextField;
  */
 public class EdicaoCondicaoView extends javax.swing.JFrame {
 
-    private CondicaoTributo condicaoTributo;
+    private FluxoTributacao condicaoTributo;
     
     /**
      * Creates new form EdicaoCondicaoView
@@ -24,11 +24,11 @@ public class EdicaoCondicaoView extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }
 
-    public CondicaoTributo getCondicaoTributo() {
+    public FluxoTributacao getCondicaoTributo() {
         return condicaoTributo;
     }
 
-    public void setCondicaoTributo(CondicaoTributo condicaoTributo) {
+    public void setCondicaoTributo(FluxoTributacao condicaoTributo) {
         this.condicaoTributo = condicaoTributo;
         if (condicaoTributo.getScriptCondicaoTributo() == null) return;
         txtDescricao.setText(condicaoTributo.getScriptCondicaoTributo().getDescricao());
@@ -188,8 +188,8 @@ public class EdicaoCondicaoView extends javax.swing.JFrame {
         if (radioAplicacao.isSelected()) {
             tipo = Tipo.APLICACAO;
         }
-        ScriptTributacao script = new ScriptTributacao(txtDescricao.getText(), txtScript.getText(), tipo);
-        CondicaoTributo novaCondicao = new CondicaoTributo(condicaoTributo.getContexto(), script);
+        LogicaTributacao script = new LogicaTributacao(txtDescricao.getText(), txtScript.getText(), tipo);
+        FluxoTributacao novaCondicao = new FluxoTributacao(condicaoTributo.getContexto(), script);
         novaCondicao.setBounds(ctView.getX() + ctView.getWidth() + 20, ctView.getY() + ctView.getHeight(), ctView.getWidth(), ctView.getHeight());
         condicaoTributo.getProximasCondicoes().add(novaCondicao);
         Container parent = ctView.getParent();
@@ -206,7 +206,7 @@ public class EdicaoCondicaoView extends javax.swing.JFrame {
     }//GEN-LAST:event_buttonCancelarActionPerformed
 
     private void buttonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAlterarActionPerformed
-        ScriptTributacao script = condicaoTributo.getScriptCondicaoTributo();
+        LogicaTributacao script = condicaoTributo.getScriptCondicaoTributo();
         script.setDescricao(txtDescricao.getText());
         script.setScript(txtScript.getText());
         if (radioCondicao.isSelected()) {

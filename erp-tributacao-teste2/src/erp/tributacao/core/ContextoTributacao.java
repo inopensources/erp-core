@@ -1,12 +1,13 @@
-package erp.tributacao.entidade;
+package erp.tributacao.core;
 
-import java.util.HashMap;
-import java.util.Map;
+import erp.cadastro.Destinatario;
+import erp.cadastro.Emitente;
+import erp.cadastro.Produto;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
 /**
- * Classe ContextoTributo
+ * Classe ContextoTributacao
  * 
  * Contem todas as variaveis que influenciam na escolha
  * de uma determinada aliquota para um tributo.
@@ -16,17 +17,17 @@ import javax.script.ScriptEngineManager;
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.0 (23/01/2013 12:373)
  */
-public class ContextoTributo {
+public class ContextoTributacao {
     
     private ScriptEngine js = new ScriptEngineManager().getEngineByName("JavaScript");
     private Emitente emitente;
     private Destinatario destinatario;
     private Produto produto;
     
-    public ContextoTributo() {
+    public ContextoTributacao() {
     }
 
-    public ContextoTributo(Emitente emitente, Destinatario destinatario, Produto produto) {
+    public ContextoTributacao(Emitente emitente, Destinatario destinatario, Produto produto) {
         this.emitente = emitente;
         this.destinatario = destinatario;
         this.produto = produto;

@@ -1,9 +1,12 @@
-package erp.tributacao.entidade;
+package erp.tributacao.core;
 
 /**
- * Classe ScriptTributacao
+ * Classe LogicaTributacao
  * 
- * Um ScriptTributacao pode ser uma condicao ou aplicacao.
+ * Uma LogicaTributacao carrega a logica da legislacao + variaveis de
+ * entrada (cliente, fornecedor, produto).
+ * 
+ * Pode condicao ou aplicacao.
  * 
  * Se for condicao, indica uma determinada situacao que influencia na escolha 
  * de uma determinada aliquota de um tributo. Nao pode alterar os atributos
@@ -17,7 +20,7 @@ package erp.tributacao.entidade;
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.0 (23/01/2013 20:54)
  */
-public class ScriptTributacao {
+public class LogicaTributacao {
     
     public enum Tipo { CONDICAO, APLICACAO }
     
@@ -26,11 +29,11 @@ public class ScriptTributacao {
     private String descricao = ""; // exemplo: "Se destinatario for de SP"
     private String script = ""; // exemplo de aplicacao: "aliquota = 18.00; println('aliq. aplicada 18%');"
                                 // exemplo de condicao: "dest.uf=='SP'"
-    public ScriptTributacao() {
+    public LogicaTributacao() {
     }
 
 
-    public ScriptTributacao(String descricao, String script, Tipo tipo) {
+    public LogicaTributacao(String descricao, String script, Tipo tipo) {
         this.descricao = descricao;
         this.script = script;
         this.tipo = tipo;

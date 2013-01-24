@@ -4,8 +4,8 @@
  */
 package erp.tributacao.view;
 
-import erp.tributacao.entidade.CondicaoTributo;
-import erp.tributacao.entidade.NaturezaOperacao;
+import erp.tributacao.core.FluxoTributacao;
+import erp.tributacao.core.NaturezaOperacao;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
@@ -36,9 +36,9 @@ public class View extends javax.swing.JFrame {
         this.naturezaOperacao = naturezaOperacao;
     }
     
-    private Set<CondicaoTributo> condicoesTributos = new HashSet<CondicaoTributo>();
+    private Set<FluxoTributacao> condicoesTributos = new HashSet<FluxoTributacao>();
     
-    public void addCondicaoTributo(CondicaoTributo condicaoTributo) {
+    public void addCondicaoTributo(FluxoTributacao condicaoTributo) {
         if (condicaoTributo instanceof NaturezaOperacao) {
             this.naturezaOperacao = (NaturezaOperacao) condicaoTributo;
         }
@@ -49,7 +49,7 @@ public class View extends javax.swing.JFrame {
         condicaoTributo.setViewComponent(ctv);
         panel.add(ctv);
         
-        for (CondicaoTributo proximaCondicao : condicaoTributo.getProximasCondicoes()) {
+        for (FluxoTributacao proximaCondicao : condicaoTributo.getProximasCondicoes()) {
             addCondicaoTributo(proximaCondicao);
         }
     }
@@ -107,7 +107,7 @@ public class View extends javax.swing.JFrame {
     private void buttonExecutarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExecutarActionPerformed
         try {
             System.out.println("--- Inicio da execucao ---");
-            naturezaOperacao.executar();
+            naturezaOperacao.apurarTributos();
             System.out.println("--- Fim da execucao ---");
         } catch (Exception ex) {
             Logger.getLogger(View.class.getName()).log(Level.SEVERE, null, ex);

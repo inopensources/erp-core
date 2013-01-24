@@ -4,8 +4,8 @@
  */
 package erp.tributacao.view;
 
-import erp.tributacao.entidade.CondicaoTributo;
-import erp.tributacao.entidade.NaturezaOperacao;
+import erp.tributacao.core.FluxoTributacao;
+import erp.tributacao.core.NaturezaOperacao;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.datatransfer.DataFlavor;
@@ -38,7 +38,7 @@ import javax.swing.TransferHandler;
  */
 public class CondicaoTributoView extends javax.swing.JPanel implements DropTargetListener, DragSourceListener, DragGestureListener {
     
-    private CondicaoTributo condicaoTributo;
+    private FluxoTributacao condicaoTributo;
     private DragSource dragSource;
     private DropTarget dropTarget;
     /**
@@ -58,7 +58,7 @@ public class CondicaoTributoView extends javax.swing.JPanel implements DropTarge
 
                     @Override
                     public DataFlavor[] getTransferDataFlavors() {
-                        return new DataFlavor[] { new DataFlavor(CondicaoTributo.class, "condicao tributo")};
+                        return new DataFlavor[] { new DataFlavor(FluxoTributacao.class, "condicao tributo")};
                     }
 
                     @Override
@@ -77,7 +77,7 @@ public class CondicaoTributoView extends javax.swing.JPanel implements DropTarge
         buttonLinkar.setTransferHandler(transfer);
     }
 
-    public CondicaoTributo getCondicaoTributo() {
+    public FluxoTributacao getCondicaoTributo() {
         return condicaoTributo;
     }
 
@@ -97,7 +97,7 @@ public class CondicaoTributoView extends javax.swing.JPanel implements DropTarge
         return label;
     }
 
-    public CondicaoTributoView(CondicaoTributo condicaoTributo) {
+    public CondicaoTributoView(FluxoTributacao condicaoTributo) {
         this();
         this.condicaoTributo = condicaoTributo;
         if (condicaoTributo instanceof NaturezaOperacao) {
@@ -297,7 +297,7 @@ public class CondicaoTributoView extends javax.swing.JPanel implements DropTarge
     public void drop(DropTargetDropEvent dtde) {
         try {
             Transferable t = dtde.getTransferable();
-            CondicaoTributo condicaoTributoPai = (CondicaoTributo) t.getTransferData(t.getTransferDataFlavors()[0]);
+            FluxoTributacao condicaoTributoPai = (FluxoTributacao) t.getTransferData(t.getTransferDataFlavors()[0]);
             condicaoTributoPai.getProximasCondicoes().add(condicaoTributo);
             updateParent();
             System.out.println("drop " + condicaoTributoPai);
