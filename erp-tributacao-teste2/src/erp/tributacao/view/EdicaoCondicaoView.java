@@ -83,8 +83,6 @@ public class EdicaoCondicaoView extends javax.swing.JFrame {
         buttonAlterar = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
         jLabel1.setText("Descricao:");
 
         jLabel3.setText("Script:");
