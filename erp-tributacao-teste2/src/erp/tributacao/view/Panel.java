@@ -39,8 +39,12 @@ public class Panel extends javax.swing.JPanel {
         for (Component c : getComponents()) {
             int w = c.getX() + c.getWidth();
             int h = c.getY() + c.getHeight();
-            if (w > widthMax) widthMax = w;
-            if (h > heightMax) heightMax = h;
+            if (w > widthMax) {
+                widthMax = w;
+            }
+            if (h > heightMax) {
+                heightMax = h;
+            }
         }
         widthMax += 50;
         heightMax += 50;

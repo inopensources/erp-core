@@ -188,9 +188,17 @@ public class EdicaoCondicaoView extends javax.swing.JFrame {
         if (radioAplicacao.isSelected()) {
             tipo = Tipo.APLICACAO;
         }
+        int maxY = 0;
+        for (FluxoTributacao ct : condicaoTributo.getProximasCondicoes()) {
+            int y = ct.getBounds().y + ct.getBounds().height + 20;
+            if (y > maxY) {
+                maxY = y;
+            }
+        }
         LogicaTributacao script = new LogicaTributacao(txtDescricao.getText(), txtScript.getText(), tipo);
         FluxoTributacao novaCondicao = new FluxoTributacao(condicaoTributo.getContexto(), script);
-        novaCondicao.setBounds(ctView.getX() + ctView.getWidth() + 20, ctView.getY() + ctView.getHeight(), ctView.getWidth(), ctView.getHeight());
+        novaCondicao.setBounds(ctView.getX() + ctView.getWidth() + 20, maxY, ctView.getWidth(), ctView.getHeight());
+        
         condicaoTributo.getProximasCondicoes().add(novaCondicao);
         Container parent = ctView.getParent();
         while (!(parent instanceof View)) {
