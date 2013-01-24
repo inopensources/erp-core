@@ -4,6 +4,7 @@ import erp.tributacao.entidade.CondicaoTributo;
 import erp.tributacao.entidade.ContextoTributo;
 import erp.tributacao.entidade.Destinatario;
 import erp.tributacao.entidade.Emitente;
+import erp.tributacao.entidade.NaturezaOperacao;
 import erp.tributacao.entidade.Produto;
 import erp.tributacao.entidade.ScriptCondicaoTributo;
 import erp.tributacao.view.View;
@@ -38,7 +39,9 @@ public class Main {
         ScriptCondicaoTributo sctPis = new ScriptCondicaoTributo("true", "Aplica PIS 1,65%", "aliquota = 1.65; println('aplicando pis aliq. 1,65%');");
         ScriptCondicaoTributo sctCofins = new ScriptCondicaoTributo("true", "Aplica COFINS 7,60%", "aliquota = 7.60; println('aplicando cofins aliq. 7,60%');");
         
-        final CondicaoTributo inicio = new CondicaoTributo(ctx, sctInicio);
+        final NaturezaOperacao inicio = new NaturezaOperacao();
+        inicio.setDescricao("Venda de mercadorias");
+        inicio.setContexto(ctx);
         inicio.setBounds(10, 200, 230, 20);
         
         CondicaoTributo dest1 = new CondicaoTributo(ctx, sctDest1);

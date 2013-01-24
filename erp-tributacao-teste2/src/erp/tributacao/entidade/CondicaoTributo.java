@@ -78,6 +78,10 @@ public class CondicaoTributo {
         return scriptCondicaoTributo;
     }
 
+    public void setContexto(ContextoTributo contexto) {
+        this.contexto = contexto;
+    }
+
     public ContextoTributo getContexto() {
         return contexto;
     }

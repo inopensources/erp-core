@@ -5,6 +5,8 @@
 package erp.tributacao.view;
 
 import erp.tributacao.entidade.CondicaoTributo;
+import erp.tributacao.entidade.NaturezaOperacao;
+import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
@@ -42,7 +44,13 @@ public class CondicaoTributoView extends javax.swing.JPanel {
     public CondicaoTributoView(CondicaoTributo condicaoTributo) {
         this();
         this.condicaoTributo = condicaoTributo;
-        this.label.setText(condicaoTributo.getScriptCondicaoTributo().getDescricao());
+        if (condicaoTributo instanceof NaturezaOperacao) {
+            this.label.setText(((NaturezaOperacao) condicaoTributo).getDescricao());
+            setBackground(Color.ORANGE);
+        }
+        else {
+            this.label.setText(condicaoTributo.getScriptCondicaoTributo().getDescricao());
+        }
         setBounds(condicaoTributo.getBounds());
     }
 

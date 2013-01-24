@@ -5,9 +5,11 @@
 package erp.tributacao.view;
 
 import erp.tributacao.entidade.CondicaoTributo;
+import erp.tributacao.entidade.NaturezaOperacao;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 
 /**
@@ -89,6 +91,10 @@ public class Panel extends javax.swing.JPanel {
                 g.drawLine(xini, yini-1, xfin, yfin-1);
                 g.drawLine(xini, yini+0, xfin, yfin+0);
                 g.drawLine(xini, yini+1, xfin, yfin+1);
+            }
+            if (ct instanceof NaturezaOperacao) {
+                setFont(new Font("arial", Font.PLAIN, 9));
+                g.drawString("Natureza de Operação:", ct.getBounds().x, ct.getBounds().y - 2);
             }
         }
     }
