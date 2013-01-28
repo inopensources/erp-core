@@ -1,5 +1,6 @@
 package erp.infra.test;
 
+import erp.infra.Form;
 import erp.infra.FormController;
 import erp.infra.GridController;
 import java.util.ArrayList;
@@ -139,20 +140,27 @@ public class View extends javax.swing.JFrame {
         field5 = new erp.infra.Field();
         buttonAtualizar = new javax.swing.JButton();
         buttonSalvar = new javax.swing.JButton();
+        buttonEditar = new javax.swing.JButton();
+        buttonCancelar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        field1.setEditableOnInsert(false);
+        field1.setEditableOnUpdate(false);
         field1.setLabelText("Id");
         field1.setProperty("id");
 
         field2.setLabelText("Cód. BACEN");
         field2.setProperty("codigoBacen");
+        field2.setRequired(true);
 
         field3.setLabelText("Nome");
         field3.setProperty("nome");
+        field3.setRequired(true);
 
         field4.setLabelText("Sigla 2");
         field4.setProperty("sigla2");
+        field4.setRequired(true);
 
         buttonAtualizarGrid.setText("Atualizar");
         buttonAtualizarGrid.addActionListener(new java.awt.event.ActionListener() {
@@ -166,6 +174,7 @@ public class View extends javax.swing.JFrame {
 
         field5.setExpression("entity.id + ' - ' + entity.codigoBacen + ' - ' + entity.nome + ' - ' + entity.sigla2");
         field5.setLabelText("Campo");
+        field5.setRequired(true);
 
         javax.swing.GroupLayout formLayout = new javax.swing.GroupLayout(form);
         form.setLayout(formLayout);
@@ -185,7 +194,7 @@ public class View extends javax.swing.JFrame {
                                 .addGap(92, 92, 92)
                                 .addComponent(field5, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(formLayout.createSequentialGroup()
-                        .addGap(36, 36, 36)
+                        .addContainerGap()
                         .addComponent(buttonAtualizarGrid)))
                 .addContainerGap())
         );
@@ -202,10 +211,10 @@ public class View extends javax.swing.JFrame {
                 .addComponent(field3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(field4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                 .addComponent(buttonAtualizarGrid)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         buttonAtualizar.setText("Atualizar");
@@ -222,6 +231,20 @@ public class View extends javax.swing.JFrame {
             }
         });
 
+        buttonEditar.setText("Editar");
+        buttonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonEditarActionPerformed(evt);
+            }
+        });
+
+        buttonCancelar.setText("Cancelar");
+        buttonCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonCancelarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -232,6 +255,10 @@ public class View extends javax.swing.JFrame {
                 .addComponent(buttonAtualizar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonSalvar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonEditar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(buttonCancelar)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -239,7 +266,9 @@ public class View extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(buttonAtualizar)
-                    .addComponent(buttonSalvar))
+                    .addComponent(buttonSalvar)
+                    .addComponent(buttonEditar)
+                    .addComponent(buttonCancelar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(form, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -258,9 +287,23 @@ public class View extends javax.swing.JFrame {
     private void buttonAtualizarGridActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAtualizarGridActionPerformed
         grid.reload();
     }//GEN-LAST:event_buttonAtualizarGridActionPerformed
+
+    private void buttonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonEditarActionPerformed
+        form.setMode(Form.Mode.UPDATE);
+        grid.setEnabled(false);
+    }//GEN-LAST:event_buttonEditarActionPerformed
+
+    private void buttonCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonCancelarActionPerformed
+        form.setMode(Form.Mode.READ_ONLY);
+        form.reload();
+        grid.setEnabled(true);
+    }//GEN-LAST:event_buttonCancelarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAtualizar;
     private javax.swing.JButton buttonAtualizarGrid;
+    private javax.swing.JButton buttonCancelar;
+    private javax.swing.JButton buttonEditar;
     private javax.swing.JButton buttonSalvar;
     private erp.infra.Field field1;
     private erp.infra.Field field2;

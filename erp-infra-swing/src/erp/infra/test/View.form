@@ -28,6 +28,10 @@
               <Component id="buttonAtualizar" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="buttonSalvar" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="buttonEditar" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="buttonCancelar" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -38,6 +42,8 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="buttonAtualizar" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="buttonSalvar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="buttonEditar" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="buttonCancelar" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="form" max="32767" attributes="0"/>
@@ -68,7 +74,7 @@
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="buttonAtualizarGrid" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -90,10 +96,10 @@
                   <Component id="field3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="field4" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace pref="45" max="32767" attributes="0"/>
                   <Component id="buttonAtualizarGrid" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" pref="229" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" min="-2" pref="190" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -101,6 +107,8 @@
       <SubComponents>
         <Component class="erp.infra.Field" name="field1">
           <Properties>
+            <Property name="editableOnInsert" type="boolean" value="false"/>
+            <Property name="editableOnUpdate" type="boolean" value="false"/>
             <Property name="labelText" type="java.lang.String" value="Id"/>
             <Property name="property" type="java.lang.String" value="id"/>
           </Properties>
@@ -109,18 +117,21 @@
           <Properties>
             <Property name="labelText" type="java.lang.String" value="C&#xf3;d. BACEN"/>
             <Property name="property" type="java.lang.String" value="codigoBacen"/>
+            <Property name="required" type="boolean" value="true"/>
           </Properties>
         </Component>
         <Component class="erp.infra.Field" name="field3">
           <Properties>
             <Property name="labelText" type="java.lang.String" value="Nome"/>
             <Property name="property" type="java.lang.String" value="nome"/>
+            <Property name="required" type="boolean" value="true"/>
           </Properties>
         </Component>
         <Component class="erp.infra.Field" name="field4">
           <Properties>
             <Property name="labelText" type="java.lang.String" value="Sigla 2"/>
             <Property name="property" type="java.lang.String" value="sigla2"/>
+            <Property name="required" type="boolean" value="true"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="buttonAtualizarGrid">
@@ -151,6 +162,7 @@
           <Properties>
             <Property name="expression" type="java.lang.String" value="entity.id + &apos; - &apos; + entity.codigoBacen + &apos; - &apos; + entity.nome + &apos; - &apos; + entity.sigla2"/>
             <Property name="labelText" type="java.lang.String" value="Campo"/>
+            <Property name="required" type="boolean" value="true"/>
           </Properties>
         </Component>
       </SubComponents>
@@ -169,6 +181,22 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonSalvarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="buttonEditar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Editar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonEditarActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="buttonCancelar">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Cancelar"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonCancelarActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

@@ -2,6 +2,7 @@ package erp.infra;
 
 import br.beanlinker.core.BeanLinker;
 import br.beanlinker.core.BeanLinkerImpl;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -185,13 +186,29 @@ public class Form extends JPanel {
                 FontMetrics fm = g.getFontMetrics();
                 String label = field.getLabel().getText();
                 int fontWidth = fm.stringWidth(label);
+                int fontHeight = fm.getHeight();
                 field.getLabel().setSize(fontWidth, field.getText().getHeight());
                 Graphics g2 = g.create(c.getBounds().x - fontWidth - 5, c.getBounds().y, getWidth(), getHeight());
                 field.getLabel().paint(g2);
                 
-                if (mode == Mode.EMPTY || mode == Mode.READ_ONLY) {
+                // Desenha o required
+                if (field.isRequired()) {
+                    g.setColor(Color.RED);
+                    g.drawString("*", c.getBounds().x + c.getBounds().width + 3, c.getBounds().y + (fontHeight / 2));
+                }
+                
+                if (mode == Mode.EMPTY) {
                     field.getText().setEditable(false);
-                    field.getText().setText("");
+                    // field.getText().setText("");
+                }
+                else if (mode == Mode.READ_ONLY) {
+                    field.getText().setEditable(false);
+                }
+                else if (mode == Mode.UPDATE) {
+                    field.getText().setEditable(field.isEditableOnUpdate());
+                }
+                else if (mode == Mode.INSERT) {
+                    field.getText().setEditable(field.isEditableOnInsert());
                 }
                 else {
                     field.getText().setEditable(true);

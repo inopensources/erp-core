@@ -1,19 +1,17 @@
 package erp.infra;
 
 import java.awt.Dimension;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
- * Field class.
+ * Lookup class.
  * 
  * @author Leonardo Ono (ono.leo@gmail.com)
- * @since 1.00.00 (27/01/2013 21:12)
+ * @since 1.00.00 (28/01/2013 15:24)
  */
-public class Field extends JPanel implements FocusListener {
+public class Lookup extends JPanel {
 
     private String property;
     private String expression;
@@ -22,16 +20,12 @@ public class Field extends JPanel implements FocusListener {
     
     private boolean editableOnUpdate = true;
     private boolean editableOnInsert = true;
-    private boolean required = false;
-    
-    private boolean selectAllOnFocus = true;
     
     /**
      * Creates new form Field
      */
-    public Field() {
+    public Lookup() {
         initComponents();
-        text.addFocusListener(this);
     }
 
     public String getProperty() {
@@ -84,14 +78,6 @@ public class Field extends JPanel implements FocusListener {
         this.editableOnInsert = editableOnInsert;
     }
 
-    public boolean isRequired() {
-        return required;
-    }
-
-    public void setRequired(boolean required) {
-        this.required = required;
-    }
-
     public void setFieldText(String fieldText) {
         this.text.setText(fieldText);
     }
@@ -133,14 +119,6 @@ public class Field extends JPanel implements FocusListener {
     public boolean isEnabled() {
         return text.isEnabled();
     }
-
-    public boolean isSelectAllOnFocus() {
-        return selectAllOnFocus;
-    }
-
-    public void setSelectAllOnFocus(boolean selectAllOnFocus) {
-        this.selectAllOnFocus = selectAllOnFocus;
-    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -154,6 +132,7 @@ public class Field extends JPanel implements FocusListener {
         label = new javax.swing.JLabel();
         labelMessage = new javax.swing.JLabel();
         text = new javax.swing.JTextField();
+        button = new javax.swing.JButton();
 
         label.setText("jLabel2");
 
@@ -163,24 +142,16 @@ public class Field extends JPanel implements FocusListener {
         setPreferredSize(new Dimension(150, text.getPreferredSize().height));
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
         add(text);
+
+        button.setText("...");
+        button.setMaximumSize(new java.awt.Dimension(20, 23));
+        button.setMinimumSize(new java.awt.Dimension(20, 23));
+        add(button);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton button;
     private javax.swing.JLabel label;
     private javax.swing.JLabel labelMessage;
     private javax.swing.JTextField text;
     // End of variables declaration//GEN-END:variables
-
-    // --- FocusListener implementation ---
-    
-    @Override
-    public void focusGained(FocusEvent e) {
-        if (selectAllOnFocus) {
-            text.selectAll();
-        }
-    }
-
-    @Override
-    public void focusLost(FocusEvent e) {
-    }
-    
 }

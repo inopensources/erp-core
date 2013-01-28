@@ -10,6 +10,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingConstants;
 import javax.swing.table.AbstractTableModel;
 
 /**
@@ -136,6 +137,9 @@ public class Grid extends JTable {
             }
             setModel(new FormTableModel(formModel));
             int i = 0;
+            BeanLinker beanLinker = new BeanLinkerImpl();
+            beanLinker.assign("cellRender", getTableHeader().getDefaultRenderer());
+            beanLinker.eval("cellRender.setHorizontalAlignment(" + SwingConstants.LEFT + ")");
             for (Component c : formModel.getComponents()) {
                 if (c instanceof Field) {
                     Field f = (Field) c;
