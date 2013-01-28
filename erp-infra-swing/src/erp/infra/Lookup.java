@@ -146,6 +146,7 @@ public class Lookup extends JPanel {
         button.setText("...");
         button.setMaximumSize(new java.awt.Dimension(20, 23));
         button.setMinimumSize(new java.awt.Dimension(20, 23));
+        button.setPreferredSize(new java.awt.Dimension(20, 23));
         add(button);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables

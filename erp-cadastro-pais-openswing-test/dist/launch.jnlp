@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<jnlp codebase="file:/home/leo/NetBeansProjects/erp-core/erp-cadastro-pais-openswing-test/dist/" href="launch.jnlp" spec="1.0+">
+<jnlp codebase="file:/D:/repositorio/erp-core/erp-cadastro-pais-openswing-test/dist/" href="launch.jnlp" spec="1.0+">
     <information>
         <title>erp-cadastro-pais-openswing-test</title>
         <vendor>leo</vendor>
         <homepage href=""/>
         <description>erp-cadastro-pais-openswing-test</description>
         <description kind="short">erp-cadastro-pais-openswing-test</description>
-    <icon href="Firefox_wallpaper.png" kind="default"/>
-<offline-allowed/>
+    <offline-allowed/>
 </information>
     <update check="background"/>
     <resources>
@@ -18,9 +17,9 @@
 <jar href="lib/commonos.jar"/>
 <jar href="lib/hessian-3.1.1.jar"/>
 <jar href="lib/hsqldb.jar"/>
-<jar href="lib/itext-1.4.8.jar"/>
 <jar href="lib/iText-2.1.7.jar"/>
 <jar href="lib/iText-rtf-2.1.7.jar"/>
+<jar href="lib/itext-1.4.8.jar"/>
 <jar href="lib/jcalendar.jar"/>
 <jar href="lib/jnlp-servlet.jar"/>
 <jar href="lib/jnlp.jar"/>

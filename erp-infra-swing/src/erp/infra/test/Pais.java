@@ -34,7 +34,7 @@ public class Pais implements Serializable {
     @Column(name = "codigo_bacen")
     private String codigoBacen;
     private String nome;
-    @Column(name = "sigla_2")
+    @Column(name = "sigla_2", columnDefinition="Sigla 2")
     private String sigla2;
 
     public Pais() {
