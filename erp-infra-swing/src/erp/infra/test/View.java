@@ -1,47 +1,121 @@
 package erp.infra.test;
 
 import erp.infra.FormController;
+import erp.infra.GridController;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * View class.
- * 
+ *
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.00.00 (28/01/2013 00:06)
  */
 public class View extends javax.swing.JFrame {
 
     private FormController<Pais> formController = new FormController<Pais>() {
+        
+        private Pais entity;
+        
+        @Override
+        public Pais getEntity() {
+            return entity;
+        }
 
         @Override
-        public Pais reload() throws Exception {
+        public void setEntity(Pais entity) {
+            this.entity = entity;
+        }
+        
+        @Override
+        public void reload() throws Exception {
+            /*
             Pais pais = new Pais();
             pais.setId(1L);
             pais.setCodigoBacen("1058");
             pais.setNome("BRASIL");
             pais.setSigla2("BR");
-            return pais;
+            entity = pais;
+            */
         }
 
         @Override
-        public void update(Pais t) throws Exception {
+        public void update() throws Exception {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public void insert(Pais t) throws Exception {
+        public void insert() throws Exception {
             throw new UnsupportedOperationException("Not supported yet.");
         }
 
         @Override
-        public void delete(Pais t) throws Exception {
+        public void delete() throws Exception {
             throw new UnsupportedOperationException("Not supported yet.");
         }
-    
+
+
+
     };
-    
+    private GridController<Pais> gridController = new GridController<Pais>() {
+        @Override
+        public List<Pais> reload() throws Exception {
+            List<Pais> list = new ArrayList<Pais>();
+            for (int i = 0; i < 30; i++) {
+                list.add(new Pais(1L, "1058", "BRASIL", "BR"));
+                list.add(new Pais(2L, "1034", "ESTADOS UNIDOS", "EU"));
+                list.add(new Pais(3L, "1098", "JAPAO", "JP"));
+                list.add(new Pais(1L, "1058", "BRASIL", "BR"));
+                list.add(new Pais(2L, "1034", "ESTADOS UNIDOS", "EU"));
+                list.add(new Pais(3L, "1098", "JAPAO", "JP"));
+                list.add(new Pais(1L, "1058", "BRASIL", "BR"));
+                list.add(new Pais(2L, "1034", "ESTADOS UNIDOS", "EU"));
+                list.add(new Pais(3L, "1098", "JAPAO", "JP"));
+                list.add(new Pais(1L, "1058", "BRASIL", "BR"));
+                list.add(new Pais(2L, "1034", "ESTADOS UNIDOS", "EU"));
+                list.add(new Pais(3L, "1098", "JAPAO", "JP"));
+                list.add(new Pais(1L, "1058", "BRASIL", "BR"));
+                list.add(new Pais(2L, "1034", "ESTADOS UNIDOS", "EU"));
+                list.add(new Pais(3L, "1098", "JAPAO", "JP"));
+                list.add(new Pais(1L, "1058", "BRASIL", "BR"));
+                list.add(new Pais(2L, "1034", "ESTADOS UNIDOS", "EU"));
+                list.add(new Pais(3L, "1098", "JAPAO", "JP"));
+                list.add(new Pais(1L, "1058", "BRASIL", "BR"));
+                list.add(new Pais(2L, "1034", "ESTADOS UNIDOS", "EU"));
+                list.add(new Pais(3L, "1098", "JAPAO", "JP"));
+                list.add(new Pais(1L, "1058", "BRASIL", "BR"));
+                list.add(new Pais(2L, "1034", "ESTADOS UNIDOS", "EU"));
+                list.add(new Pais(3L, "1098", "JAPAO", "JP"));
+                list.add(new Pais(1L, "1058", "BRASIL", "BR"));
+                list.add(new Pais(2L, "1034", "ESTADOS UNIDOS", "EU"));
+                list.add(new Pais(3L, "1098", "JAPAO", "JP"));
+                list.add(new Pais(1L, "1058", "BRASIL", "BR"));
+                list.add(new Pais(2L, "1034", "ESTADOS UNIDOS", "EU"));
+                list.add(new Pais(3L, "1098", "JAPAO", "JP"));
+            }
+            return list;
+        }
+
+        @Override
+        public void update(List<Pais> t) throws Exception {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public void insert(List<Pais> t) throws Exception {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public void delete(List<Pais> t) throws Exception {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+    };
+
     public View() {
         initComponents();
         form.setController(formController);
+        grid.setController(gridController);
     }
 
     /**
@@ -58,6 +132,9 @@ public class View extends javax.swing.JFrame {
         field2 = new erp.infra.Field();
         field3 = new erp.infra.Field();
         field4 = new erp.infra.Field();
+        buttonAtualizarGrid = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        grid = new erp.infra.Grid();
         buttonAtualizar = new javax.swing.JButton();
         buttonSalvar = new javax.swing.JButton();
 
@@ -75,33 +152,61 @@ public class View extends javax.swing.JFrame {
         field4.setLabelText("Sigla 2:");
         field4.setProperty("sigla2");
 
+        buttonAtualizarGrid.setText("Atualizar");
+        buttonAtualizarGrid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAtualizarGridActionPerformed(evt);
+            }
+        });
+
+        grid.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        grid.setFormModel(form);
+        jScrollPane1.setViewportView(grid);
+
         javax.swing.GroupLayout formLayout = new javax.swing.GroupLayout(form);
         form.setLayout(formLayout);
         formLayout.setHorizontalGroup(
             formLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 674, Short.MAX_VALUE)
             .addGroup(formLayout.createSequentialGroup()
-                .addGap(101, 101, 101)
                 .addGroup(formLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(field3, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(field4, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(formLayout.createSequentialGroup()
-                        .addComponent(field1, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(108, 108, 108)
-                        .addComponent(field2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(109, Short.MAX_VALUE))
+                        .addGap(106, 106, 106)
+                        .addGroup(formLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(field2, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(field1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(field3, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(field4, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(formLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(buttonAtualizarGrid)))
+                .addContainerGap())
         );
         formLayout.setVerticalGroup(
             formLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(formLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(formLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(field1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(field2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(field1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(field2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(field3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(field4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(152, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 42, Short.MAX_VALUE)
+                .addComponent(buttonAtualizarGrid)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         buttonAtualizar.setText("Atualizar");
@@ -124,6 +229,7 @@ public class View extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(form, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
+                .addGap(8, 8, 8)
                 .addComponent(buttonAtualizar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(buttonSalvar)
@@ -150,14 +256,19 @@ public class View extends javax.swing.JFrame {
         form.insert();
     }//GEN-LAST:event_buttonSalvarActionPerformed
 
+    private void buttonAtualizarGridActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAtualizarGridActionPerformed
+        grid.reload();
+    }//GEN-LAST:event_buttonAtualizarGridActionPerformed
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAtualizar;
+    private javax.swing.JButton buttonAtualizarGrid;
     private javax.swing.JButton buttonSalvar;
     private erp.infra.Field field1;
     private erp.infra.Field field2;
     private erp.infra.Field field3;
     private erp.infra.Field field4;
     private erp.infra.Form form;
+    private erp.infra.Grid grid;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
-
 }

@@ -18,12 +18,38 @@ import javax.swing.JPanel;
  */
 public class Form extends JPanel {
 
-    private Object entity;
+    public enum Mode { EMPTY, INSERT, UPDATE, READ_ONLY, CUSTOM }
+    
+    private Mode mode = Mode.EMPTY;
     private String property;
     private FormController controller;
 
     public Form() {
         initComponents();
+    }
+
+    public Mode getMode() {
+        return mode;
+    }
+
+    public void setMode(Mode mode) {
+        this.mode = mode;
+        repaint();
+    }
+
+    public Object getEntity() {
+        return controller.getEntity();
+    }
+
+    public void setEntity(Object entity) {
+        controller.setEntity(entity);
+        try {
+            if (entity != null) {
+                reloadPrivate(entity);
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     public String getProperty() {
@@ -47,7 +73,7 @@ public class Form extends JPanel {
             return;
         }
         try {
-            controller.delete(entity);
+            controller.delete();
         } catch (Exception ex) {
             Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -59,7 +85,7 @@ public class Form extends JPanel {
             return;
         }
         try {
-            controller.update(entity);
+            controller.update();
         } catch (Exception ex) {
             Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -71,7 +97,7 @@ public class Form extends JPanel {
             return;
         }
         try {
-            controller.insert(entity);
+            controller.insert();
         } catch (Exception ex) {
             Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -83,19 +109,12 @@ public class Form extends JPanel {
             return;
         }
         try {
-            entity = controller.reload();
-            for (Component c : getComponents()) {
-                if (c instanceof Field) {
-                    BeanLinker linker = new BeanLinkerImpl();
-                    linker.registerClass("Entity", entity.getClass().getName());
-                    linker.registerClass("Field", Field.class.getName());
-                    Field field = (Field) c;
-                    linker.assign("entity", entity);
-                    linker.assign("field", field);
-                    linker.linkProperty("Entity." + field.getProperty(), "Field.fieldText", "", "", "", "");
-                    linker.update("entity", "field");
-                }
+            controller.reload();
+            if (controller.getEntity() == null) {
+                setMode(Mode.EMPTY);
+                return;
             }
+            reloadPrivate(controller.getEntity());
         } catch (Exception ex) {
             Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -103,6 +122,21 @@ public class Form extends JPanel {
 
     }
 
+    private void reloadPrivate(Object entityPrivate) throws Exception {
+        for (Component c : getComponents()) {
+            if (c instanceof Field) {
+                BeanLinker linker = new BeanLinkerImpl();
+                linker.registerClass("Entity", entityPrivate.getClass().getName());
+                linker.registerClass("Field", Field.class.getName());
+                Field field = (Field) c;
+                linker.assign("entity", entityPrivate);
+                linker.assign("field", field);
+                linker.linkProperty("Entity." + field.getProperty(), "Field.fieldText", "", "", "", "");
+                linker.update("entity", "field");
+            }
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -134,6 +168,8 @@ public class Form extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        
+        // Desenha os labels dos campos adicionados neste formulario
         for (Component c : getComponents()) {
             if (c instanceof Field) {
                 Field field = (Field) c;
@@ -141,12 +177,17 @@ public class Form extends JPanel {
                 FontMetrics fm = g.getFontMetrics();
                 String label = field.getLabelText();
                 int fontWidth = fm.stringWidth(label);
-                int fontHeight = fm.getHeight();
                 field.getLabel().setSize(fontWidth, field.getText().getHeight());
                 Graphics g2 = g.create(c.getBounds().x - fontWidth - 5, c.getBounds().y, getWidth(), getHeight());
                 field.getLabel().paint(g2);
-                // field.getText().setToolTipText("Este campo nao pode estar vazio !");
-                // g.drawString(label, c.getBounds().x - fontWidth - 5, c.getBounds().y + c.getBounds().height - (Math.abs(c.getBounds().height - fontHeight)));
+                
+                if (mode == Mode.EMPTY || mode == Mode.READ_ONLY) {
+                    field.getText().setEditable(false);
+                    field.getText().setText("");
+                }
+                else {
+                    field.getText().setEditable(true);
+                }
             }
         }        
     }

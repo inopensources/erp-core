@@ -2,6 +2,7 @@ package erp.infra;
 
 import java.awt.Dimension;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
@@ -10,7 +11,7 @@ import javax.swing.JTextField;
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.00.00 (27/01/2013 21:12)
  */
-public class Field extends javax.swing.JPanel {
+public class Field extends JPanel {
 
     private String property;
     
@@ -92,17 +93,13 @@ public class Field extends javax.swing.JPanel {
         labelMessage = new javax.swing.JLabel();
         text = new javax.swing.JTextField();
 
-        label.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        label.setText("jLabel2");
 
-        labelMessage.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
+        labelMessage.setText("jLabel1");
 
         setMinimumSize(new java.awt.Dimension(110, 30));
         setPreferredSize(new Dimension(150, text.getPreferredSize().height));
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
-
-        text.setFont(new java.awt.Font("Ubuntu", 0, 14)); // NOI18N
-        text.setMinimumSize(new java.awt.Dimension(0, 0));
-        text.setPreferredSize(text.getPreferredSize());
         add(text);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables

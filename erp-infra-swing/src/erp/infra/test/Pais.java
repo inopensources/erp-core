@@ -36,6 +36,16 @@ public class Pais implements Serializable {
     private String nome;
     @Column(name = "sigla_2")
     private String sigla2;
+
+    public Pais() {
+    }
+
+    public Pais(Long id, String codigoBacen, String nome, String sigla2) {
+        this.id = id;
+        this.codigoBacen = codigoBacen;
+        this.nome = nome;
+        this.sigla2 = sigla2;
+    }
     
     public Long getId() {
         return id;

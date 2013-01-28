@@ -1,5 +1,7 @@
 package erp.infra.test;
 
+import javax.swing.UIManager;
+
 /**
  * Main class.
  * 
@@ -8,7 +10,8 @@ package erp.infra.test;
  */
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         View view = new View();
         view.setVisible(true);
     }
