@@ -88,8 +88,17 @@ public class Grid extends JTable {
                 Object entity = entities.get(rowIndex);
                 BeanLinker linker = new BeanLinkerImpl();
                 Field field = fields.get(columnIndex);
+                String value = "";
                 linker.assign("entity", entity);
-                String value = linker.eval("entity." + field.getProperty()).toString();
+                if (field.getExpression() != null) {
+                    value = linker.eval(field.getExpression()).toString();
+                }
+                else if (field.getProperty() == null || field.getProperty().trim().isEmpty()) {
+                    return "";
+                }
+                else {
+                    value = linker.eval("entity." + field.getProperty()).toString();
+                }
                 return value;
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
@@ -122,7 +131,17 @@ public class Grid extends JTable {
         }
         try {
             entities = controller.reload();
+            if (formModel == null) {
+                return;
+            }
             setModel(new FormTableModel(formModel));
+            int i = 0;
+            for (Component c : formModel.getComponents()) {
+                if (c instanceof Field) {
+                    Field f = (Field) c;
+                    getColumnModel().getColumn(i++).setPreferredWidth(f.getBounds().width);
+                }
+            }
         } catch (Exception ex) {
             Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -135,5 +154,5 @@ public class Grid extends JTable {
         System.out.println("changeSelection rowIndex:" + rowIndex + " columnIndex: " + columnIndex);
         formModel.setEntity(entities.get(rowIndex));
     }
-    
+
 }

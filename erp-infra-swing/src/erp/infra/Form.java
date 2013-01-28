@@ -131,8 +131,16 @@ public class Form extends JPanel {
                 Field field = (Field) c;
                 linker.assign("entity", entityPrivate);
                 linker.assign("field", field);
-                linker.linkProperty("Entity." + field.getProperty(), "Field.fieldText", "", "", "", "");
-                linker.update("entity", "field");
+                if (field.getExpression() != null) {
+                    linker.eval("field.fieldText = " + field.getExpression());
+                }
+                else if (field.getProperty() == null || field.getProperty().trim().isEmpty()) {
+                    continue;
+                }
+                else {
+                    linker.linkProperty("Entity." + field.getProperty(), "Field.fieldText", "", "", "", "");
+                    linker.update("entity", "field");
+                }
             }
         }
     }
@@ -175,7 +183,7 @@ public class Form extends JPanel {
                 Field field = (Field) c;
                 g.setFont(field.getLabel().getFont());
                 FontMetrics fm = g.getFontMetrics();
-                String label = field.getLabelText();
+                String label = field.getLabel().getText();
                 int fontWidth = fm.stringWidth(label);
                 field.getLabel().setSize(fontWidth, field.getText().getHeight());
                 Graphics g2 = g.create(c.getBounds().x - fontWidth - 5, c.getBounds().y, getWidth(), getHeight());

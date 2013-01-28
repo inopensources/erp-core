@@ -51,20 +51,24 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="jScrollPane1" alignment="1" pref="674" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" alignment="1" pref="663" max="32767" attributes="0"/>
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="-2" pref="106" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="field2" alignment="0" min="-2" pref="106" max="-2" attributes="0"/>
-                              <Component id="field1" min="-2" pref="71" max="-2" attributes="0"/>
-                              <Component id="field3" alignment="0" min="-2" pref="222" max="-2" attributes="0"/>
-                              <Component id="field4" min="-2" pref="70" max="-2" attributes="0"/>
+                              <Component id="field2" alignment="0" min="-2" pref="79" max="-2" attributes="0"/>
+                              <Component id="field3" alignment="0" min="-2" pref="191" max="-2" attributes="0"/>
+                              <Component id="field4" alignment="0" min="-2" pref="49" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="field1" min="-2" pref="50" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="92" max="-2" attributes="0"/>
+                                  <Component id="field5" min="-2" pref="303" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="36" max="-2" attributes="0"/>
                           <Component id="buttonAtualizarGrid" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -76,17 +80,20 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="field1" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Component id="field1" min="-2" max="-2" attributes="0"/>
+                      <Component id="field5" min="-2" max="-2" attributes="0"/>
+                  </Group>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="field2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="field3" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="field4" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="42" max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="buttonAtualizarGrid" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jScrollPane1" min="-2" pref="193" max="-2" attributes="0"/>
+                  <Component id="jScrollPane1" pref="229" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -94,25 +101,25 @@
       <SubComponents>
         <Component class="erp.infra.Field" name="field1">
           <Properties>
-            <Property name="labelText" type="java.lang.String" value="Id:"/>
+            <Property name="labelText" type="java.lang.String" value="Id"/>
             <Property name="property" type="java.lang.String" value="id"/>
           </Properties>
         </Component>
         <Component class="erp.infra.Field" name="field2">
           <Properties>
-            <Property name="labelText" type="java.lang.String" value="C&#xf3;d. BACEN:"/>
+            <Property name="labelText" type="java.lang.String" value="C&#xf3;d. BACEN"/>
             <Property name="property" type="java.lang.String" value="codigoBacen"/>
           </Properties>
         </Component>
         <Component class="erp.infra.Field" name="field3">
           <Properties>
-            <Property name="labelText" type="java.lang.String" value="Nome:"/>
+            <Property name="labelText" type="java.lang.String" value="Nome"/>
             <Property name="property" type="java.lang.String" value="nome"/>
           </Properties>
         </Component>
         <Component class="erp.infra.Field" name="field4">
           <Properties>
-            <Property name="labelText" type="java.lang.String" value="Sigla 2:"/>
+            <Property name="labelText" type="java.lang.String" value="Sigla 2"/>
             <Property name="property" type="java.lang.String" value="sigla2"/>
           </Properties>
         </Component>
@@ -133,14 +140,6 @@
           <SubComponents>
             <Component class="erp.infra.Grid" name="grid">
               <Properties>
-                <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="4" rowCount="4">
-                    <Column editable="true" title="Title 1" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 2" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 3" type="java.lang.Object"/>
-                    <Column editable="true" title="Title 4" type="java.lang.Object"/>
-                  </Table>
-                </Property>
                 <Property name="formModel" type="erp.infra.Form" editor="org.netbeans.modules.form.ComponentChooserEditor">
                   <ComponentRef name="form"/>
                 </Property>
@@ -148,6 +147,12 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="erp.infra.Field" name="field5">
+          <Properties>
+            <Property name="expression" type="java.lang.String" value="entity.id + &apos; - &apos; + entity.codigoBacen + &apos; - &apos; + entity.nome + &apos; - &apos; + entity.sigla2"/>
+            <Property name="labelText" type="java.lang.String" value="Campo"/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
     <Component class="javax.swing.JButton" name="buttonAtualizar">

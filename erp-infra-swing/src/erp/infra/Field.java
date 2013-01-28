@@ -14,6 +14,9 @@ import javax.swing.JTextField;
 public class Field extends JPanel {
 
     private String property;
+    private String expression;
+    private String labelText;
+    private String labelSeparator = ":";
     
     /**
      * Creates new form Field
@@ -30,12 +33,30 @@ public class Field extends JPanel {
         this.property = property;
     }
 
+    public String getExpression() {
+        return expression;
+    }
+
+    public void setExpression(String expression) {
+        this.expression = expression;
+    }
+
     public void setLabelText(String labelText) {
-        this.label.setText(labelText);
+        this.labelText = labelText;
+        this.label.setText(labelText + labelSeparator);
     }
     
     public String getLabelText() {
-        return label.getText();
+        return labelText;
+    }
+
+    public String getLabelSeparator() {
+        return labelSeparator;
+    }
+
+    public void setLabelSeparator(String labelSeparator) {
+        this.labelSeparator = labelSeparator;
+        this.label.setText(labelText + labelSeparator);
     }
 
     public void setFieldText(String fieldText) {
