@@ -193,7 +193,7 @@ public class Form extends JPanel {
                 
                 // Desenha o required
                 if (field.isRequired()) {
-                    g.setColor(Color.RED);
+                    g.setColor(new Color(255, 100, 100));
                     g.drawString("*", c.getBounds().x + c.getBounds().width + 3, c.getBounds().y + (fontHeight / 2));
                 }
                 

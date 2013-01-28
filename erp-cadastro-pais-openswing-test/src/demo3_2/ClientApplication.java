@@ -9,7 +9,7 @@ import org.openswing.swing.util.client.ClientSettings;
 public class ClientApplication {
 
     public ClientApplication() {
-        ClientSettings.LOOK_AND_FEEL_CLASS_NAME = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
+        // ClientSettings.LOOK_AND_FEEL_CLASS_NAME = "com.sun.java.swing.plaf.nimbus.NimbusLookAndFeel";
         new PaisGridController();
     }
 

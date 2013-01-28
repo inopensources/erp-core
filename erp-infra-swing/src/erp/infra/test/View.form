@@ -29,7 +29,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <Component id="jToolBar1" min="-2" pref="43" max="-2" attributes="0"/>
+              <Component id="jToolBar1" min="-2" pref="31" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="form" max="32767" attributes="0"/>
           </Group>
@@ -84,7 +84,7 @@
                   <Component id="field4" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="lookup1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace pref="20" max="32767" attributes="0"/>
+                  <EmptySpace pref="32" max="32767" attributes="0"/>
                   <Component id="buttonAtualizarGrid" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jScrollPane1" min="-2" pref="190" max="-2" attributes="0"/>
@@ -160,8 +160,8 @@
     <Container class="javax.swing.JToolBar" name="jToolBar1">
       <Properties>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
-            <EtchetBorder/>
+          <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
+            <BevelBorder/>
           </Border>
         </Property>
         <Property name="rollover" type="boolean" value="true"/>
@@ -172,7 +172,7 @@
         <Component class="javax.swing.JButton" name="buttonAtualizar">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/images/refresh1.png"/>
+              <Image iconType="3" name="/images/reload16x16.gif"/>
             </Property>
           </Properties>
           <Events>
@@ -182,14 +182,14 @@
         <Component class="javax.swing.JButton" name="buttonDelete">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/images/document_delete.png"/>
+              <Image iconType="3" name="/images/delete16x16.gif"/>
             </Property>
           </Properties>
         </Component>
         <Component class="javax.swing.JButton" name="buttonEditar">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/images/document_edit.png"/>
+              <Image iconType="3" name="/images/edit16x16.gif"/>
             </Property>
           </Properties>
           <Events>
@@ -199,7 +199,7 @@
         <Component class="javax.swing.JButton" name="buttonSalvar">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/images/save.png"/>
+              <Image iconType="3" name="/images/save2_16x16.png"/>
             </Property>
           </Properties>
           <Events>
@@ -209,7 +209,7 @@
         <Component class="javax.swing.JButton" name="buttonCancelar">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/images/delete.png"/>
+              <Image iconType="3" name="/images/cancel16x16.gif"/>
             </Property>
           </Properties>
           <Events>
