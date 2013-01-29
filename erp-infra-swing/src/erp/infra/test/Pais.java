@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  * Entidade Pais.
@@ -37,6 +38,9 @@ public class Pais implements Serializable {
     @Column(name = "sigla_2", columnDefinition="Sigla 2")
     private String sigla2;
 
+    @Transient
+    private Object objeto;
+    
     public Pais() {
     }
 
@@ -45,6 +49,14 @@ public class Pais implements Serializable {
         this.codigoBacen = codigoBacen;
         this.nome = nome;
         this.sigla2 = sigla2;
+    }
+
+    public Object getObjeto() {
+        return objeto;
+    }
+
+    public void setObjeto(Object objeto) {
+        this.objeto = objeto;
     }
     
     public Long getId() {
@@ -102,8 +114,7 @@ public class Pais implements Serializable {
 
     @Override
     public String toString() {
-        return "Pais{" + "id=" + id + ", codigoBacen=" + codigoBacen 
-                + ", nome=" + nome + ", sigla2=" + sigla2 + '}';
+        return "Pais{" + "id=" + id + ", codigoBacen=" + codigoBacen + ", nome=" + nome + ", sigla2=" + sigla2 + ", objeto=" + objeto + '}';
     }
 
 }

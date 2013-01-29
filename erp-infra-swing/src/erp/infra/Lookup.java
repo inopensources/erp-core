@@ -1,9 +1,12 @@
 package erp.infra;
 
+import br.beanlinker.core.BeanLinker;
+import br.beanlinker.core.BeanLinkerImpl;
 import java.awt.Dimension;
-import java.awt.Graphics;
-import javax.swing.JButton;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
@@ -15,6 +18,8 @@ import javax.swing.JTextField;
  */
 public class Lookup extends JPanel {
 
+    private LookupController controller;
+    
     private String property;
     private String expression;
     private String labelText;
@@ -23,11 +28,22 @@ public class Lookup extends JPanel {
     private boolean editableOnUpdate = true;
     private boolean editableOnInsert = true;
     
+    private Object entity;
+    private String descriptionExpression;
+    
     /**
      * Creates new form Field
      */
     public Lookup() {
         initComponents();
+    }
+
+    public LookupController getController() {
+        return controller;
+    }
+
+    public void setController(LookupController controller) {
+        this.controller = controller;
     }
 
     public String getProperty() {
@@ -121,6 +137,22 @@ public class Lookup extends JPanel {
     public boolean isEnabled() {
         return text.isEnabled();
     }
+
+    public Object getEntity() {
+        return entity;
+    }
+
+    public void setEntity(Object entity) {
+        this.entity = entity;
+    }
+
+    public String getDescriptionExpression() {
+        return descriptionExpression;
+    }
+
+    public void setDescriptionExpression(String descriptionExpression) {
+        this.descriptionExpression = descriptionExpression;
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -135,6 +167,7 @@ public class Lookup extends JPanel {
         labelMessage = new javax.swing.JLabel();
         text = new javax.swing.JTextField();
         button = new javax.swing.JButton();
+        labelDescription = new javax.swing.JLabel();
 
         label.setText("jLabel2");
 
@@ -143,21 +176,49 @@ public class Lookup extends JPanel {
         setMinimumSize(new java.awt.Dimension(110, 30));
         setPreferredSize(new Dimension(150, text.getPreferredSize().height));
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
+
+        text.setPreferredSize(new java.awt.Dimension(50, 20));
+        text.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textActionPerformed(evt);
+            }
+        });
         add(text);
 
-        button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/preview16x16.gif"))); // NOI18N
         button.setText("...");
         button.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         button.setMaximumSize(new java.awt.Dimension(20, 23));
         button.setMinimumSize(new java.awt.Dimension(20, 23));
-        button.setOpaque(true);
         button.setPreferredSize(new java.awt.Dimension(25, 23));
         add(button);
+
+        labelDescription.setText("description");
+        labelDescription.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+        labelDescription.setPreferredSize(new java.awt.Dimension(400, 23));
+        add(labelDescription);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void textActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textActionPerformed
+        System.out.println("textActionPerformed " + evt);
+        if (controller != null) {
+            try {
+                entity = controller.reload(text.getText()).get(0);
+                BeanLinker beanLinker = new BeanLinkerImpl();
+                beanLinker.assign("entity", entity);
+                labelDescription.setText(beanLinker.eval(descriptionExpression).toString());
+            } catch (Exception ex) {
+                Logger.getLogger(Lookup.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
+        }
+    }//GEN-LAST:event_textActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button;
     private javax.swing.JLabel label;
+    private javax.swing.JLabel labelDescription;
     private javax.swing.JLabel labelMessage;
     private javax.swing.JTextField text;
     // End of variables declaration//GEN-END:variables
+
 }

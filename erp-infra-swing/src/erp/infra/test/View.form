@@ -66,13 +66,13 @@
                           </Group>
                           <EmptySpace min="-2" pref="97" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="field3" min="-2" pref="191" max="-2" attributes="0"/>
                               <Component id="field5" min="-2" pref="303" max="-2" attributes="0"/>
-                              <Component id="lookup1" min="-2" pref="138" max="-2" attributes="0"/>
+                              <Component id="field3" alignment="0" min="-2" pref="191" max="-2" attributes="0"/>
+                              <Component id="lookup" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -92,7 +92,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="field4" min="-2" max="-2" attributes="0"/>
-                      <Component id="lookup1" min="-2" max="-2" attributes="0"/>
+                      <Component id="lookup" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Component id="buttonAtualizarGrid" min="-2" max="-2" attributes="0"/>
@@ -163,7 +163,12 @@
             <Property name="required" type="boolean" value="true"/>
           </Properties>
         </Component>
-        <Component class="erp.infra.Lookup" name="lookup1">
+        <Component class="erp.infra.Lookup" name="lookup">
+          <Properties>
+            <Property name="descriptionExpression" type="java.lang.String" value="&apos;&lt;html&gt;&lt;body&gt;&lt;strong&gt; &apos; + entity.id + &apos; &lt;/strong&gt; - &apos; + entity.nome + &apos;&lt;/body&gt;&lt;/html&gt;&apos;"/>
+            <Property name="expression" type="java.lang.String" value=""/>
+            <Property name="property" type="java.lang.String" value="objeto"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>
@@ -224,6 +229,17 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonCancelarActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="buttonExibirEntity">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Exibir Entity"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonExibirEntityActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

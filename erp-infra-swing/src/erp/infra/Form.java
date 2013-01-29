@@ -132,7 +132,7 @@ public class Form extends JPanel {
                 Field field = (Field) c;
                 linker.assign("entity", entityPrivate);
                 linker.assign("field", field);
-                if (field.getExpression() != null) {
+                if (field.getExpression() != null && !field.getExpression().trim().isEmpty()) {
                     linker.eval("field.fieldText = " + field.getExpression());
                 }
                 else if (field.getProperty() == null || field.getProperty().trim().isEmpty()) {
@@ -141,6 +141,24 @@ public class Form extends JPanel {
                 else {
                     linker.linkProperty("Entity." + field.getProperty(), "Field.fieldText", "", "", "", "");
                     linker.update("entity", "field");
+                }
+            }
+            else if (c instanceof Lookup) {
+                BeanLinker linker = new BeanLinkerImpl();
+                linker.registerClass("Entity", entityPrivate.getClass().getName());
+                linker.registerClass("Lookup", Lookup.class.getName());
+                Lookup lookup = (Lookup) c;
+                linker.assign("entity", entityPrivate);
+                linker.assign("lookup", lookup);
+                if (lookup.getExpression() != null && !lookup.getExpression().trim().isEmpty()) {
+                    linker.eval("lookup.entity = " + lookup.getExpression());
+                }
+                else if (lookup.getProperty() == null || lookup.getProperty().trim().isEmpty()) {
+                    continue;
+                }
+                else {
+                    linker.linkProperty("Entity." + lookup.getProperty(), "lookup.entity", "", "", "", "");
+                    linker.update("entity", "lookup");
                 }
             }
         }
@@ -180,6 +198,7 @@ public class Form extends JPanel {
         
         // Desenha os labels dos campos adicionados neste formulario
         for (Component c : getComponents()) {
+            
             if (c instanceof Field) {
                 Field field = (Field) c;
                 g.setFont(field.getLabel().getFont());
@@ -213,6 +232,26 @@ public class Form extends JPanel {
                 else {
                     field.getText().setEditable(true);
                 }
+            }
+            else if (c instanceof Lookup) {
+                Lookup lookup = (Lookup) c;
+                if (mode == Mode.EMPTY) {
+                    lookup.getText().setEditable(false);
+                    // field.getText().setText("");
+                }
+                else if (mode == Mode.READ_ONLY) {
+                    lookup.getText().setEditable(false);
+                }
+                else if (mode == Mode.UPDATE) {
+                    lookup.getText().setEditable(lookup.isEditableOnUpdate());
+                }
+                else if (mode == Mode.INSERT) {
+                    lookup.getText().setEditable(lookup.isEditableOnInsert());
+                }
+                else {
+                    lookup.getText().setEditable(true);
+                }
+                
             }
         }        
     }

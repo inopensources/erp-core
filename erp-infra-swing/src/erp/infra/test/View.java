@@ -3,8 +3,10 @@ package erp.infra.test;
 import erp.infra.Form;
 import erp.infra.FormController;
 import erp.infra.GridController;
+import erp.infra.LookupController;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  * View class.
@@ -15,9 +17,8 @@ import java.util.List;
 public class View extends javax.swing.JFrame {
 
     private FormController<Pais> formController = new FormController<Pais>() {
-        
         private Pais entity;
-        
+
         @Override
         public Pais getEntity() {
             return entity;
@@ -27,17 +28,17 @@ public class View extends javax.swing.JFrame {
         public void setEntity(Pais entity) {
             this.entity = entity;
         }
-        
+
         @Override
         public void reload() throws Exception {
             /*
-            Pais pais = new Pais();
-            pais.setId(1L);
-            pais.setCodigoBacen("1058");
-            pais.setNome("BRASIL");
-            pais.setSigla2("BR");
-            entity = pais;
-            */
+             Pais pais = new Pais();
+             pais.setId(1L);
+             pais.setCodigoBacen("1058");
+             pais.setNome("BRASIL");
+             pais.setSigla2("BR");
+             entity = pais;
+             */
         }
 
         @Override
@@ -54,10 +55,8 @@ public class View extends javax.swing.JFrame {
         public void delete() throws Exception {
             throw new UnsupportedOperationException("Not supported yet.");
         }
-
-
-
     };
+    
     private GridController<Pais> gridController = new GridController<Pais>() {
         @Override
         public List<Pais> reload() throws Exception {
@@ -111,12 +110,37 @@ public class View extends javax.swing.JFrame {
         public void delete(List<Pais> t) throws Exception {
             throw new UnsupportedOperationException("Not supported yet.");
         }
+        
+    };
+    
+    private LookupController<Pais> lookupController = new LookupController<Pais>() {
+        private Pais pais;
+
+        @Override
+        public Pais getEntity() {
+            return pais;
+        }
+
+        @Override
+        public void setEntity(Pais entity) {
+            this.pais = entity;
+        }
+
+        @Override
+        public List<Pais> reload(String code) throws Exception {
+            Pais pais = new Pais(999L, "1058", "TESTESEL", "TESTE");
+            List<Pais> paises = new ArrayList<Pais>();
+            paises.add(pais);
+            return paises;
+        }
+        
     };
 
     public View() {
         initComponents();
         form.setController(formController);
         grid.setController(gridController);
+        lookup.setController(lookupController);
         grid.reload();
     }
 
@@ -138,13 +162,14 @@ public class View extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         grid = new erp.infra.Grid();
         field5 = new erp.infra.Field();
-        lookup1 = new erp.infra.Lookup();
+        lookup = new erp.infra.Lookup();
         jToolBar1 = new javax.swing.JToolBar();
         buttonAtualizar = new javax.swing.JButton();
         buttonDelete = new javax.swing.JButton();
         buttonEditar = new javax.swing.JButton();
         buttonSalvar = new javax.swing.JButton();
         buttonCancelar = new javax.swing.JButton();
+        buttonExibirEntity = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -181,6 +206,10 @@ public class View extends javax.swing.JFrame {
         field5.setLabelText("Campo");
         field5.setRequired(true);
 
+        lookup.setDescriptionExpression("'<html><body><strong> ' + entity.id + ' </strong> - ' + entity.nome + '</body></html>'");
+        lookup.setExpression("");
+        lookup.setProperty("objeto");
+
         javax.swing.GroupLayout formLayout = new javax.swing.GroupLayout(form);
         form.setLayout(formLayout);
         formLayout.setHorizontalGroup(
@@ -199,9 +228,9 @@ public class View extends javax.swing.JFrame {
                             .addComponent(field4, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(97, 97, 97)
                         .addGroup(formLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(field3, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(field5, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lookup1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(field3, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lookup, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
         );
         formLayout.setVerticalGroup(
@@ -218,7 +247,7 @@ public class View extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(formLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(field4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lookup1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lookup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
                 .addComponent(buttonAtualizarGrid)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -263,6 +292,17 @@ public class View extends javax.swing.JFrame {
         });
         jToolBar1.add(buttonCancelar);
 
+        buttonExibirEntity.setText("Exibir Entity");
+        buttonExibirEntity.setFocusable(false);
+        buttonExibirEntity.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        buttonExibirEntity.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        buttonExibirEntity.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonExibirEntityActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(buttonExibirEntity);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -305,12 +345,17 @@ public class View extends javax.swing.JFrame {
         grid.setEnabled(true);
     }//GEN-LAST:event_buttonCancelarActionPerformed
 
+    private void buttonExibirEntityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonExibirEntityActionPerformed
+        JOptionPane.showMessageDialog(this, form.getEntity());
+    }//GEN-LAST:event_buttonExibirEntityActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAtualizar;
     private javax.swing.JButton buttonAtualizarGrid;
     private javax.swing.JButton buttonCancelar;
     private javax.swing.JButton buttonDelete;
     private javax.swing.JButton buttonEditar;
+    private javax.swing.JButton buttonExibirEntity;
     private javax.swing.JButton buttonSalvar;
     private erp.infra.Field field1;
     private erp.infra.Field field2;
@@ -321,6 +366,8 @@ public class View extends javax.swing.JFrame {
     private erp.infra.Grid grid;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
-    private erp.infra.Lookup lookup1;
+    private erp.infra.Lookup lookup;
     // End of variables declaration//GEN-END:variables
+
 }
+
