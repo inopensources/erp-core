@@ -7,6 +7,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.MenuComponent;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,6 +26,8 @@ import javax.swing.JPanel;
  */
 public class Form extends JPanel {
 
+    private long formId = System.currentTimeMillis();
+    
     public enum Mode {
 
         EMPTY, INSERT, UPDATE, READ_ONLY, CUSTOM
@@ -235,12 +238,21 @@ public class Form extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+        g.drawString("Form id: " + formId, 10, 30);
+        g.drawString("Components count: " + getComponentCount(), 10, 50);
+        g.drawString("Entity layout: " + entityLayout, 10, 70);
+        if (java.beans.Beans.isDesignTime()) {
+            setEntityLayout(entityLayout);
+        }
     }
 
+    
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-
+        
+        System.out.println("paint form: " + getComponentCount());
+        
         // Desenha os labels dos campos adicionados neste formulario
         for (Component c : getComponents()) {
 

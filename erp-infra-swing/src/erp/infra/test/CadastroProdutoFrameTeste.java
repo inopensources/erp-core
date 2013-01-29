@@ -4,6 +4,8 @@
  */
 package erp.infra.test;
 
+import javax.swing.UIManager;
+
 /**
  *
  * @author leonardo
@@ -28,35 +30,65 @@ public class CadastroProdutoFrameTeste extends javax.swing.JFrame {
 
         produtoModel = new erp.infra.test.Produto();
         splitPane = new javax.swing.JSplitPane();
-        form1 = new erp.infra.Form();
+        jPanel1 = new javax.swing.JPanel();
+        jToolBar1 = new javax.swing.JToolBar();
+        jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
+        form1 = new erp.infra.Form();
+        field1 = new erp.infra.Field();
+        jPanel2 = new javax.swing.JPanel();
+        jToolBar2 = new javax.swing.JToolBar();
+        jButton2 = new javax.swing.JButton();
+        jScrollPane4 = new javax.swing.JScrollPane();
         grid1 = new erp.infra.Grid();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(800, 561));
+        setPreferredSize(new java.awt.Dimension(900, 561));
 
-        splitPane.setDividerLocation(250);
+        splitPane.setDividerLocation(300);
         splitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jToolBar1.setRollover(true);
+
+        jButton1.setText("Atualizar");
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton1);
+
+        jPanel1.add(jToolBar1, java.awt.BorderLayout.PAGE_START);
+
         form1.setEntityLayout(produtoModel);
+        form1.setLayout(null);
+        form1.add(field1);
+        field1.setBounds(620, 170, 150, 20);
 
-        javax.swing.GroupLayout form1Layout = new javax.swing.GroupLayout(form1);
-        form1.setLayout(form1Layout);
-        form1Layout.setHorizontalGroup(
-            form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 886, Short.MAX_VALUE)
-        );
-        form1Layout.setVerticalGroup(
-            form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 249, Short.MAX_VALUE)
-        );
+        jScrollPane1.setViewportView(form1);
 
-        splitPane.setLeftComponent(form1);
+        jPanel1.add(jScrollPane1, java.awt.BorderLayout.CENTER);
+
+        splitPane.setTopComponent(jPanel1);
+
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        jToolBar2.setRollover(true);
+
+        jButton2.setText("Atualizar");
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar2.add(jButton2);
+
+        jPanel2.add(jToolBar2, java.awt.BorderLayout.PAGE_START);
 
         grid1.setFormModel(form1);
-        jScrollPane1.setViewportView(grid1);
+        jScrollPane4.setViewportView(grid1);
 
-        splitPane.setRightComponent(jScrollPane1);
+        jPanel2.add(jScrollPane4, java.awt.BorderLayout.CENTER);
+
+        splitPane.setRightComponent(jPanel2);
 
         getContentPane().add(splitPane, java.awt.BorderLayout.CENTER);
 
@@ -75,7 +107,8 @@ public class CadastroProdutoFrameTeste extends javax.swing.JFrame {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    //javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                     break;
                 }
             }
@@ -98,9 +131,17 @@ public class CadastroProdutoFrameTeste extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private erp.infra.Field field1;
     private erp.infra.Form form1;
     private erp.infra.Grid grid1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JToolBar jToolBar2;
     private erp.infra.test.Produto produtoModel;
     private javax.swing.JSplitPane splitPane;
     // End of variables declaration//GEN-END:variables
