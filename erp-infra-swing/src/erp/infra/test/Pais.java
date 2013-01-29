@@ -1,5 +1,7 @@
 package erp.infra.test;
 
+import erp.infra.annotation.Field;
+import erp.infra.annotation.Form;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -23,7 +25,13 @@ import javax.persistence.Transient;
  * @since 1.0 (18/01/2013 23:05)
  */
 @Entity
-@Table(name="pais")
+@Table(name = "pais")
+@Form(id = "pais", layout = "\n"
+        + "           [id__]        [objeto____________]      \n"
+        + "           [codbc_]                                \n"
+        + "           [nome___________________]               \n"
+        + "           [s2__]                                  \n"
+)
 public class Pais implements Serializable {
     
     private static final long serialVersionUID = 1L;
@@ -34,8 +42,9 @@ public class Pais implements Serializable {
 
     @Column(name = "codigo_bacen")
     private String codigoBacen;
+    
     private String nome;
-    @Column(name = "sigla_2", columnDefinition="Sigla 2")
+    
     private String sigla2;
 
     @Transient
@@ -51,6 +60,7 @@ public class Pais implements Serializable {
         this.sigla2 = sigla2;
     }
 
+    @Field(id="objeto", label="Objeto")
     public Object getObjeto() {
         return objeto;
     }
@@ -59,6 +69,7 @@ public class Pais implements Serializable {
         this.objeto = objeto;
     }
     
+    @Field(id="id", label="Id")
     public Long getId() {
         return id;
     }
@@ -67,6 +78,7 @@ public class Pais implements Serializable {
         this.id = id;
     }
 
+    @Field(id="codbc", label="Cód. BACEN")
     public String getCodigoBacen() {
         return codigoBacen;
     }
@@ -75,6 +87,7 @@ public class Pais implements Serializable {
         this.codigoBacen = codigoBacen;
     }
 
+    @Field(id="nome", label="Nome")
     public String getNome() {
         return nome;
     }
@@ -83,6 +96,7 @@ public class Pais implements Serializable {
         this.nome = nome;
     }
 
+    @Field(id="s2", label="Sigla 2")
     public String getSigla2() {
         return sigla2;
     }

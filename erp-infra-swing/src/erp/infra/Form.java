@@ -6,8 +6,13 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -24,6 +29,7 @@ public class Form extends JPanel {
     private Mode mode = Mode.EMPTY;
     private String property;
     private FormController controller;
+    private Object entityLayout;
 
     public Form() {
         initComponents();
@@ -39,6 +45,9 @@ public class Form extends JPanel {
     }
 
     public Object getEntity() {
+        if (controller == null) {
+            return null;
+        }
         return controller.getEntity();
     }
 
@@ -234,27 +243,83 @@ public class Form extends JPanel {
                 }
             }
             else if (c instanceof Lookup) {
-                Lookup lookup = (Lookup) c;
+                Lookup looku = (Lookup) c;
                 if (mode == Mode.EMPTY) {
-                    lookup.getText().setEditable(false);
+                    looku.getText().setEditable(false);
                     // field.getText().setText("");
                 }
                 else if (mode == Mode.READ_ONLY) {
-                    lookup.getText().setEditable(false);
+                    looku.getText().setEditable(false);
                 }
                 else if (mode == Mode.UPDATE) {
-                    lookup.getText().setEditable(lookup.isEditableOnUpdate());
+                    looku.getText().setEditable(looku.isEditableOnUpdate());
                 }
                 else if (mode == Mode.INSERT) {
-                    lookup.getText().setEditable(lookup.isEditableOnInsert());
+                    looku.getText().setEditable(looku.isEditableOnInsert());
                 }
                 else {
-                    lookup.getText().setEditable(true);
+                    looku.getText().setEditable(true);
                 }
                 
             }
         }        
     }
 
+    public Object getEntityLayout() {
+        return entityLayout;
+    }
+
+    public void setEntityLayout(Object entity) {
+        this.entityLayout = entity;
+        
+        setLayout(null);
+        erp.infra.annotation.Form af = entity.getClass().getAnnotation(erp.infra.annotation.Form.class);
+        if (af == null) {
+            throw new RuntimeException("@Form annotation not found !");
+        }
+        
+        // Extrai todas anotacoes Field
+        Map<String, erp.infra.annotation.Field> fields = new HashMap<String, erp.infra.annotation.Field>();
+        for (Method m : entity.getClass().getMethods()) {
+            erp.infra.annotation.Field fa = m.getAnnotation(erp.infra.annotation.Field.class);
+            if (fa != null) {
+                System.out.println(m.getName() + " field: " + fa);
+                fields.put(fa.id().trim(), fa);
+            }
+        }
+        
+        // Analisa o layout
+        System.out.println("-----------------------");
+        String[] linhas = af.layout().split("\n");
+        for (int y=0; y<linhas.length; y++) {
+            String linha = linhas[y];
+            System.out.println("linha " + y + ": " + linha);
+            Pattern p = Pattern.compile("\\[.*?]");
+            Matcher m = p.matcher(linha);
+            while (m.find()) {
+                String id = m.group().replaceAll("[\\[\\]_ ]", "");
+                erp.infra.annotation.Field f = fields.get(id);
+                int layoutScale = af.layoutScale();
+                int start = m.start();
+                int end = m.end();
+                int dif = end - start;
+                System.out.println("encontrou id: " + id + " field: " + f);
+                
+                Field fv = new Field();
+                int defaultHeight = fv.getPreferredSize().height;
+                fv.setLabelText(f.label());
+                int xfv = start * layoutScale;
+                int yfv = y * (defaultHeight + af.verticalPadding());
+                int widthfv = dif * layoutScale;
+                int heightfv = defaultHeight;
+                fv.setBounds(xfv, yfv, widthfv, heightfv);
+                
+                add(fv);
+            }
+        }
+        
+    }
+
+    
     
 }

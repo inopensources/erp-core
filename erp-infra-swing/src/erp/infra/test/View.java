@@ -158,11 +158,12 @@ public class View extends javax.swing.JFrame {
         field2 = new erp.infra.Field();
         field3 = new erp.infra.Field();
         field4 = new erp.infra.Field();
-        buttonAtualizarGrid = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         grid = new erp.infra.Grid();
         field5 = new erp.infra.Field();
         lookup = new erp.infra.Lookup();
+        jToolBar2 = new javax.swing.JToolBar();
+        buttonAtualizarGrid = new javax.swing.JButton();
         jToolBar1 = new javax.swing.JToolBar();
         buttonAtualizar = new javax.swing.JButton();
         buttonDelete = new javax.swing.JButton();
@@ -192,13 +193,6 @@ public class View extends javax.swing.JFrame {
         field4.setProperty("sigla2");
         field4.setRequired(true);
 
-        buttonAtualizarGrid.setText("Atualizar");
-        buttonAtualizarGrid.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonAtualizarGridActionPerformed(evt);
-            }
-        });
-
         grid.setFormModel(form);
         jScrollPane1.setViewportView(grid);
 
@@ -210,16 +204,26 @@ public class View extends javax.swing.JFrame {
         lookup.setExpression("");
         lookup.setProperty("objeto");
 
+        jToolBar2.setRollover(true);
+
+        buttonAtualizarGrid.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/refresh16x16.png"))); // NOI18N
+        buttonAtualizarGrid.setText("Atualizar");
+        buttonAtualizarGrid.setFocusable(false);
+        buttonAtualizarGrid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAtualizarGridActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(buttonAtualizarGrid);
+
         javax.swing.GroupLayout formLayout = new javax.swing.GroupLayout(form);
         form.setLayout(formLayout);
         formLayout.setHorizontalGroup(
             formLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
-            .addGroup(formLayout.createSequentialGroup()
-                .addGroup(formLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(formLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(buttonAtualizarGrid))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, formLayout.createSequentialGroup()
+                .addGroup(formLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(formLayout.createSequentialGroup()
                         .addGap(128, 128, 128)
                         .addGroup(formLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -236,7 +240,7 @@ public class View extends javax.swing.JFrame {
         formLayout.setVerticalGroup(
             formLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(formLayout.createSequentialGroup()
-                .addContainerGap(32, Short.MAX_VALUE)
+                .addContainerGap(30, Short.MAX_VALUE)
                 .addGroup(formLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(field1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(field5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -249,7 +253,7 @@ public class View extends javax.swing.JFrame {
                     .addComponent(field4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lookup, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
-                .addComponent(buttonAtualizarGrid)
+                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -366,6 +370,7 @@ public class View extends javax.swing.JFrame {
     private erp.infra.Grid grid;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JToolBar jToolBar2;
     private erp.infra.Lookup lookup;
     // End of variables declaration//GEN-END:variables
 
