@@ -1,6 +1,8 @@
 package erp.infra;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -143,10 +145,13 @@ public class Lookup extends JPanel {
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
         add(text);
 
+        button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/preview16x16.gif"))); // NOI18N
         button.setText("...");
+        button.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         button.setMaximumSize(new java.awt.Dimension(20, 23));
         button.setMinimumSize(new java.awt.Dimension(20, 23));
-        button.setPreferredSize(new java.awt.Dimension(20, 23));
+        button.setOpaque(true);
+        button.setPreferredSize(new java.awt.Dimension(25, 23));
         add(button);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
