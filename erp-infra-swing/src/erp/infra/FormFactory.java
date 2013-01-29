@@ -1,4 +1,4 @@
-package erp.infra.test;
+package erp.infra;
 
 import erp.infra.Field;
 import erp.infra.Form;
@@ -14,6 +14,16 @@ import java.util.regex.Pattern;
  */
 public class FormFactory {
 
+    public static void listAllFieldId(Object entity) {
+        // Extrai todas anotacoes Field
+        for (Method m : entity.getClass().getMethods()) {
+            erp.infra.annotation.Field fa = m.getAnnotation(erp.infra.annotation.Field.class);
+            if (fa != null) {
+                System.out.println("[" + fa.id() + "]");
+            }
+        }
+    }
+    
     public static Form create(Object entity) {
         Form form = new Form();
         form.setLayout(null);

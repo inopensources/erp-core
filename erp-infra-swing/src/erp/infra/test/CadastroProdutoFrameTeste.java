@@ -8,14 +8,13 @@ package erp.infra.test;
  *
  * @author leonardo
  */
-public class TesteEntityLayoutFrame extends javax.swing.JFrame {
+public class CadastroProdutoFrameTeste extends javax.swing.JFrame {
 
     /**
-     * Creates new form TesteEntityLayoutFrame
+     * Creates new form CadastroProdutoFrameTeste
      */
-    public TesteEntityLayoutFrame() {
+    public CadastroProdutoFrameTeste() {
         initComponents();
-        // form1.setEntity(pais1);
     }
 
     /**
@@ -27,42 +26,39 @@ public class TesteEntityLayoutFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pais1 = new erp.infra.test.Pais();
+        produtoModel = new erp.infra.test.Produto();
+        splitPane = new javax.swing.JSplitPane();
         form1 = new erp.infra.Form();
-
-        pais1.setCodigoBacen("1058");
-        pais1.setId(new java.lang.Long(1L));
-        pais1.setNome("JAPAO");
-        pais1.setObjeto("teste");
-        pais1.setSigla2("JP");
+        jScrollPane1 = new javax.swing.JScrollPane();
+        grid1 = new erp.infra.Grid();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(800, 561));
 
-        form1.setEntity(pais1);
-        form1.setEntityLayout(pais1);
-        form1.setPreferredSize(new java.awt.Dimension(400, 300));
+        splitPane.setDividerLocation(250);
+        splitPane.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+
+        form1.setEntityLayout(produtoModel);
 
         javax.swing.GroupLayout form1Layout = new javax.swing.GroupLayout(form1);
         form1.setLayout(form1Layout);
         form1Layout.setHorizontalGroup(
             form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 827, Short.MAX_VALUE)
+            .addGap(0, 886, Short.MAX_VALUE)
         );
         form1Layout.setVerticalGroup(
             form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 478, Short.MAX_VALUE)
+            .addGap(0, 249, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(form1, javax.swing.GroupLayout.DEFAULT_SIZE, 827, Short.MAX_VALUE)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(form1, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
-        );
+        splitPane.setLeftComponent(form1);
+
+        grid1.setFormModel(form1);
+        jScrollPane1.setViewportView(grid1);
+
+        splitPane.setRightComponent(jScrollPane1);
+
+        getContentPane().add(splitPane, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -75,6 +71,7 @@ public class TesteEntityLayoutFrame extends javax.swing.JFrame {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -83,26 +80,28 @@ public class TesteEntityLayoutFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TesteEntityLayoutFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroProdutoFrameTeste.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TesteEntityLayoutFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroProdutoFrameTeste.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TesteEntityLayoutFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroProdutoFrameTeste.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TesteEntityLayoutFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(CadastroProdutoFrameTeste.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-         */
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TesteEntityLayoutFrame().setVisible(true);
+                new CadastroProdutoFrameTeste().setVisible(true);
             }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private erp.infra.Form form1;
-    private erp.infra.test.Pais pais1;
+    private erp.infra.Grid grid1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private erp.infra.test.Produto produtoModel;
+    private javax.swing.JSplitPane splitPane;
     // End of variables declaration//GEN-END:variables
 }

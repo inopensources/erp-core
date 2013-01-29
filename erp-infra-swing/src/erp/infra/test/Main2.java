@@ -1,5 +1,6 @@
 package erp.infra.test;
 
+import erp.infra.FormFactory;
 import erp.infra.Form;
 import java.awt.BorderLayout;
 import javax.swing.JFrame;
@@ -14,6 +15,7 @@ import javax.swing.JFrame;
 public class Main2 {
 
     public static void main(String[] args) throws Exception {
+        /*
         Pais pais = new Pais(1L, "1058", "BRASIL", "BR");
         //Form form = FormFactory.create(pais);
         
@@ -28,6 +30,10 @@ public class Main2 {
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+        */
+        
+        Produto p = new Produto();
+        FormFactory.listAllFieldId(p);
     }
 
 }
