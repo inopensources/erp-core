@@ -14,7 +14,13 @@ import javax.swing.JFrame;
 public class Main2 {
 
     public static void main(String[] args) throws Exception {
-        Form form = FormFactory.create(new Pais(1L, "1058", "BRASIL", "BR"));
+        Pais pais = new Pais(1L, "1058", "BRASIL", "BR");
+        //Form form = FormFactory.create(pais);
+        
+        Form form = new Form();
+        
+        form.setEntityLayout(pais);
+        form.setEntity(pais);
         
         JFrame frame = new JFrame("teste");
         frame.getContentPane().add(form, BorderLayout.CENTER);

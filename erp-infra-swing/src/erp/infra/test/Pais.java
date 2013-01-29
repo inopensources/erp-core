@@ -27,7 +27,7 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "pais")
 @Form(id = "pais", layout = "\n"
-        + "           [id__]        [objeto____________]      \n"
+        + "           [id__]        [objeto_________]         \n"
         + "           [codbc_]                                \n"
         + "           [nome___________________]               \n"
         + "           [s2__]                                  \n"

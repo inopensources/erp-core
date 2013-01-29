@@ -24,11 +24,15 @@ public class FormFactory {
         
         // Extrai todas anotacoes Field
         Map<String, erp.infra.annotation.Field> fields = new HashMap<String, erp.infra.annotation.Field>();
+        Map<String, String> properties = new HashMap<String, String>();
         for (Method m : entity.getClass().getMethods()) {
             erp.infra.annotation.Field fa = m.getAnnotation(erp.infra.annotation.Field.class);
             if (fa != null) {
                 System.out.println(m.getName() + " field: " + fa);
                 fields.put(fa.id().trim(), fa);
+                String property = m.getName().replaceFirst("(get|set)", "");
+                property = property.substring(0, 1).toLowerCase() + property.substring(1);
+                properties.put(fa.id(), property);
             }
         }
         
@@ -43,6 +47,9 @@ public class FormFactory {
             while (m.find()) {
                 String id = m.group().replaceAll("[\\[\\]_ ]", "");
                 erp.infra.annotation.Field f = fields.get(id);
+                if (f == null) {
+                    continue;
+                }
                 int layoutScale = af.layoutScale();
                 int start = m.start();
                 int end = m.end();
@@ -57,6 +64,10 @@ public class FormFactory {
                 int widthfv = dif * layoutScale;
                 int heightfv = defaultHeight;
                 fv.setBounds(xfv, yfv, widthfv, heightfv);
+                
+                // Seta a propriedade do Field corretamente
+                String property = properties.get(id);
+                fv.setProperty(property);
                 
                 form.add(fv);
             }

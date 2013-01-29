@@ -15,6 +15,7 @@ public class TesteEntityLayoutFrame extends javax.swing.JFrame {
      */
     public TesteEntityLayoutFrame() {
         initComponents();
+        // form1.setEntity(pais1);
     }
 
     /**
@@ -26,22 +27,29 @@ public class TesteEntityLayoutFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pais = new erp.infra.test.Pais();
+        pais1 = new erp.infra.test.Pais();
         form1 = new erp.infra.Form();
+
+        pais1.setCodigoBacen("1058");
+        pais1.setId(new java.lang.Long(1L));
+        pais1.setNome("JAPAO");
+        pais1.setObjeto("teste");
+        pais1.setSigla2("JP");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        form1.setEntityLayout(pais);
+        form1.setEntity(pais1);
+        form1.setEntityLayout(pais1);
 
         javax.swing.GroupLayout form1Layout = new javax.swing.GroupLayout(form1);
         form1.setLayout(form1Layout);
         form1Layout.setHorizontalGroup(
             form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 624, Short.MAX_VALUE)
+            .addGap(0, 567, Short.MAX_VALUE)
         );
         form1Layout.setVerticalGroup(
             form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 397, Short.MAX_VALUE)
+            .addGap(0, 324, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -72,7 +80,6 @@ public class TesteEntityLayoutFrame extends javax.swing.JFrame {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -89,6 +96,7 @@ public class TesteEntityLayoutFrame extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(TesteEntityLayoutFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+         */
         //</editor-fold>
 
         /* Create and display the form */
@@ -100,6 +108,6 @@ public class TesteEntityLayoutFrame extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private erp.infra.Form form1;
-    private erp.infra.test.Pais pais;
+    private erp.infra.test.Pais pais1;
     // End of variables declaration//GEN-END:variables
 }

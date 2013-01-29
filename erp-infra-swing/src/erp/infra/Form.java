@@ -4,6 +4,7 @@ import br.beanlinker.core.BeanLinker;
 import br.beanlinker.core.BeanLinkerImpl;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.lang.reflect.Method;
@@ -24,8 +25,10 @@ import javax.swing.JPanel;
  */
 public class Form extends JPanel {
 
-    public enum Mode { EMPTY, INSERT, UPDATE, READ_ONLY, CUSTOM }
-    
+    public enum Mode {
+
+        EMPTY, INSERT, UPDATE, READ_ONLY, CUSTOM
+    }
     private Mode mode = Mode.EMPTY;
     private String property;
     private FormController controller;
@@ -52,13 +55,48 @@ public class Form extends JPanel {
     }
 
     public void setEntity(Object entity) {
-        controller.setEntity(entity);
+        if (controller == null) {
+            controller = new FormController() {
+                
+                private Object entity;
+                
+                @Override
+                public Object getEntity() {
+                    return entity;
+                }
+
+                @Override
+                public void setEntity(Object entity) {
+                    this.entity = entity;
+                }
+
+                @Override
+                public void reload() throws Exception {
+                }
+
+                @Override
+                public void update() throws Exception {
+                }
+
+                @Override
+                public void insert() throws Exception {
+                }
+
+                @Override
+                public void delete() throws Exception {
+                }
+            };
+        }
+        
+        if (controller != null) {
+            controller.setEntity(entity);
+        }
         try {
             if (entity != null) {
                 reloadPrivate(entity);
             }
         } catch (Exception ex) {
-            throw new RuntimeException(ex);
+            // throw new RuntimeException(ex);
         }
     }
 
@@ -142,17 +180,17 @@ public class Form extends JPanel {
                 linker.assign("entity", entityPrivate);
                 linker.assign("field", field);
                 if (field.getExpression() != null && !field.getExpression().trim().isEmpty()) {
-                    linker.eval("field.fieldText = " + field.getExpression());
-                }
-                else if (field.getProperty() == null || field.getProperty().trim().isEmpty()) {
+                    linker.eval("field.fieldText = " + field.getExpression().toString());
+                } else if (field.getProperty() == null || field.getProperty().trim().isEmpty()) {
                     continue;
+                } else {
+                    Object nullTest = linker.eval("entity." + field.getProperty());
+                    if (nullTest != null) {
+                        linker.linkProperty("Entity." + field.getProperty() + ".toString()", "Field.fieldText", "", "", "", "");
+                        linker.update("entity", "field");
+                    }
                 }
-                else {
-                    linker.linkProperty("Entity." + field.getProperty(), "Field.fieldText", "", "", "", "");
-                    linker.update("entity", "field");
-                }
-            }
-            else if (c instanceof Lookup) {
+            } else if (c instanceof Lookup) {
                 BeanLinker linker = new BeanLinkerImpl();
                 linker.registerClass("Entity", entityPrivate.getClass().getName());
                 linker.registerClass("Lookup", Lookup.class.getName());
@@ -161,18 +199,16 @@ public class Form extends JPanel {
                 linker.assign("lookup", lookup);
                 if (lookup.getExpression() != null && !lookup.getExpression().trim().isEmpty()) {
                     linker.eval("lookup.entity = " + lookup.getExpression());
-                }
-                else if (lookup.getProperty() == null || lookup.getProperty().trim().isEmpty()) {
+                } else if (lookup.getProperty() == null || lookup.getProperty().trim().isEmpty()) {
                     continue;
-                }
-                else {
+                } else {
                     linker.linkProperty("Entity." + lookup.getProperty(), "lookup.entity", "", "", "", "");
                     linker.update("entity", "lookup");
                 }
             }
         }
     }
-    
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -204,10 +240,10 @@ public class Form extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        
+
         // Desenha os labels dos campos adicionados neste formulario
         for (Component c : getComponents()) {
-            
+
             if (c instanceof Field) {
                 Field field = (Field) c;
                 g.setFont(field.getLabel().getFont());
@@ -218,73 +254,68 @@ public class Form extends JPanel {
                 field.getLabel().setSize(fontWidth, field.getText().getHeight());
                 Graphics g2 = g.create(c.getBounds().x - fontWidth - 5, c.getBounds().y, getWidth(), getHeight());
                 field.getLabel().paint(g2);
-                
+
                 // Desenha o required
                 if (field.isRequired()) {
                     g.setColor(new Color(255, 100, 100));
                     g.drawString("*", c.getBounds().x + c.getBounds().width + 3, c.getBounds().y + (fontHeight / 2));
                 }
-                
+
                 if (mode == Mode.EMPTY) {
                     field.getText().setEditable(false);
                     // field.getText().setText("");
-                }
-                else if (mode == Mode.READ_ONLY) {
+                } else if (mode == Mode.READ_ONLY) {
                     field.getText().setEditable(false);
-                }
-                else if (mode == Mode.UPDATE) {
+                } else if (mode == Mode.UPDATE) {
                     field.getText().setEditable(field.isEditableOnUpdate());
-                }
-                else if (mode == Mode.INSERT) {
+                } else if (mode == Mode.INSERT) {
                     field.getText().setEditable(field.isEditableOnInsert());
-                }
-                else {
+                } else {
                     field.getText().setEditable(true);
                 }
-            }
-            else if (c instanceof Lookup) {
+            } else if (c instanceof Lookup) {
                 Lookup looku = (Lookup) c;
                 if (mode == Mode.EMPTY) {
                     looku.getText().setEditable(false);
                     // field.getText().setText("");
-                }
-                else if (mode == Mode.READ_ONLY) {
+                } else if (mode == Mode.READ_ONLY) {
                     looku.getText().setEditable(false);
-                }
-                else if (mode == Mode.UPDATE) {
+                } else if (mode == Mode.UPDATE) {
                     looku.getText().setEditable(looku.isEditableOnUpdate());
-                }
-                else if (mode == Mode.INSERT) {
+                } else if (mode == Mode.INSERT) {
                     looku.getText().setEditable(looku.isEditableOnInsert());
-                }
-                else {
+                } else {
                     looku.getText().setEditable(true);
                 }
-                
+
             }
-        }        
+        }
     }
 
     public Object getEntityLayout() {
         return entityLayout;
     }
 
-    public void setEntityLayout(Object entity) {
-        this.entityLayout = entity;
-        
+    public void setEntityLayout(Object entityLayout) {
+        this.entityLayout = entityLayout;
+
         setLayout(null);
-        erp.infra.annotation.Form af = entity.getClass().getAnnotation(erp.infra.annotation.Form.class);
+        erp.infra.annotation.Form af = entityLayout.getClass().getAnnotation(erp.infra.annotation.Form.class);
         if (af == null) {
             throw new RuntimeException("@Form annotation not found !");
         }
         
         // Extrai todas anotacoes Field
         Map<String, erp.infra.annotation.Field> fields = new HashMap<String, erp.infra.annotation.Field>();
-        for (Method m : entity.getClass().getMethods()) {
+        Map<String, String> properties = new HashMap<String, String>();
+        for (Method m : entityLayout.getClass().getMethods()) {
             erp.infra.annotation.Field fa = m.getAnnotation(erp.infra.annotation.Field.class);
             if (fa != null) {
                 System.out.println(m.getName() + " field: " + fa);
                 fields.put(fa.id().trim(), fa);
+                String property = m.getName().replaceFirst("(get|set)", "");
+                property = property.substring(0, 1).toLowerCase() + property.substring(1);
+                properties.put(fa.id(), property);
             }
         }
         
@@ -299,6 +330,9 @@ public class Form extends JPanel {
             while (m.find()) {
                 String id = m.group().replaceAll("[\\[\\]_ ]", "");
                 erp.infra.annotation.Field f = fields.get(id);
+                if (f == null) {
+                    continue;
+                }
                 int layoutScale = af.layoutScale();
                 int start = m.start();
                 int end = m.end();
@@ -314,12 +348,23 @@ public class Form extends JPanel {
                 int heightfv = defaultHeight;
                 fv.setBounds(xfv, yfv, widthfv, heightfv);
                 
+                // Seta a propriedade do Field corretamente
+                String property = properties.get(id);
+                fv.setProperty(property);
+                
                 add(fv);
             }
         }
+        // TODO calcular o tamanho adequado
+        //setPreferredSize(new Dimension(400, 300));
+        
+        // Atualiza as informacoes do formulario
+        try {
+            reload();
+        } catch (Exception ex) {
+            // throw new RuntimeException(ex);
+        }
         
     }
-
-    
     
 }
