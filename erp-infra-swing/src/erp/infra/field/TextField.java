@@ -179,7 +179,7 @@ public class TextField extends Field implements FocusListener {
         
         @Override
         public void config() {
-            text.setRegex(".*");
+            // text.setRegex(".*");
         }
 
         @Override

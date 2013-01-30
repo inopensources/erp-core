@@ -18,6 +18,8 @@
         <Property name="sigla2" type="java.lang.String" value="BR"/>
       </Properties>
     </Component>
+    <Component class="erp.infra.test.GridModelImpl" name="gridModelImpl1">
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
@@ -48,6 +50,8 @@
                       <Component id="jButton1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="buttonUpdateModel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="button1" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -64,8 +68,9 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="buttonUpdateModel" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="button1" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -92,7 +97,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="353" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="328" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -112,6 +117,19 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonUpdateModelActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="erp.infra.button.Button" name="button1">
+      <Properties>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/images/refresh16x16.png"/>
+        </Property>
+        <Property name="entityModel" type="erp.infra.form.FormModel" editor="org.netbeans.modules.form.ComponentChooserEditor">
+          <ComponentRef name="gridModelImpl1"/>
+        </Property>
+        <Property name="type" type="erp.infra.button.Button$Type" editor="org.netbeans.modules.form.editors.EnumEditor">
+          <Value id="INSERT"/>
+        </Property>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

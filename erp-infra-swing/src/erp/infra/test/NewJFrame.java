@@ -29,9 +29,11 @@ public class NewJFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         pais1 = new erp.infra.test.entity.Pais();
+        gridModelImpl1 = new erp.infra.test.GridModelImpl();
         form1 = new erp.infra.form.Form();
         jButton1 = new javax.swing.JButton();
         buttonUpdateModel = new javax.swing.JButton();
+        button1 = new erp.infra.button.Button();
 
         pais1.setCaracter(new java.lang.Character('B'));
         pais1.setCodigoBacen("1058");
@@ -56,7 +58,7 @@ public class NewJFrame extends javax.swing.JFrame {
         );
         form1Layout.setVerticalGroup(
             form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 353, Short.MAX_VALUE)
+            .addGap(0, 328, Short.MAX_VALUE)
         );
 
         jButton1.setText("jButton1");
@@ -73,6 +75,10 @@ public class NewJFrame extends javax.swing.JFrame {
             }
         });
 
+        button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/refresh16x16.png"))); // NOI18N
+        button1.setEntityModel(gridModelImpl1);
+        button1.setType(erp.infra.button.Button.Type.INSERT);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -85,6 +91,8 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addComponent(jButton1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(buttonUpdateModel)
+                        .addGap(18, 18, 18)
+                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -96,8 +104,9 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
-                    .addComponent(buttonUpdateModel))
-                .addContainerGap())
+                    .addComponent(buttonUpdateModel)
+                    .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35))
         );
 
         pack();
@@ -125,7 +134,7 @@ public class NewJFrame extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
+                if ("Windows".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -149,8 +158,10 @@ public class NewJFrame extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private erp.infra.button.Button button1;
     private javax.swing.JButton buttonUpdateModel;
     private erp.infra.form.Form form1;
+    private erp.infra.test.GridModelImpl gridModelImpl1;
     private javax.swing.JButton jButton1;
     private erp.infra.test.entity.Pais pais1;
     // End of variables declaration//GEN-END:variables

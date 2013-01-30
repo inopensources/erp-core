@@ -79,6 +79,26 @@ public class Form extends JPanel {
                 @Override
                 public void delete() throws Exception {
                 }
+
+                @Override
+                public void cancel() throws Exception {
+                }
+
+                @Override
+                public void first() throws Exception {
+                }
+
+                @Override
+                public void next() throws Exception {
+                }
+
+                @Override
+                public void previous() throws Exception {
+                }
+
+                @Override
+                public void last() throws Exception {
+                }
             };
         }
         

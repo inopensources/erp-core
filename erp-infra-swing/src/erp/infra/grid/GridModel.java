@@ -12,7 +12,9 @@ import java.util.List;
  */
 public interface GridModel<T> extends FormModel<T> {
     
-    public List<T> reloadGrid() throws Exception;
+    public List<T> getEntities();
+    
+    public void reloadEntities() throws Exception;
     public void update(List<T> t) throws Exception;
     public void insert(List<T> t) throws Exception;
     public void delete(List<T> t) throws Exception;

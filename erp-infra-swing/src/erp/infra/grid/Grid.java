@@ -133,7 +133,8 @@ public class Grid extends JTable {
             return;
         }
         try {
-            entities = controller.reloadGrid();
+            controller.reloadEntities();
+            entities = controller.getEntities();
             if (formModel == null) {
                 return;
             }
