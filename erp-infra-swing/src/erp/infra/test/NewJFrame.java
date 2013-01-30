@@ -29,55 +29,71 @@ public class NewJFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         pais1 = new erp.infra.test.entity.Pais();
-        gridModelImpl1 = new erp.infra.test.GridModelImpl();
+        formModelImpl1 = new erp.infra.test.FormModelImpl();
         form1 = new erp.infra.form.Form();
-        jButton1 = new javax.swing.JButton();
-        buttonUpdateModel = new javax.swing.JButton();
+        button2 = new erp.infra.button.Button();
         button1 = new erp.infra.button.Button();
+        button3 = new erp.infra.button.Button();
+        button4 = new erp.infra.button.Button();
+        button5 = new erp.infra.button.Button();
 
-        pais1.setCaracter(new java.lang.Character('B'));
+        pais1.setCaracter(new java.lang.Character('A'));
         pais1.setCodigoBacen("1058");
-        pais1.setDataCadastro(new Date());
         pais1.setId(new java.lang.Long(1L));
         pais1.setNome("BRASIL");
-        pais1.setObjeto(buttonUpdateModel);
-        pais1.setQuente(java.lang.Boolean.TRUE);
+        pais1.setQuente(java.lang.Boolean.FALSE);
         pais1.setSigla2("BR");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         form1.setEntity(pais1);
         form1.setEntityLayout(pais1);
-        form1.setMode(erp.infra.form.Form.Mode.UPDATE);
+        form1.setMode(erp.infra.form.Form.Mode.READ_ONLY);
+
+        button2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/refresh16x16.png"))); // NOI18N
+
+        button1.setText("insert");
+        button1.setType(erp.infra.button.Button.Type.INSERT);
+
+        button3.setText("update");
+        button3.setType(erp.infra.button.Button.Type.UPDATE);
+
+        button4.setText("delete");
+        button4.setType(erp.infra.button.Button.Type.DELETE);
+
+        button5.setText("cancel");
+        button5.setType(erp.infra.button.Button.Type.CANCEL);
 
         javax.swing.GroupLayout form1Layout = new javax.swing.GroupLayout(form1);
         form1.setLayout(form1Layout);
         form1Layout.setHorizontalGroup(
             form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 587, Short.MAX_VALUE)
+            .addGroup(form1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(143, Short.MAX_VALUE))
         );
         form1Layout.setVerticalGroup(
             form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 328, Short.MAX_VALUE)
+            .addGroup(form1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(330, Short.MAX_VALUE))
         );
-
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-
-        buttonUpdateModel.setText("update model");
-        buttonUpdateModel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonUpdateModelActionPerformed(evt);
-            }
-        });
-
-        button1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/refresh16x16.png"))); // NOI18N
-        button1.setEntityModel(gridModelImpl1);
-        button1.setType(erp.infra.button.Button.Type.INSERT);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -85,43 +101,19 @@ public class NewJFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(form1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(buttonUpdateModel)
-                        .addGap(18, 18, 18)
-                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(form1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(12, 12, 12)
+                .addContainerGap()
                 .addComponent(form1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(buttonUpdateModel)
-                    .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-        System.out.println(pais1);
-        form1.reload();
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void buttonUpdateModelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonUpdateModelActionPerformed
-        form1.update();
-        System.out.println("pais atualizado: " + pais1);
-    }//GEN-LAST:event_buttonUpdateModelActionPerformed
 
     /**
      * @param args the command line arguments
@@ -159,10 +151,12 @@ public class NewJFrame extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private erp.infra.button.Button button1;
-    private javax.swing.JButton buttonUpdateModel;
+    private erp.infra.button.Button button2;
+    private erp.infra.button.Button button3;
+    private erp.infra.button.Button button4;
+    private erp.infra.button.Button button5;
     private erp.infra.form.Form form1;
-    private erp.infra.test.GridModelImpl gridModelImpl1;
-    private javax.swing.JButton jButton1;
+    private erp.infra.test.FormModelImpl formModelImpl1;
     private erp.infra.test.entity.Pais pais1;
     // End of variables declaration//GEN-END:variables
 }

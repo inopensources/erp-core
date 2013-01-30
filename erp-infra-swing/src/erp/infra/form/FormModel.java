@@ -1,14 +1,12 @@
 package erp.infra.form;
 
-import erp.infra.core.NavigationModel;
-
 /**
  * FormModel interface.
  * 
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.00.00 (27/01/2013 23:39)
  */
-public interface FormModel<T> extends NavigationModel {
+public interface FormModel<T> {
 
     public T getEntity();
     public void setEntity(T entity);

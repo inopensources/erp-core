@@ -2,7 +2,9 @@ package erp.infra.button;
 
 import br.beanlinker.core.BeanLinker;
 import br.beanlinker.core.BeanLinkerImpl;
-import erp.infra.form.FormModel;
+import erp.infra.form.Form.Mode;
+import erp.infra.form.FormModelListener;
+import erp.infra.form.WrapperFormModel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -13,10 +15,10 @@ import javax.swing.JButton;
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.00.00 (30/01/2013 14:55)
  */
-public class Button extends JButton {
+public class Button extends JButton implements FormModelListener {
     
     private static BeanLinker linker = new BeanLinkerImpl();
-    
+  
     public enum Type { 
         RELOAD("model.reload()"), 
         INSERT("model.insert()"), 
@@ -37,7 +39,7 @@ public class Button extends JButton {
     }
     
     private Type type = Type.RELOAD;
-    private FormModel entityModel;
+    private WrapperFormModel entityModel;
     
     public Button() {
         initComponents();
@@ -51,12 +53,13 @@ public class Button extends JButton {
         this.type = type;
     }
 
-    public FormModel getEntityModel() {
+    public WrapperFormModel getEntityModel() {
         return entityModel;
     }
 
-    public void setEntityModel(FormModel entityModel) {
+    public void setEntityModel(WrapperFormModel entityModel) {
         this.entityModel = entityModel;
+        entityModel.addListener(this);
         try {
             linker.assign("model", entityModel);
         } catch (Exception ex) {
@@ -82,7 +85,7 @@ public class Button extends JButton {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_formActionPerformed
-        System.out.println(evt);
+        System.out.println("entityModel: " + entityModel + " evt: " + evt);
         if (entityModel == null) {
             return;
         }
@@ -95,5 +98,155 @@ public class Button extends JButton {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+    
+    // --- FormModelListener implementation ---
+    
+    @Override
+    public void modeChanged() {
+        if (entityModel == null || type == null) {
+            return;
+        }
+        
+        if (entityModel.getMode() == Mode.EMPTY) {
+            if (type == Type.CANCEL) {
+                setEnabled(false);
+            }
+            else if (type == Type.DELETE) {
+                setEnabled(false);
+            }
+            else if (type == Type.FIRST) {
+                setEnabled(true);
+            }
+            else if (type == Type.INSERT) {
+                setEnabled(true);
+            }
+            else if (type == Type.LAST) {
+                setEnabled(true);
+            }
+            else if (type == Type.NEXT) {
+                setEnabled(true);
+            }
+            else if (type == Type.PREVIOUS) {
+                setEnabled(true);
+            }
+            else if (type == Type.RELOAD) {
+                setEnabled(false);
+            }
+            else if (type == Type.UPDATE) {
+                setEnabled(false);
+            }
+        }
+        else if (entityModel.getMode() == Mode.READ_ONLY) {
+            if (type == Type.CANCEL) {
+                setEnabled(false);
+            }
+            else if (type == Type.DELETE) {
+                setEnabled(true);
+            }
+            else if (type == Type.FIRST) {
+                setEnabled(true);
+            }
+            else if (type == Type.INSERT) {
+                setEnabled(true);
+            }
+            else if (type == Type.LAST) {
+                setEnabled(true);
+            }
+            else if (type == Type.NEXT) {
+                setEnabled(true);
+            }
+            else if (type == Type.PREVIOUS) {
+                setEnabled(true);
+            }
+            else if (type == Type.RELOAD) {
+                setEnabled(true);
+            }
+            else if (type == Type.UPDATE) {
+                setEnabled(true);
+            }
+        }
+        else if (entityModel.getMode() == Mode.INSERT) {
+            if (type == Type.CANCEL) {
+                setEnabled(true);
+            }
+            else if (type == Type.DELETE) {
+                setEnabled(false);
+            }
+            else if (type == Type.FIRST) {
+                setEnabled(false);
+            }
+            else if (type == Type.INSERT) {
+                setEnabled(true);
+            }
+            else if (type == Type.LAST) {
+                setEnabled(false);
+            }
+            else if (type == Type.NEXT) {
+                setEnabled(false);
+            }
+            else if (type == Type.PREVIOUS) {
+                setEnabled(false);
+            }
+            else if (type == Type.RELOAD) {
+                setEnabled(false);
+            }
+            else if (type == Type.UPDATE) {
+                setEnabled(false);
+            }
+        }
+        else if (entityModel.getMode() == Mode.UPDATE) {
+            if (type == Type.CANCEL) {
+                setEnabled(true);
+            }
+            else if (type == Type.DELETE) {
+                setEnabled(false);
+            }
+            else if (type == Type.FIRST) {
+                setEnabled(false);
+            }
+            else if (type == Type.INSERT) {
+                setEnabled(false);
+            }
+            else if (type == Type.LAST) {
+                setEnabled(false);
+            }
+            else if (type == Type.NEXT) {
+                setEnabled(false);
+            }
+            else if (type == Type.PREVIOUS) {
+                setEnabled(false);
+            }
+            else if (type == Type.RELOAD) {
+                setEnabled(true);
+            }
+            else if (type == Type.UPDATE) {
+                setEnabled(true);
+            }
+        }
+    }
+
+    @Override
+    public void entityChanged() {
+    }
+
+    @Override
+    public void reloaded() {
+    }
+
+    @Override
+    public void updated() {
+    }
+
+    @Override
+    public void inserted() {
+    }
+
+    @Override
+    public void canceled() {
+    }
+
+    @Override
+    public void deleted() {
+    }
     
 }

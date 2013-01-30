@@ -2,6 +2,7 @@ package erp.infra.form;
 
 import br.beanlinker.core.BeanLinker;
 import br.beanlinker.core.BeanLinkerImpl;
+import erp.infra.button.Button;
 import erp.infra.lookup.Lookup;
 import erp.infra.field.Field;
 import java.awt.Color;
@@ -27,6 +28,9 @@ public class Form extends JPanel {
     private String property;
     private FormModel controller;
     private Object entityLayout;
+    private FormModelListenerImpl formModelListenerImpl = new FormModelListenerImpl();
+    
+    private WrapperFormModel formModel;
 
     public Form() {
         initComponents();
@@ -82,22 +86,6 @@ public class Form extends JPanel {
 
                 @Override
                 public void cancel() throws Exception {
-                }
-
-                @Override
-                public void first() throws Exception {
-                }
-
-                @Override
-                public void next() throws Exception {
-                }
-
-                @Override
-                public void previous() throws Exception {
-                }
-
-                @Override
-                public void last() throws Exception {
                 }
             };
         }
@@ -339,6 +327,77 @@ public class Form extends JPanel {
             reload();
         } catch (Exception ex) {
             // throw new RuntimeException(ex);
+        }
+    }
+
+    public FormModel getFormModel() {
+        return formModel;
+    }
+
+    public void setFormModel(FormModel formModel) {
+        this.formModel = new WrapperFormModel(formModel);
+        this.formModel.addListener(formModelListenerImpl);
+        this.formModel.setEntity(getEntity());
+        for (Component comp : getComponents()) {
+            if (comp instanceof Button && this.formModel != null) {
+                System.out.println("-------> ADICIONANDO BUTTON FORM MODEL setFormModel <-------------");
+                Button button = (Button) comp;
+                button.setEntityModel(this.formModel);
+            }
+        }
+    }
+
+    @Override
+    public Component add(Component comp) {
+        if (comp instanceof Button && formModel != null) {
+            System.out.println("-------> ADICIONANDO BUTTON FORM MODEL add <-------------");
+            Button button = (Button) comp;
+            button.setEntityModel(formModel);
+        }
+        return super.add(comp);
+    }
+    
+    private class FormModelListenerImpl implements FormModelListener {
+        @Override
+        public void modeChanged() {
+            System.out.println("form modeChanged");
+            setMode(formModel.getMode());
+        }
+
+        @Override
+        public void entityChanged() {
+            System.out.println("form entityChanged");
+            reload();
+        }
+
+        @Override
+        public void reloaded() {
+            System.out.println("form reloaded");
+            reload();
+        }
+
+        @Override
+        public void updated() {
+            System.out.println("form updated");
+            reload();
+        }
+
+        @Override
+        public void inserted() {
+            System.out.println("form inserted");
+            reload();
+        }
+
+        @Override
+        public void canceled() {
+            System.out.println("form canceled");
+            reload();
+        }
+
+        @Override
+        public void deleted() {
+            System.out.println("form deleted");
+            reload();
         }
     }
     

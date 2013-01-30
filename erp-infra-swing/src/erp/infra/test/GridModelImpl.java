@@ -1,5 +1,7 @@
 package erp.infra.test;
 
+import erp.infra.core.NavigationModel;
+import erp.infra.form.FormModelListener;
 import erp.infra.grid.GridModel;
 import erp.infra.test.entity.Pais;
 import java.util.ArrayList;
@@ -9,7 +11,7 @@ import java.util.List;
  *
  * @author leonardo
  */
-public class GridModelImpl implements GridModel<Pais> {
+public class GridModelImpl implements GridModel<Pais>, NavigationModel {
     
     private Pais pais;
     private List<Pais> paises = new ArrayList<Pais>();
@@ -105,5 +107,5 @@ public class GridModelImpl implements GridModel<Pais> {
     public void cancel() throws Exception {
         System.out.println("cancel");
     }
-    
+
 }
