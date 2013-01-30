@@ -2,19 +2,13 @@ package erp.infra;
 
 import br.beanlinker.core.BeanLinker;
 import br.beanlinker.core.BeanLinkerImpl;
+import erp.infra.field.Field;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
-import java.awt.MenuComponent;
-import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -26,12 +20,8 @@ import javax.swing.JPanel;
  */
 public class Form extends JPanel {
 
-    private long formId = System.currentTimeMillis();
+    public enum Mode { EMPTY, INSERT, UPDATE, READ_ONLY, CUSTOM }
     
-    public enum Mode {
-
-        EMPTY, INSERT, UPDATE, READ_ONLY, CUSTOM
-    }
     private Mode mode = Mode.EMPTY;
     private String property;
     private FormController controller;
@@ -236,18 +226,6 @@ public class Form extends JPanel {
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public void paint(Graphics g) {
-        super.paint(g);
-        g.drawString("Form id: " + formId, 10, 30);
-        g.drawString("Components count: " + getComponentCount(), 10, 50);
-        g.drawString("Entity layout: " + entityLayout, 10, 70);
-        if (java.beans.Beans.isDesignTime()) {
-            setEntityLayout(entityLayout);
-        }
-    }
-
-    
-    @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         
@@ -263,7 +241,7 @@ public class Form extends JPanel {
                 String label = field.getLabel().getText();
                 int fontWidth = fm.stringWidth(label);
                 int fontHeight = fm.getHeight();
-                field.getLabel().setSize(fontWidth, field.getText().getHeight());
+                field.getLabel().setSize(fontWidth, field.getComponent().getHeight());
                 Graphics g2 = g.create(c.getBounds().x - fontWidth - 5, c.getBounds().y, getWidth(), getHeight());
                 field.getLabel().paint(g2);
 
@@ -274,16 +252,16 @@ public class Form extends JPanel {
                 }
 
                 if (mode == Mode.EMPTY) {
-                    field.getText().setEditable(false);
+                    field.setEditable(false);
                     // field.getText().setText("");
                 } else if (mode == Mode.READ_ONLY) {
-                    field.getText().setEditable(false);
+                    field.setEditable(false);
                 } else if (mode == Mode.UPDATE) {
-                    field.getText().setEditable(field.isEditableOnUpdate());
+                    field.setEditable(field.isUpdatable());
                 } else if (mode == Mode.INSERT) {
-                    field.getText().setEditable(field.isEditableOnInsert());
+                    field.setEditable(field.isInsertable());
                 } else {
-                    field.getText().setEditable(true);
+                    field.setEditable(true);
                 }
             } else if (c instanceof Lookup) {
                 Lookup looku = (Lookup) c;
@@ -310,63 +288,8 @@ public class Form extends JPanel {
 
     public void setEntityLayout(Object entityLayout) {
         this.entityLayout = entityLayout;
+        FormUtils.createAndAddFieldsFromEntityToForm(entityLayout, this);
 
-        setLayout(null);
-        erp.infra.annotation.Form af = entityLayout.getClass().getAnnotation(erp.infra.annotation.Form.class);
-        if (af == null) {
-            throw new RuntimeException("@Form annotation not found !");
-        }
-        
-        // Extrai todas anotacoes Field
-        Map<String, erp.infra.annotation.Field> fields = new HashMap<String, erp.infra.annotation.Field>();
-        Map<String, String> properties = new HashMap<String, String>();
-        for (Method m : entityLayout.getClass().getMethods()) {
-            erp.infra.annotation.Field fa = m.getAnnotation(erp.infra.annotation.Field.class);
-            if (fa != null) {
-                System.out.println(m.getName() + " field: " + fa);
-                fields.put(fa.id().trim(), fa);
-                String property = m.getName().replaceFirst("(get|set)", "");
-                property = property.substring(0, 1).toLowerCase() + property.substring(1);
-                properties.put(fa.id(), property);
-            }
-        }
-        
-        // Analisa o layout
-        System.out.println("-----------------------");
-        String[] linhas = af.layout().split("\n");
-        for (int y=0; y<linhas.length; y++) {
-            String linha = linhas[y];
-            System.out.println("linha " + y + ": " + linha);
-            Pattern p = Pattern.compile("\\[.*?]");
-            Matcher m = p.matcher(linha);
-            while (m.find()) {
-                String id = m.group().replaceAll("[\\[\\]_ ]", "");
-                erp.infra.annotation.Field f = fields.get(id);
-                if (f == null) {
-                    continue;
-                }
-                int layoutScale = af.layoutScale();
-                int start = m.start();
-                int end = m.end();
-                int dif = end - start;
-                System.out.println("encontrou id: " + id + " field: " + f);
-                
-                Field fv = new Field();
-                int defaultHeight = fv.getPreferredSize().height;
-                fv.setLabelText(f.label());
-                int xfv = start * layoutScale;
-                int yfv = y * (defaultHeight + af.verticalPadding());
-                int widthfv = dif * layoutScale;
-                int heightfv = defaultHeight;
-                fv.setBounds(xfv, yfv, widthfv, heightfv);
-                
-                // Seta a propriedade do Field corretamente
-                String property = properties.get(id);
-                fv.setProperty(property);
-                
-                add(fv);
-            }
-        }
         // TODO calcular o tamanho adequado
         //setPreferredSize(new Dimension(400, 300));
         
@@ -376,7 +299,6 @@ public class Form extends JPanel {
         } catch (Exception ex) {
             // throw new RuntimeException(ex);
         }
-        
     }
     
 }

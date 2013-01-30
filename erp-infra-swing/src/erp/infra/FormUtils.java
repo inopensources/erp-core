@@ -1,7 +1,7 @@
 package erp.infra;
 
-import erp.infra.Field;
-import erp.infra.Form;
+import erp.infra.field.Field;
+import erp.infra.field.TextField;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,10 +9,12 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
+ * Form utility class.
  *
- * @author leonardo
+ * @author Leonardo Ono (ono.leo@gmail.com)
+ * @since 1.00.00 (30/01/2013 10:36)
  */
-public class FormFactory {
+public class FormUtils {
 
     public static void listAllFieldId(Object entity) {
         // Extrai todas anotacoes Field
@@ -23,10 +25,11 @@ public class FormFactory {
             }
         }
     }
-    
-    public static Form create(Object entity) {
-        Form form = new Form();
+
+    public static void createAndAddFieldsFromEntityToForm(Object entity, Form form) {
+        form.removeAll();
         form.setLayout(null);
+        
         erp.infra.annotation.Form af = entity.getClass().getAnnotation(erp.infra.annotation.Form.class);
         if (af == null) {
             throw new RuntimeException("@Form annotation not found !");
@@ -35,6 +38,8 @@ public class FormFactory {
         // Extrai todas anotacoes Field
         Map<String, erp.infra.annotation.Field> fields = new HashMap<String, erp.infra.annotation.Field>();
         Map<String, String> properties = new HashMap<String, String>();
+        Map<String, Class> types = new HashMap<String, Class>();
+        
         for (Method m : entity.getClass().getMethods()) {
             erp.infra.annotation.Field fa = m.getAnnotation(erp.infra.annotation.Field.class);
             if (fa != null) {
@@ -43,6 +48,7 @@ public class FormFactory {
                 String property = m.getName().replaceFirst("(get|set)", "");
                 property = property.substring(0, 1).toLowerCase() + property.substring(1);
                 properties.put(fa.id(), property);
+                types.put(fa.id(), m.getReturnType());
             }
         }
         
@@ -66,7 +72,8 @@ public class FormFactory {
                 int dif = end - start;
                 System.out.println("encontrou id: " + id + " field: " + f);
                 
-                Field fv = new Field();
+                Field fv = createDefaultFieldFromType(types.get(id));
+                
                 int defaultHeight = fv.getPreferredSize().height;
                 fv.setLabelText(f.label());
                 int xfv = start * layoutScale;
@@ -82,8 +89,23 @@ public class FormFactory {
                 form.add(fv);
             }
         }
-        
+    }
+    
+    public static Form createFormFromEntity(Object entity) {
+        Form form = new Form();
+        createAndAddFieldsFromEntityToForm(entity, form);
         return form;
+    }
+    
+    public static Field createDefaultFieldFromType(Class type) {
+        Field field;
+        //if (type == String.class) {
+            field = new TextField();
+            if (field.isTypeAcceptable(type)) {
+                field.init(type);
+            }
+        //}
+        return field;
     }
     
 }

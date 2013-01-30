@@ -1,4 +1,4 @@
-package erp.infra.test;
+package erp.infra.test.entity;
 
 import erp.infra.annotation.Field;
 import erp.infra.annotation.Form;
@@ -21,13 +21,13 @@ import javax.persistence.Temporal;
 @Entity
 @Table(name="produto")
 @Form(id="produto", layout="\n"
-        + "              [id____]                 [codint  ]                                  \n"
-        + "              [desc                                                      ]         \n"
-        + "              [tipo  ]                                                             \n"
-        + "              [codncm  ]               [codgen    ]           [codserv   ]         \n"
-        + "              [aliqicms  ]             [custunit  ]           [vlrvnd    ]         \n"
-        + "              [unidestoq ]             [pesounit  ]                                \n"
-        + "              [datacad   ]             [dataultatu]                                \n"
+        + "              [id____]                 [codint____]                                \n"
+        + "              [desc______________________________________________________]         \n"
+        + "              [tipo__]                                                             \n"
+        + "              [codncm__]               [codgen____]           [codserv___]         \n"
+        + "              [aliqicms__]             [custunit__]           [vlrvnd____]         \n"
+        + "              [unidestoq_]             [pesounit__]                                \n"
+        + "              [datacad___]             [dataultatu]                                \n"
 )
 public class Produto {
     

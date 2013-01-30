@@ -8,14 +8,13 @@ package erp.infra.test;
  *
  * @author leonardo
  */
-public class TesteEntityLayoutFrame extends javax.swing.JFrame {
+public class NewJFrame extends javax.swing.JFrame {
 
     /**
-     * Creates new form TesteEntityLayoutFrame
+     * Creates new form NewJFrame
      */
-    public TesteEntityLayoutFrame() {
+    public NewJFrame() {
         initComponents();
-        // form1.setEntity(pais1);
     }
 
     /**
@@ -27,41 +26,41 @@ public class TesteEntityLayoutFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pais1 = new erp.infra.test.Pais();
-        form1 = new erp.infra.Form();
-
-        pais1.setCodigoBacen("1058");
-        pais1.setId(new java.lang.Long(1L));
-        pais1.setNome("JAPAO");
-        pais1.setObjeto("teste");
-        pais1.setSigla2("JP");
+        pais1 = new erp.infra.test.entity.Pais();
+        form2 = new erp.infra.Form();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        form1.setEntity(pais1);
-        form1.setEntityLayout(pais1);
-        form1.setPreferredSize(new java.awt.Dimension(400, 300));
+        form2.setEntity(pais1);
+        form2.setEntityLayout(pais1);
+        form2.setMode(erp.infra.Form.Mode.INSERT);
 
-        javax.swing.GroupLayout form1Layout = new javax.swing.GroupLayout(form1);
-        form1.setLayout(form1Layout);
-        form1Layout.setHorizontalGroup(
-            form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 827, Short.MAX_VALUE)
+        javax.swing.GroupLayout form2Layout = new javax.swing.GroupLayout(form2);
+        form2.setLayout(form2Layout);
+        form2Layout.setHorizontalGroup(
+            form2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 587, Short.MAX_VALUE)
         );
-        form1Layout.setVerticalGroup(
-            form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 478, Short.MAX_VALUE)
+        form2Layout.setVerticalGroup(
+            form2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 278, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(form1, javax.swing.GroupLayout.DEFAULT_SIZE, 827, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(form2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(form1, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(form2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -75,6 +74,7 @@ public class TesteEntityLayoutFrame extends javax.swing.JFrame {
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -83,26 +83,25 @@ public class TesteEntityLayoutFrame extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TesteEntityLayoutFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TesteEntityLayoutFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TesteEntityLayoutFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TesteEntityLayoutFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-         */
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new TesteEntityLayoutFrame().setVisible(true);
+                new NewJFrame().setVisible(true);
             }
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private erp.infra.Form form1;
-    private erp.infra.test.Pais pais1;
+    private erp.infra.Form form2;
+    private erp.infra.test.entity.Pais pais1;
     // End of variables declaration//GEN-END:variables
 }

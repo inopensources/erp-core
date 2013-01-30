@@ -1,4 +1,4 @@
-package erp.infra.test;
+package erp.infra.test.entity;
 
 import erp.infra.annotation.Field;
 import erp.infra.annotation.Form;
