@@ -33,6 +33,6 @@ public @interface Form {
     /**
      * Espaco vertical entre um componente e outro;
      */
-    int verticalPadding() default 5;
+    int verticalPadding() default 3;
     
 }

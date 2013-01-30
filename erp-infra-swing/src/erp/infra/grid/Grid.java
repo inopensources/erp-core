@@ -1,9 +1,9 @@
-package erp.infra;
+package erp.infra.grid;
 
-import erp.infra.form.Form;
-import erp.infra.field.Field;
 import br.beanlinker.core.BeanLinker;
 import br.beanlinker.core.BeanLinkerImpl;
+import erp.infra.field.Field;
+import erp.infra.form.Form;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ import javax.swing.table.AbstractTableModel;
 public class Grid extends JTable {
     
     private List<Object> entities;
-    private GridController controller;
+    private GridModel controller;
     private Form formModel;
 
     public Grid() {
@@ -32,11 +32,11 @@ public class Grid extends JTable {
         setAutoResizeMode(AUTO_RESIZE_OFF);
     }
 
-    public GridController getController() {
+    public GridModel getController() {
         return controller;
     }
 
-    public void setController(GridController controller) {
+    public void setController(GridModel controller) {
         this.controller = controller;
     }
 
@@ -133,7 +133,7 @@ public class Grid extends JTable {
             return;
         }
         try {
-            entities = controller.reload();
+            entities = controller.reloadGrid();
             if (formModel == null) {
                 return;
             }

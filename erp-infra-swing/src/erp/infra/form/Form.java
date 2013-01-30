@@ -2,7 +2,7 @@ package erp.infra.form;
 
 import br.beanlinker.core.BeanLinker;
 import br.beanlinker.core.BeanLinkerImpl;
-import erp.infra.Lookup;
+import erp.infra.lookup.Lookup;
 import erp.infra.field.Field;
 import java.awt.Color;
 import java.awt.Component;
@@ -25,7 +25,7 @@ public class Form extends JPanel {
     
     private Mode mode = Mode.EMPTY;
     private String property;
-    private FormController controller;
+    private FormModel controller;
     private Object entityLayout;
 
     public Form() {
@@ -50,7 +50,7 @@ public class Form extends JPanel {
 
     public void setEntity(Object entity) {
         if (controller == null) {
-            controller = new FormController() {
+            controller = new FormModel() {
                 
                 private Object entity;
                 
@@ -102,11 +102,11 @@ public class Form extends JPanel {
         this.property = property;
     }
 
-    public FormController getController() {
+    public FormModel getController() {
         return controller;
     }
 
-    public void setController(FormController controller) {
+    public void setController(FormModel controller) {
         this.controller = controller;
     }
 
@@ -161,6 +161,7 @@ public class Form extends JPanel {
             return;
         }
         try {
+            updatePrivate(controller.getEntity());
             controller.insert();
         } catch (Exception ex) {
             Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);

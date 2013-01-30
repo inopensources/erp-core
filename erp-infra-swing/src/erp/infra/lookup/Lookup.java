@@ -1,4 +1,4 @@
-package erp.infra;
+package erp.infra.lookup;
 
 import br.beanlinker.core.BeanLinker;
 import br.beanlinker.core.BeanLinkerImpl;
@@ -18,7 +18,7 @@ import javax.swing.JTextField;
  */
 public class Lookup extends JPanel {
 
-    private LookupController controller;
+    private LookupModel controller;
     
     private String property;
     private String expression;
@@ -38,11 +38,11 @@ public class Lookup extends JPanel {
         initComponents();
     }
 
-    public LookupController getController() {
+    public LookupModel getController() {
         return controller;
     }
 
-    public void setController(LookupController controller) {
+    public void setController(LookupModel controller) {
         this.controller = controller;
     }
 
