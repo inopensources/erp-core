@@ -10,6 +10,11 @@ import javax.swing.text.PlainDocument;
 /**
  * RegexText class.
  * 
+ * TODO
+ * Numa string, ao utilizar a tecla DEL, verificar
+ * se o texto resultante e valido. Se sim, permanecer com o texto.
+ * Senao, apagar todo texto apartir dai.
+ * 
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.00.00 (30/01/2013 11:06)
  */

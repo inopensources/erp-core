@@ -101,7 +101,7 @@ public class FormUtils {
         Field field;
         //if (type == String.class) {
             field = new TextField();
-            if (field.isTypeAcceptable(type)) {
+            if (field.isAcceptableType(type)) {
                 field.init(type);
             }
         //}

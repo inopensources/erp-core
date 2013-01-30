@@ -27,11 +27,14 @@ public class TextField extends Field implements FocusListener {
         
         // Set acceptable types for this field
         new TextTypeConfig();
+        new CharacterTypeConfig();
+        new BooleanTypeConfig();
         new NumericTypeConfig();
+        new DateTypeConfig();
     }
     
     @Override
-    public boolean isTypeAcceptable(Class type) {
+    public boolean isAcceptableType(Class type) {
         return typeConfigs.containsKey(type);
     }
     
@@ -111,7 +114,7 @@ public class TextField extends Field implements FocusListener {
     public void focusLost(FocusEvent e) {
     }
 
-    // --- Type config ---
+    // --- Default type configs ---
     
     private abstract class TypeConfig {
         abstract void config();
@@ -129,6 +132,39 @@ public class TextField extends Field implements FocusListener {
         @Override
         public void config() {
             text.setRegex(".*");
+        }
+    }
+
+    private class CharacterTypeConfig extends TypeConfig {
+        CharacterTypeConfig() {
+            setAllTypeConfigs();
+        }
+        
+        private void setAllTypeConfigs() {
+            typeConfigs.put(Character.class, this);
+            typeConfigs.put(char.class, this);
+        }
+        
+        @Override
+        public void config() {
+            text.setRegex(".{1}");
+        }
+    }
+    
+    private class BooleanTypeConfig extends TypeConfig {
+        BooleanTypeConfig() {
+            setAllTypeConfigs();
+        }
+        
+        private void setAllTypeConfigs() {
+            typeConfigs.put(Boolean.class, this);
+            typeConfigs.put(boolean.class, this);
+        }
+        
+        @Override
+        public void config() {
+            // TODO internationalization
+            text.setRegex("SIM|NAO");
         }
     }
     
@@ -151,6 +187,22 @@ public class TextField extends Field implements FocusListener {
         @Override
         public void config() {
             text.setRegex("[0-9]*");
+        }
+    }
+ 
+    private class DateTypeConfig extends TypeConfig {
+        DateTypeConfig() {
+            setTypeConfig();
+        }
+        
+        private void setTypeConfig() {
+            typeConfigs.put(java.util.Date.class, this);
+        }
+        
+        @Override
+        public void config() {
+            // TODO internationalization
+            text.setRegex("[0-9]{2}/[0-9]{2}/[0-9]{4}");
         }
     }
     

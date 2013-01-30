@@ -101,7 +101,7 @@ public abstract class Field extends JPanel {
 
     // --- methods that must be implemented ---
     
-    public abstract boolean isTypeAcceptable(Class type);
+    public abstract boolean isAcceptableType(Class type);
     public abstract Set<Class> acceptableTypes();
     public abstract void init(Class type);
     public abstract boolean isEditable();
@@ -121,7 +121,7 @@ public abstract class Field extends JPanel {
         label.setText("jLabel2");
 
         setMinimumSize(new java.awt.Dimension(110, 30));
-        setPreferredSize(new java.awt.Dimension(100, 20));
+        setPreferredSize(new java.awt.Dimension(100, 25));
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
