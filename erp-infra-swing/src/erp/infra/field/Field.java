@@ -118,7 +118,7 @@ public abstract class Field extends JPanel {
 
         label = new javax.swing.JLabel();
 
-        label.setText("jLabel2");
+        label.setText("label");
 
         setMinimumSize(new java.awt.Dimension(110, 30));
         setPreferredSize(new java.awt.Dimension(100, 25));

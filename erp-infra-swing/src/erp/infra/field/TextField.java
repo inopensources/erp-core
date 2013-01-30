@@ -23,6 +23,7 @@ public class TextField extends Field implements FocusListener {
 
     public TextField() {
         initComponents();
+        text.addFocusListener(this);
         component = text;
         
         // Set acceptable types for this field
@@ -50,7 +51,8 @@ public class TextField extends Field implements FocusListener {
     public void init(Class type) {
         TypeConfig typeConfig = typeConfigs.get(type);
         if (typeConfig == null) {
-            throw new UnsupportedOperationException("Type " + type.getName() + " not supported !");
+            throw new UnsupportedOperationException("Type " 
+                    + type.getName() + " not supported !");
         }
         typeConfig.config();
     }

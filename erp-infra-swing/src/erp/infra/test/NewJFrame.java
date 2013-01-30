@@ -27,22 +27,21 @@ public class NewJFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         pais1 = new erp.infra.test.entity.Pais();
-        form2 = new erp.infra.Form();
+        form1 = new erp.infra.Form();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        form2.setEntity(pais1);
-        form2.setEntityLayout(pais1);
-        form2.setMode(erp.infra.Form.Mode.INSERT);
+        form1.setEntityLayout(pais1);
+        form1.setMode(erp.infra.Form.Mode.INSERT);
 
-        javax.swing.GroupLayout form2Layout = new javax.swing.GroupLayout(form2);
-        form2.setLayout(form2Layout);
-        form2Layout.setHorizontalGroup(
-            form2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout form1Layout = new javax.swing.GroupLayout(form1);
+        form1.setLayout(form1Layout);
+        form1Layout.setHorizontalGroup(
+            form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 587, Short.MAX_VALUE)
         );
-        form2Layout.setVerticalGroup(
-            form2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        form1Layout.setVerticalGroup(
+            form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 278, Short.MAX_VALUE)
         );
 
@@ -52,14 +51,14 @@ public class NewJFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(form2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(form1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(form2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(form1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -101,7 +100,7 @@ public class NewJFrame extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private erp.infra.Form form2;
+    private erp.infra.Form form1;
     private erp.infra.test.entity.Pais pais1;
     // End of variables declaration//GEN-END:variables
 }

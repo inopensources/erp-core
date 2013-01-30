@@ -1,5 +1,6 @@
 package erp.infra;
 
+import erp.infra.field.CheckField;
 import erp.infra.field.Field;
 import erp.infra.field.TextField;
 import java.lang.reflect.Method;
@@ -99,12 +100,16 @@ public class FormUtils {
     
     public static Field createDefaultFieldFromType(Class type) {
         Field field;
-        //if (type == String.class) {
+        if (type == Boolean.class || type == boolean.class) {
+            field = new CheckField();
+            field.init(type);
+        }
+        else {
             field = new TextField();
             if (field.isAcceptableType(type)) {
                 field.init(type);
             }
-        //}
+        }
         return field;
     }
     

@@ -27,15 +27,14 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "pais")
-@Form(id = "pais", layout = "\n"
-        + "           [id__]        [objeto_________]         \n"
+@Form(id = "pais", verticalPadding=3, layout = "\n"
+        + "           [id__]           [objeto_________]      \n"
         + "           [codbc_]                                \n"
         + "           [nome_________________________]         \n"
         + "           [s2__   ]                               \n"
         + "           [quente ]                               \n"
         + "           [datacad]                               \n"
         + "           [c]                                     \n"
-        
 )
 public class Pais implements Serializable {
     
