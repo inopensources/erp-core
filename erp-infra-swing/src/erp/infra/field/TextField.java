@@ -327,7 +327,12 @@ public class TextField extends Field implements FocusListener {
 
         @Override
         void setValue(Date value) {
-            text.setText(sdf.format(value));
+            try {
+                text.setText(sdf.format(value));
+            }
+            catch (Exception e) {
+                text.setText("");
+            }
         }
     }
     
