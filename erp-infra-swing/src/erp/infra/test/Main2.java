@@ -1,7 +1,7 @@
 package erp.infra.test;
 
-import erp.infra.Form;
-import erp.infra.FormUtils;
+import erp.infra.form.Form;
+import erp.infra.form.FormUtils;
 import erp.infra.test.entity.Pais;
 import erp.infra.test.entity.Produto;
 import java.awt.BorderLayout;

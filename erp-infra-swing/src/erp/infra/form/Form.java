@@ -1,7 +1,8 @@
-package erp.infra;
+package erp.infra.form;
 
 import br.beanlinker.core.BeanLinker;
 import br.beanlinker.core.BeanLinkerImpl;
+import erp.infra.Lookup;
 import erp.infra.field.Field;
 import java.awt.Color;
 import java.awt.Component;
@@ -126,10 +127,32 @@ public class Form extends JPanel {
             return;
         }
         try {
+            updatePrivate(controller.getEntity());
             controller.update();
         } catch (Exception ex) {
             Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }
+    
+    private void updatePrivate(Object entityPrivate) throws Exception {
+        for (Component c : getComponents()) {
+            if (c instanceof Field) {
+                BeanLinker linker = new BeanLinkerImpl();
+                linker.registerClass("Entity", entityPrivate.getClass().getName());
+                linker.registerClass("Field", Field.class.getName());
+                Field field = (Field) c;
+                linker.assign("entity", entityPrivate);
+                linker.assign("field", field);
+                if (field.getExpression() != null && !field.getExpression().trim().isEmpty()) {
+                } else if (field.getProperty() == null || field.getProperty().trim().isEmpty()) {
+                    continue;
+                } else {
+                    Object value = field.getValue();
+                    linker.assign("value", value);
+                    linker.eval("entity." + field.getProperty() + " = value");
+                }
+            }
         }
     }
 
@@ -177,11 +200,8 @@ public class Form extends JPanel {
                 } else if (field.getProperty() == null || field.getProperty().trim().isEmpty()) {
                     continue;
                 } else {
-                    Object nullTest = linker.eval("entity." + field.getProperty());
-                    if (nullTest != null) {
-                        linker.linkProperty("Entity." + field.getProperty() + ".toString()", "Field.fieldText", "", "", "", "");
-                        linker.update("entity", "field");
-                    }
+                    Object value = linker.eval("entity." + field.getProperty());
+                    field.setValue(value);
                 }
             } else if (c instanceof Lookup) {
                 BeanLinker linker = new BeanLinkerImpl();

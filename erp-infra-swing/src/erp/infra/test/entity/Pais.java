@@ -166,4 +166,9 @@ public class Pais implements Serializable {
         return true;
     }
 
+    @Override
+    public String toString() {
+        return "Pais{" + "id=" + id + ", codigoBacen=" + codigoBacen + ", nome=" + nome + ", sigla2=" + sigla2 + ", objeto=" + objeto + ", quente=" + quente + ", dataCadastro=" + dataCadastro + ", caracter=" + caracter + '}';
+    }
+
 }

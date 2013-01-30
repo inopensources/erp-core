@@ -1,6 +1,8 @@
 package erp.infra.field;
 
 import java.awt.Component;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -24,6 +26,11 @@ public abstract class Field extends JPanel {
     private boolean insertable = true;
     private boolean updatable = true;
     private boolean required = false;
+    
+    protected Class type;
+    protected TypeConfig typeConfig;
+    protected Map<Class, TypeConfig> typeConfigs 
+            = new HashMap<Class, TypeConfig>();
     
     public Field() {
         initComponents();
@@ -106,6 +113,8 @@ public abstract class Field extends JPanel {
     public abstract void init(Class type);
     public abstract boolean isEditable();
     public abstract void setEditable(boolean editable);
+    public abstract void setValue(Object value);
+    public abstract Object getValue();
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -128,4 +137,12 @@ public abstract class Field extends JPanel {
     private javax.swing.JLabel label;
     // End of variables declaration//GEN-END:variables
 
+    // --- Type config ---
+    
+    abstract class TypeConfig<T> {
+        abstract void config();
+        abstract T getValue();
+        abstract void setValue(T value);
+    }
+    
 }

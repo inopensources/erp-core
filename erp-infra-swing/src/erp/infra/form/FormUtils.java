@@ -1,4 +1,4 @@
-package erp.infra;
+package erp.infra.form;
 
 import erp.infra.field.CheckField;
 import erp.infra.field.Field;

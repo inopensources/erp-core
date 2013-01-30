@@ -2,8 +2,11 @@ package erp.infra.field;
 
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.util.HashMap;
-import java.util.Map;
+import java.lang.reflect.Constructor;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -14,12 +17,11 @@ import java.util.Set;
  */
 public class TextField extends Field implements FocusListener {
 
-    private Map<Class, TypeConfig> typeConfigs = new HashMap<Class, TypeConfig>();
-    
     // --- TextField specific properties ---
 
     private String regex = "";
     private boolean selectAllOnFocus = true;
+    private boolean editablePropertyModificable = true;
 
     public TextField() {
         initComponents();
@@ -27,6 +29,7 @@ public class TextField extends Field implements FocusListener {
         component = text;
         
         // Set acceptable types for this field
+        new ObjectTypeConfig();
         new TextTypeConfig();
         new CharacterTypeConfig();
         new BooleanTypeConfig();
@@ -49,17 +52,20 @@ public class TextField extends Field implements FocusListener {
      */
     @Override
     public void init(Class type) {
-        TypeConfig typeConfig = typeConfigs.get(type);
+        typeConfig = typeConfigs.get(type);
         if (typeConfig == null) {
             throw new UnsupportedOperationException("Type " 
                     + type.getName() + " not supported !");
         }
+        this.type = type;
         typeConfig.config();
     }
     
     @Override
     public void setEditable(boolean editable) {
-        text.setEditable(editable);
+        if (editablePropertyModificable) {
+            text.setEditable(editable);
+        }
     }
     
     @Override
@@ -67,6 +73,16 @@ public class TextField extends Field implements FocusListener {
         return text.isEditable();
     }
 
+    @Override
+    public void setValue(Object value) {
+        typeConfig.setValue(value);
+    }
+
+    @Override
+    public Object getValue() {
+        return typeConfig.getValue();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -117,12 +133,42 @@ public class TextField extends Field implements FocusListener {
     }
 
     // --- Default type configs ---
-    
-    private abstract class TypeConfig {
-        abstract void config();
+
+    private class ObjectTypeConfig extends TypeConfig<Object> {
+        private Object obj;
+        
+        ObjectTypeConfig() {
+            setTypeConfig();
+        }
+        
+        private void setTypeConfig() {
+            typeConfigs.put(Object.class, this);
+        }
+        
+        @Override
+        public void config() {
+            setEditable(false);
+            editablePropertyModificable = false;
+        }
+
+        @Override
+        Object getValue() {
+            return obj;
+        }
+
+        @Override
+        void setValue(Object value) {
+            obj = value;
+            if (obj == null) {
+                text.setText("");
+            }
+            else {
+                text.setText(obj.toString());
+            }
+        }
     }
     
-    private class TextTypeConfig extends TypeConfig {
+    private class TextTypeConfig extends TypeConfig<String> {
         TextTypeConfig() {
             setTypeConfig();
         }
@@ -135,9 +181,19 @@ public class TextField extends Field implements FocusListener {
         public void config() {
             text.setRegex(".*");
         }
+
+        @Override
+        public String getValue() {
+            return text.getText();
+        }
+
+        @Override
+        public void setValue(String value) {
+            text.setText(value);
+        }
     }
 
-    private class CharacterTypeConfig extends TypeConfig {
+    private class CharacterTypeConfig extends TypeConfig<Character> {
         CharacterTypeConfig() {
             setAllTypeConfigs();
         }
@@ -151,9 +207,24 @@ public class TextField extends Field implements FocusListener {
         public void config() {
             text.setRegex(".{1}");
         }
+
+        @Override
+        Character getValue() {
+            Character c = null;
+            try {
+                c = text.getText().charAt(0);
+            }
+            catch (Exception e) { }
+            return c;
+        }
+
+        @Override
+        void setValue(Character value) {
+            text.setText(value.toString());
+        }
     }
     
-    private class BooleanTypeConfig extends TypeConfig {
+    private class BooleanTypeConfig extends TypeConfig<Boolean> {
         BooleanTypeConfig() {
             setAllTypeConfigs();
         }
@@ -167,6 +238,25 @@ public class TextField extends Field implements FocusListener {
         public void config() {
             // TODO internationalization
             text.setRegex("SIM|NAO");
+        }
+
+        @Override
+        Boolean getValue() {
+            Boolean ret = false;
+            if (text.getText().startsWith("S")) {
+                ret = true;
+            }
+            return ret;
+        }
+
+        @Override
+        void setValue(Boolean value) {
+            if (value) {
+                text.setText("SIM");
+            }
+            else {
+                text.setText("NAO");
+            }
         }
     }
     
@@ -190,9 +280,27 @@ public class TextField extends Field implements FocusListener {
         public void config() {
             text.setRegex("[0-9]*");
         }
+
+        @Override
+        Object getValue() {
+            Object ret = null;
+            try {
+                Constructor c = type.getConstructor(String.class);
+                ret = c.newInstance(text.getText());
+            } catch (Exception ex) {
+            }
+            return ret;
+        }
+
+        @Override
+        void setValue(Object value) {
+            text.setText(value.toString());
+        }
     }
  
-    private class DateTypeConfig extends TypeConfig {
+    private class DateTypeConfig extends TypeConfig<Date> {
+        private DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        
         DateTypeConfig() {
             setTypeConfig();
         }
@@ -205,6 +313,21 @@ public class TextField extends Field implements FocusListener {
         public void config() {
             // TODO internationalization
             text.setRegex("[0-9]{2}/[0-9]{2}/[0-9]{4}");
+        }
+
+        @Override
+        Date getValue() {
+            Date ret = null;
+            try {
+                ret = sdf.parse(text.getText());
+            } catch (ParseException ex) {
+            }
+            return ret;
+        }
+
+        @Override
+        void setValue(Date value) {
+            text.setText(sdf.format(value));
         }
     }
     

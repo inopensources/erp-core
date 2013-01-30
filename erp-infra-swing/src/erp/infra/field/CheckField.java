@@ -1,7 +1,5 @@
 package erp.infra.field;
 
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -14,8 +12,6 @@ import java.util.Set;
  */
 public class CheckField extends Field {
 
-    private Map<Class, TypeConfig> typeConfigs = new HashMap<Class, TypeConfig>();
-    
     public CheckField() {
         initComponents();
         component = checkBox;
@@ -39,7 +35,7 @@ public class CheckField extends Field {
      */
     @Override
     public void init(Class type) {
-        TypeConfig typeConfig = typeConfigs.get(type);
+        typeConfig = typeConfigs.get(type);
         if (typeConfig == null) {
             throw new UnsupportedOperationException("Type " 
                     + type.getName() + " not supported !");
@@ -56,7 +52,17 @@ public class CheckField extends Field {
     public boolean isEditable() {
         return checkBox.isEnabled();
     }
+    
+    @Override
+    public void setValue(Object value) {
+        typeConfig.setValue(value);
+    }
 
+    @Override
+    public Object getValue() {
+        return typeConfig.getValue();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -90,11 +96,7 @@ public class CheckField extends Field {
 
     // --- Default type configs ---
     
-    private abstract class TypeConfig {
-        abstract void config();
-    }
-    
-    private class BooleanTypeConfig extends TypeConfig {
+    private class BooleanTypeConfig extends TypeConfig<Boolean> {
         BooleanTypeConfig() {
             setAllTypeConfigs();
         }
@@ -106,6 +108,16 @@ public class CheckField extends Field {
         
         @Override
         public void config() {
+        }
+
+        @Override
+        Boolean getValue() {
+            return checkBox.isSelected();
+        }
+
+        @Override
+        void setValue(Boolean value) {
+            checkBox.setSelected(value);
         }
     }
     

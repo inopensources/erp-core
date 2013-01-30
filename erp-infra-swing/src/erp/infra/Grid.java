@@ -1,5 +1,6 @@
 package erp.infra;
 
+import erp.infra.form.Form;
 import erp.infra.field.Field;
 import br.beanlinker.core.BeanLinker;
 import br.beanlinker.core.BeanLinkerImpl;
