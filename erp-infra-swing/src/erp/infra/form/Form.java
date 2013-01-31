@@ -128,6 +128,9 @@ public class Form extends JPanel {
     }
 
     private void reloadPrivate(Object entityPrivate) throws Exception {
+        if (entityPrivate == null) {
+            return;
+        }
         for (Component c : getComponents()) {
             if (c instanceof Field) {
                 BeanLinker linker = new BeanLinkerImpl();

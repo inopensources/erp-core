@@ -75,6 +75,9 @@ public class FormUtils {
                 
                 Field fv = createDefaultFieldFromType(types.get(id));
                 
+                fv.setInsertable(f.insertable());
+                fv.setUpdatable(f.updatable());
+                
                 int defaultHeight = fv.getPreferredSize().height;
                 fv.setLabelText(f.label());
                 int xfv = start * layoutScale;

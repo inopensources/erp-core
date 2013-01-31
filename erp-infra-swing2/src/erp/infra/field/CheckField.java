@@ -15,7 +15,7 @@ public class CheckField extends Field {
         component = checkBox;
         
         // Set acceptable types for this field
-        new BooleanTypeConfig();
+        new BooleanTypeImplementation();
     }
     
     @Override
@@ -95,10 +95,10 @@ public class CheckField extends Field {
         return checkBox.isSelected();
     }
 
-    // --- Default type configs ---
+    // --- Default type implementation ---
     
-    private class BooleanTypeConfig extends TypeConfig<Boolean> {
-        BooleanTypeConfig() {
+    private class BooleanTypeImplementation extends TypeImplementation<Boolean> {
+        BooleanTypeImplementation() {
             setAllTypeConfigs();
         }
         
