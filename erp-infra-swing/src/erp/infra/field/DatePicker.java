@@ -31,7 +31,7 @@ public class DatePicker extends javax.swing.JPanel implements ActionListener {
     private JButton[][] dayButtons = new JButton[7][7];
     
     // Provisory selection
-    private Point provSel = new Point(0, 1);
+    private Point provSel;
     
     private Color originalBackground;
     
@@ -197,6 +197,13 @@ public class DatePicker extends javax.swing.JPanel implements ActionListener {
         private Calendar calendar = Calendar.getInstance();
         private DateFormatSymbols dfs = new DateFormatSymbols();
 
+        public Model() {
+            Point newProvSel = getSelectedCell();
+            if (newProvSel != null) {
+                provSel = newProvSel;
+            }
+        }
+
         public Date getSelectedDate() {
             return selectedDate;
         }
@@ -268,7 +275,7 @@ public class DatePicker extends javax.swing.JPanel implements ActionListener {
             return selectedDate.equals(getCellDate(x, y));
         }
         
-        public Point getSelectedCell() {
+        public final Point getSelectedCell() {
             Point selectedCell = new Point();
             for (int y=0; y<7; y++) {
                 for (int x=0; x<7; x++) {

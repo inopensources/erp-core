@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 
 /**
  * Entidade Produto.
@@ -27,7 +28,7 @@ import javax.persistence.Temporal;
         + "              [codncm__]               [codgen____]           [codserv___]         \n"
         + "              [aliqicms__]             [custunit__]           [vlrvnd____]         \n"
         + "              [unidestoq_]             [pesounit__]                                \n"
-        + "              [datacad___]             [dataultatu]                                \n"
+        + "              [datacad___]             [dataultatu]           [prom      ]         \n"
 )
 public class Produto {
     
@@ -77,6 +78,9 @@ public class Produto {
     @Column(name="data_ultima_atualizacao")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     private Date dataUltimaAtualizacao;
+    
+    @Transient
+    private boolean promocao;
     
     @Field(id="id", label="Id", insertable=false, updatable=false)
     public Long getId() {
@@ -211,6 +215,15 @@ public class Produto {
 
     public void setDataUltimaAtualizacao(Date dataUltimaAtualizacao) {
         this.dataUltimaAtualizacao = dataUltimaAtualizacao;
+    }
+
+    @Field(id="prom", label="Promoção")
+    public boolean getPromocao() {
+        return promocao;
+    }
+
+    public void setPromocao(boolean promocao) {
+        this.promocao = promocao;
     }
 
     @Override

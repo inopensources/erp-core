@@ -46,6 +46,7 @@ public class DateField extends TextField implements DatePicker.ModelListener {
     private class ShowPopupAction extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
+            text.requestFocus();
             datePicker.setDate((Date) DateField.this.getValue());
             popup.show(text, 0, text.getHeight());
             datePicker.requestFocus();
@@ -63,9 +64,9 @@ public class DateField extends TextField implements DatePicker.ModelListener {
 
         button = new javax.swing.JButton();
 
-        button.setText("...");
+        button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erp/infra/images/datePicker.gif"))); // NOI18N
         button.setFocusable(false);
-        button.setPreferredSize(new java.awt.Dimension(20, 25));
+        button.setPreferredSize(new java.awt.Dimension(32, 25));
 
         setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.LINE_AXIS));
     }// </editor-fold>//GEN-END:initComponents

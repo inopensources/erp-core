@@ -31,7 +31,7 @@ public class DatePicker extends javax.swing.JPanel implements ActionListener {
     private JButton[][] dayButtons = new JButton[7][7];
     
     // Provisory selection
-    private Point provSel = new Point(0, 1);
+    private Point provSel;
     
     private Color originalBackground;
     
@@ -69,7 +69,7 @@ public class DatePicker extends javax.swing.JPanel implements ActionListener {
                 , KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_UP, 0)
                 , JComponent.WHEN_FOCUSED); 
         
-        registerKeyboardAction(new PageDownMonthKeyAction()
+        registerKeyboardAction(new PageDownKeyAction()
                 , KeyStroke.getKeyStroke(KeyEvent.VK_PAGE_DOWN, 0)
                 , JComponent.WHEN_FOCUSED); 
     }
@@ -197,6 +197,13 @@ public class DatePicker extends javax.swing.JPanel implements ActionListener {
         private Calendar calendar = Calendar.getInstance();
         private DateFormatSymbols dfs = new DateFormatSymbols();
 
+        public Model() {
+            Point newProvSel = getSelectedCell();
+            if (newProvSel != null) {
+                provSel = newProvSel;
+            }
+        }
+
         public Date getSelectedDate() {
             return selectedDate;
         }
@@ -268,7 +275,7 @@ public class DatePicker extends javax.swing.JPanel implements ActionListener {
             return selectedDate.equals(getCellDate(x, y));
         }
         
-        public Point getSelectedCell() {
+        public final Point getSelectedCell() {
             Point selectedCell = new Point();
             for (int y=0; y<7; y++) {
                 for (int x=0; x<7; x++) {
@@ -348,6 +355,7 @@ public class DatePicker extends javax.swing.JPanel implements ActionListener {
         int col = Integer.parseInt(colRow.split(",")[0]);
         int row = Integer.parseInt(colRow.split(",")[1]);
         model.setSelectedDate(model.getCellDate(col, row));
+        requestFocus();
     }
 
     // --- ModelListener ---
@@ -366,7 +374,7 @@ public class DatePicker extends javax.swing.JPanel implements ActionListener {
         this.listener = listener;
     }
     
-    // Allow user to select date through keyboard
+    // --- Allow user to select date through keyboard ---
     
     private class UpKeyAction extends AbstractAction {
         @Override
@@ -428,7 +436,7 @@ public class DatePicker extends javax.swing.JPanel implements ActionListener {
         }
     }
 
-    private class PageDownMonthKeyAction extends AbstractAction {
+    private class PageDownKeyAction extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
             model.previousMonth();
