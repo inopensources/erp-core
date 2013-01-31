@@ -1,9 +1,11 @@
 package erp.infra.form;
 
 import erp.infra.field.CheckField;
+import erp.infra.field.DateField;
 import erp.infra.field.Field;
 import erp.infra.field.TextField;
 import java.lang.reflect.Method;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -103,7 +105,10 @@ public class FormUtils {
     
     public static Field createDefaultFieldFromType(Class type) {
         Field field;
-        if (type == Boolean.class || type == boolean.class) {
+        if (type == Date.class) {
+            field = new DateField();
+        }
+        else if (type == Boolean.class || type == boolean.class) {
             field = new CheckField();
             field.init(type);
         }

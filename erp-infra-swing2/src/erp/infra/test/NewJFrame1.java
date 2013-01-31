@@ -28,6 +28,7 @@ public class NewJFrame1 extends javax.swing.JFrame {
 
         datePicker1 = new erp.infra.field.DatePicker();
         jButton1 = new javax.swing.JButton();
+        dateField1 = new erp.infra.field.DateField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,13 +52,19 @@ public class NewJFrame1 extends javax.swing.JFrame {
                         .addGap(157, 157, 157)
                         .addComponent(jButton1)))
                 .addContainerGap(194, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(dateField1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(datePicker1, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(69, 69, 69)
+                .addGap(31, 31, 31)
+                .addComponent(dateField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(13, 13, 13)
                 .addComponent(jButton1)
                 .addContainerGap(92, Short.MAX_VALUE))
         );
@@ -106,6 +113,7 @@ public class NewJFrame1 extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private erp.infra.field.DateField dateField1;
     private erp.infra.field.DatePicker datePicker1;
     private javax.swing.JButton jButton1;
     // End of variables declaration//GEN-END:variables

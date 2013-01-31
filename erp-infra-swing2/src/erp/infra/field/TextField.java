@@ -117,7 +117,7 @@ public class TextField extends Field implements FocusListener {
     }//GEN-LAST:event_textActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private erp.infra.field.RegexText text;
+    protected erp.infra.field.RegexText text;
     // End of variables declaration//GEN-END:variables
 
     // --- TextField specific properties ---
