@@ -127,6 +127,7 @@ public abstract class Field extends JPanel {
 
         label = new javax.swing.JLabel();
 
+        label.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         label.setText("label");
 
         setMinimumSize(new java.awt.Dimension(110, 30));

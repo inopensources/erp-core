@@ -186,7 +186,7 @@ public class Lookup extends JPanel {
         add(text);
 
         button.setText("...");
-        button.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        button.setBorder(null);
         button.setMaximumSize(new java.awt.Dimension(20, 23));
         button.setMinimumSize(new java.awt.Dimension(20, 23));
         button.setPreferredSize(new java.awt.Dimension(25, 23));

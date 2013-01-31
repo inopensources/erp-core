@@ -4,18 +4,16 @@
  */
 package erp.infra.test;
 
-import javax.swing.UIManager;
-
 /**
  *
- * @author leonardo
+ * @author leo
  */
-public class NewJFrame extends javax.swing.JFrame {
+public class NewJFrame1 extends javax.swing.JFrame {
 
     /**
-     * Creates new form NewJFrame
+     * Creates new form NewJFrame1
      */
-    public NewJFrame() {
+    public NewJFrame1() {
         initComponents();
     }
 
@@ -28,29 +26,34 @@ public class NewJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pais1 = new erp.infra.test.entity.Pais();
-        formModelImpl1 = new erp.infra.test.FormModelImpl();
+        produto1 = new erp.infra.test.entity.Produto();
+        formModelImplProduto1 = new erp.infra.test.FormModelImplProduto();
         form1 = new erp.infra.form.Form();
         button2 = new erp.infra.button.Button();
         button1 = new erp.infra.button.Button();
+        button5 = new erp.infra.button.Button();
         button3 = new erp.infra.button.Button();
         button4 = new erp.infra.button.Button();
-        button5 = new erp.infra.button.Button();
-        lookup1 = new erp.infra.lookup.Lookup();
+        textField1 = new erp.infra.field.TextField();
 
-        pais1.setCaracter(new java.lang.Character('A'));
-        pais1.setCodigoBacen("1058");
-        pais1.setId(new java.lang.Long(1L));
-        pais1.setNome("BRASIL");
-        pais1.setQuente(java.lang.Boolean.FALSE);
-        pais1.setSigla2("BR");
+        produto1.setCodigoGenero("a");
+        produto1.setCodigoInterno("a");
+        produto1.setCodigoNcm("a");
+        produto1.setCodigoServico("a");
+        produto1.setDescricao("sdfsdf");
+        produto1.setId(new java.lang.Long(4L));
+        produto1.setPesoUnitario("45.4");
+        produto1.setSituacao("45");
+        produto1.setTipoItem("435");
+        produto1.setUnidadeEstoque("45");
 
-        formModelImpl1.setEntity(pais1);
+        formModelImplProduto1.setEntity(produto1);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        form1.setEntityLayout(pais1);
-        form1.setFormModel(formModelImpl1);
+        form1.setEntityLayout(produto1);
+        form1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        form1.setFormModel(formModelImplProduto1);
 
         button2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/refresh16x16.png"))); // NOI18N
         button2.setText("reload");
@@ -58,48 +61,51 @@ public class NewJFrame extends javax.swing.JFrame {
         button1.setText("insert");
         button1.setType(erp.infra.button.Button.Type.INSERT);
 
+        button5.setText("cancel");
+        button5.setType(erp.infra.button.Button.Type.CANCEL);
+
         button3.setText("update");
         button3.setType(erp.infra.button.Button.Type.UPDATE);
 
         button4.setText("delete");
         button4.setType(erp.infra.button.Button.Type.DELETE);
 
-        button5.setText("cancel");
-        button5.setType(erp.infra.button.Button.Type.CANCEL);
+        textField1.setRequired(true);
 
         javax.swing.GroupLayout form1Layout = new javax.swing.GroupLayout(form1);
         form1.setLayout(form1Layout);
         form1Layout.setHorizontalGroup(
             form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(form1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lookup1, javax.swing.GroupLayout.PREFERRED_SIZE, 510, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(form1Layout.createSequentialGroup()
-                        .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(159, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(332, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, form1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(242, 242, 242))
         );
         form1Layout.setVerticalGroup(
             form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(form1Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, form1Layout.createSequentialGroup()
+                .addContainerGap(230, Short.MAX_VALUE)
+                .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
                 .addGroup(form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 273, Short.MAX_VALUE)
-                .addComponent(lookup1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(83, 83, 83))
+                .addGap(35, 35, 35))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -132,22 +138,27 @@ public class NewJFrame extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewJFrame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewJFrame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewJFrame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewJFrame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewJFrame().setVisible(true);
+                new NewJFrame1().setVisible(true);
             }
         });
     }
@@ -158,8 +169,8 @@ public class NewJFrame extends javax.swing.JFrame {
     private erp.infra.button.Button button4;
     private erp.infra.button.Button button5;
     private erp.infra.form.Form form1;
-    private erp.infra.test.FormModelImpl formModelImpl1;
-    private erp.infra.lookup.Lookup lookup1;
-    private erp.infra.test.entity.Pais pais1;
+    private erp.infra.test.FormModelImplProduto formModelImplProduto1;
+    private erp.infra.test.entity.Produto produto1;
+    private erp.infra.field.TextField textField1;
     // End of variables declaration//GEN-END:variables
 }

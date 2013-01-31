@@ -1,5 +1,6 @@
 package erp.infra.field;
 
+import java.awt.KeyboardFocusManager;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.lang.reflect.Constructor;
@@ -75,11 +76,17 @@ public class TextField extends Field implements FocusListener {
 
     @Override
     public void setValue(Object value) {
+        if (typeConfig == null) {
+            return;
+        }
         typeConfig.setValue(value);
     }
 
     @Override
     public Object getValue() {
+        if (typeConfig == null) {
+            return null;
+        }
         return typeConfig.getValue();
     }
     
@@ -95,8 +102,20 @@ public class TextField extends Field implements FocusListener {
         text = new erp.infra.field.RegexText();
 
         setLayout(new java.awt.BorderLayout());
+
+        text.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        text.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textActionPerformed(evt);
+            }
+        });
         add(text, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void textActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textActionPerformed
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().focusNextComponent();
+    }//GEN-LAST:event_textActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private erp.infra.field.RegexText text;
     // End of variables declaration//GEN-END:variables
