@@ -62,11 +62,11 @@ public class DatePicker extends javax.swing.JPanel implements ActionListener {
     }
 
     public void setDate(Date date) {
-        model.setDate(date);
+        model.setSelectedDate(date);
     }
     
     public Date getDate() {
-        return model.getDate();
+        return model.getSelectedDate();
     }
     
     /**
@@ -144,13 +144,22 @@ public class DatePicker extends javax.swing.JPanel implements ActionListener {
         private Date selectedDate = date;
         private Calendar calendar = Calendar.getInstance();
         private DateFormatSymbols dfs = new DateFormatSymbols();
-        
-        public Date getDate() {
+
+        public Date getSelectedDate() {
             return selectedDate;
         }
 
-        public void setDate(Date date) {
-            this.selectedDate = date;
+        public void setSelectedDate(Date selectedDate) {
+            this.selectedDate = selectedDate;
+            if (selectedDate != null) {
+                setDate(selectedDate);
+            }
+            else {
+                updateView();
+            }
+        }
+        
+        private void setDate(Date date) {
             if (date != null) {
                 this.date = date;
             }
@@ -199,7 +208,7 @@ public class DatePicker extends javax.swing.JPanel implements ActionListener {
             if (selectedDate == null) {
                 return false;
             }
-            return date.equals(getCellDate(x, y));
+            return selectedDate.equals(getCellDate(x, y));
         }
         
         public void nextMonth() {
@@ -260,7 +269,7 @@ public class DatePicker extends javax.swing.JPanel implements ActionListener {
         String colRow = panel.getClientProperty(e.getSource()).toString();
         int col = Integer.parseInt(colRow.split(",")[0]);
         int row = Integer.parseInt(colRow.split(",")[1]);
-        model.setDate(model.getCellDate(col, row));
+        model.setSelectedDate(model.getCellDate(col, row));
     }
     
     // Test
