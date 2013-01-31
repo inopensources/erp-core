@@ -8,6 +8,7 @@ package erp.infra.form;
  */
 public interface FormModelListener {
     
+    public abstract void updateModel();
     public abstract void modeChanged();
     public abstract void entityChanged();
     public abstract void reloaded();

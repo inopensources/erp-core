@@ -48,4 +48,10 @@ public class FormModelImpl implements FormModel<Pais> {
         System.out.println("delete");
     }
 
+    @Override
+    public Pais newInstance() throws Exception {
+        System.out.println("newInstance");
+        return new Pais();
+    }
+
 }

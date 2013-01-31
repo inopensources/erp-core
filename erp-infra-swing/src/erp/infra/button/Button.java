@@ -18,6 +18,7 @@ import javax.swing.JButton;
 public class Button extends JButton implements FormModelListener {
     
     private static BeanLinker linker = new BeanLinkerImpl();
+
   
     public enum Type { 
         RELOAD("model.reload()"), 
@@ -225,6 +226,10 @@ public class Button extends JButton implements FormModelListener {
         }
     }
 
+    @Override
+    public void updateModel() {
+    }
+    
     @Override
     public void entityChanged() {
     }

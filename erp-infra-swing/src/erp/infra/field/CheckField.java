@@ -115,7 +115,12 @@ public class CheckField extends Field {
 
         @Override
         void setValue(Boolean value) {
-            checkBox.setSelected(value);
+            if (value == null) {
+                checkBox.setSelected(false);
+            }
+            else {
+                checkBox.setSelected(value);
+            }
         }
     }
     

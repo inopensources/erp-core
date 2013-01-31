@@ -1,6 +1,7 @@
 package erp.infra.form;
 
 import erp.infra.form.Form.Mode;
+import erp.infra.test.entity.Pais;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class WrapperFormModel<T> implements FormModel<T> {
 
     private FormModel<T> formModel;
     
-    private Mode mode = Mode.EMPTY;
+    private Mode mode = Mode.READ_ONLY;
     private List<FormModelListener> listeners = new ArrayList<FormModelListener>();
 
     public WrapperFormModel(FormModel<T> formModel) {
@@ -37,7 +38,9 @@ public class WrapperFormModel<T> implements FormModel<T> {
     public void setMode(Mode mode) {
         boolean changed = (this.mode != mode);
         this.mode = mode;
-        fireModeChanged();
+        if (changed) {
+            fireModeChanged();
+        }
     }
 
     @Override
@@ -69,20 +72,25 @@ public class WrapperFormModel<T> implements FormModel<T> {
         }
         else if (mode == Mode.UPDATE) {
             System.out.println("update");
+            fireUpdateModel();
             formModel.update();
             fireUpdated();
+            setMode(Mode.READ_ONLY);
         }
     }
 
     @Override
     public void insert() throws Exception {
         if (mode == Mode.READ_ONLY) {
+            setEntity(newInstance());
             setMode(Mode.INSERT);
         }
         else if (mode == Mode.INSERT) {
             System.out.println("insert");
+            fireUpdateModel();
             formModel.insert();
             fireInserted();
+            setMode(Mode.READ_ONLY);
         }
     }
 
@@ -98,6 +106,13 @@ public class WrapperFormModel<T> implements FormModel<T> {
         System.out.println("cancel");
         formModel.cancel();
         fireCanceled();
+        setMode(Mode.READ_ONLY);
+    }
+    
+    protected void fireUpdateModel() {
+        for (FormModelListener listener : listeners) {
+            listener.updateModel();
+        }
     }
     
     protected void fireModeChanged() {
@@ -140,6 +155,11 @@ public class WrapperFormModel<T> implements FormModel<T> {
         for (FormModelListener listener : listeners) {
             listener.deleted();
         }
+    }
+
+    @Override
+    public T newInstance() throws Exception {
+        return formModel.newInstance();
     }
     
 }

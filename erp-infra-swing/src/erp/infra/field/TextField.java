@@ -158,12 +158,11 @@ public class TextField extends Field implements FocusListener {
 
         @Override
         void setValue(Object value) {
-            obj = value;
-            if (obj == null) {
+            if (value == null) {
                 text.setText("");
             }
             else {
-                text.setText(obj.toString());
+                text.setText(value.toString());
             }
         }
     }
@@ -189,7 +188,12 @@ public class TextField extends Field implements FocusListener {
 
         @Override
         public void setValue(String value) {
-            text.setText(value);
+            if (value == null) {
+                text.setText("");
+            }
+            else {
+                text.setText(value);
+            }
         }
     }
 
@@ -220,7 +224,12 @@ public class TextField extends Field implements FocusListener {
 
         @Override
         void setValue(Character value) {
-            text.setText(value.toString());
+            if (value == null) {
+                text.setText("");
+            }
+            else {
+                text.setText(value.toString());
+            }
         }
     }
     
@@ -251,7 +260,7 @@ public class TextField extends Field implements FocusListener {
 
         @Override
         void setValue(Boolean value) {
-            if (value) {
+            if (value != null && value) {
                 text.setText("SIM");
             }
             else {
@@ -294,7 +303,12 @@ public class TextField extends Field implements FocusListener {
 
         @Override
         void setValue(Object value) {
-            text.setText(value.toString());
+            if (value == null) {
+                text.setText("");
+            }
+            else {
+                text.setText(value.toString());
+            }
         }
     }
  

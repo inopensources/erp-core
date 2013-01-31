@@ -16,5 +16,6 @@ public interface FormModel<T> {
     public void insert() throws Exception;
     public void delete() throws Exception;
     public void cancel() throws Exception;
+    public T newInstance() throws Exception;
     
 }

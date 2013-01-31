@@ -3,8 +3,8 @@ package erp.infra.form;
 import br.beanlinker.core.BeanLinker;
 import br.beanlinker.core.BeanLinkerImpl;
 import erp.infra.button.Button;
-import erp.infra.lookup.Lookup;
 import erp.infra.field.Field;
+import erp.infra.lookup.Lookup;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FontMetrics;
@@ -22,84 +22,27 @@ import javax.swing.JPanel;
  */
 public class Form extends JPanel {
 
-    public enum Mode { EMPTY, INSERT, UPDATE, READ_ONLY, CUSTOM }
+    public enum Mode { EMPTY, READ_ONLY, INSERT, UPDATE }
     
-    private Mode mode = Mode.EMPTY;
-    private String property;
-    private FormModel controller;
-    private Object entityLayout;
     private FormModelListenerImpl formModelListenerImpl = new FormModelListenerImpl();
-    
+
+    private String property;
+    private Object entityLayout;
     private WrapperFormModel formModel;
+
+    // Enquanto nao tiver formModel setado, armazena localmente 
+    //private Mode mode = Mode.READ_ONLY;
+    //private Object entity;
 
     public Form() {
         initComponents();
     }
 
     public Mode getMode() {
-        return mode;
-    }
-
-    public void setMode(Mode mode) {
-        this.mode = mode;
-        repaint();
-    }
-
-    public Object getEntity() {
-        if (controller == null) {
-            return null;
+        if (formModel != null) {
+            return formModel.getMode();
         }
-        return controller.getEntity();
-    }
-
-    public void setEntity(Object entity) {
-        if (controller == null) {
-            controller = new FormModel() {
-                
-                private Object entity;
-                
-                @Override
-                public Object getEntity() {
-                    return entity;
-                }
-
-                @Override
-                public void setEntity(Object entity) {
-                    this.entity = entity;
-                }
-
-                @Override
-                public void reload() throws Exception {
-                }
-
-                @Override
-                public void update() throws Exception {
-                }
-
-                @Override
-                public void insert() throws Exception {
-                }
-
-                @Override
-                public void delete() throws Exception {
-                }
-
-                @Override
-                public void cancel() throws Exception {
-                }
-            };
-        }
-        
-        if (controller != null) {
-            controller.setEntity(entity);
-        }
-        try {
-            if (entity != null) {
-                reloadPrivate(entity);
-            }
-        } catch (Exception ex) {
-            // throw new RuntimeException(ex);
-        }
+        return null;
     }
 
     public String getProperty() {
@@ -110,40 +53,34 @@ public class Form extends JPanel {
         this.property = property;
     }
 
-    public FormModel getController() {
-        return controller;
+    public WrapperFormModel getController() {
+        return formModel;
     }
 
-    public void setController(FormModel controller) {
-        this.controller = controller;
+    public void setController(WrapperFormModel controller) {
+        this.formModel = controller;
     }
 
     public void delete() {
-        if (controller == null) {
-            return;
-        }
-        try {
-            controller.delete();
-        } catch (Exception ex) {
-            Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        }
     }
 
-    public void update() {
-        if (controller == null) {
+    public void updateModel() {
+        if (formModel == null) {
             return;
         }
         try {
-            updatePrivate(controller.getEntity());
-            controller.update();
+            updateModelPrivate(formModel.getEntity());
         } catch (Exception ex) {
             Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }
     
-    private void updatePrivate(Object entityPrivate) throws Exception {
+    private void updateModelPrivate(Object entityPrivate) throws Exception {
+        if (entityPrivate == null) {
+            return;
+        }
+        
         for (Component c : getComponents()) {
             if (c instanceof Field) {
                 BeanLinker linker = new BeanLinkerImpl();
@@ -165,12 +102,12 @@ public class Form extends JPanel {
     }
 
     public void insert() {
-        if (controller == null) {
+        if (formModel == null) {
             return;
         }
         try {
-            updatePrivate(controller.getEntity());
-            controller.insert();
+            updateModelPrivate(formModel.getEntity());
+            formModel.insert();
         } catch (Exception ex) {
             Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -178,16 +115,11 @@ public class Form extends JPanel {
     }
 
     public void reload() {
-        if (controller == null) {
+        if (formModel == null) {
             return;
         }
         try {
-            controller.reload();
-            if (controller.getEntity() == null) {
-                setMode(Mode.EMPTY);
-                return;
-            }
-            reloadPrivate(controller.getEntity());
+            reloadPrivate(formModel.getEntity());
         } catch (Exception ex) {
             Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -280,28 +212,28 @@ public class Form extends JPanel {
                     g.drawString("*", c.getBounds().x + c.getBounds().width + 3, c.getBounds().y + (fontHeight / 2));
                 }
 
-                if (mode == Mode.EMPTY) {
+                if (getMode() == Mode.EMPTY) {
                     field.setEditable(false);
                     // field.getText().setText("");
-                } else if (mode == Mode.READ_ONLY) {
+                } else if (getMode() == Mode.READ_ONLY) {
                     field.setEditable(false);
-                } else if (mode == Mode.UPDATE) {
+                } else if (getMode() == Mode.UPDATE) {
                     field.setEditable(field.isUpdatable());
-                } else if (mode == Mode.INSERT) {
+                } else if (getMode() == Mode.INSERT) {
                     field.setEditable(field.isInsertable());
                 } else {
                     field.setEditable(true);
                 }
             } else if (c instanceof Lookup) {
                 Lookup looku = (Lookup) c;
-                if (mode == Mode.EMPTY) {
+                if (getMode() == Mode.EMPTY) {
                     looku.getText().setEditable(false);
                     // field.getText().setText("");
-                } else if (mode == Mode.READ_ONLY) {
+                } else if (getMode() == Mode.READ_ONLY) {
                     looku.getText().setEditable(false);
-                } else if (mode == Mode.UPDATE) {
+                } else if (getMode() == Mode.UPDATE) {
                     looku.getText().setEditable(looku.isEditableOnUpdate());
-                } else if (mode == Mode.INSERT) {
+                } else if (getMode() == Mode.INSERT) {
                     looku.getText().setEditable(looku.isEditableOnInsert());
                 } else {
                     looku.getText().setEditable(true);
@@ -337,7 +269,6 @@ public class Form extends JPanel {
     public void setFormModel(FormModel formModel) {
         this.formModel = new WrapperFormModel(formModel);
         this.formModel.addListener(formModelListenerImpl);
-        this.formModel.setEntity(getEntity());
         for (Component comp : getComponents()) {
             if (comp instanceof Button && this.formModel != null) {
                 System.out.println("-------> ADICIONANDO BUTTON FORM MODEL setFormModel <-------------");
@@ -345,6 +276,9 @@ public class Form extends JPanel {
                 button.setEntityModel(this.formModel);
             }
         }
+        reload();
+        this.formModel.setMode(Mode.EMPTY);
+        this.formModel.setMode(Mode.READ_ONLY);
     }
 
     @Override
@@ -354,14 +288,14 @@ public class Form extends JPanel {
             Button button = (Button) comp;
             button.setEntityModel(formModel);
         }
-        return super.add(comp);
+        Component ret = super.add(comp);
+        return ret;
     }
     
     private class FormModelListenerImpl implements FormModelListener {
         @Override
         public void modeChanged() {
-            System.out.println("form modeChanged");
-            setMode(formModel.getMode());
+            repaint();
         }
 
         @Override
@@ -398,6 +332,11 @@ public class Form extends JPanel {
         public void deleted() {
             System.out.println("form deleted");
             reload();
+        }
+
+        @Override
+        public void updateModel() {
+            Form.this.updateModel();
         }
     }
     

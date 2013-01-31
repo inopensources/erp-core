@@ -108,4 +108,9 @@ public class GridModelImpl implements GridModel<Pais>, NavigationModel {
         System.out.println("cancel");
     }
 
+    @Override
+    public Pais newInstance() throws Exception {
+        return new Pais();
+    }
+
 }

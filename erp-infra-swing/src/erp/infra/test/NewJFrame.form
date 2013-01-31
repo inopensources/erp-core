@@ -13,6 +13,11 @@
       </Properties>
     </Component>
     <Component class="erp.infra.test.FormModelImpl" name="formModelImpl1">
+      <Properties>
+        <Property name="entity" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection component="pais1" type="bean"/>
+        </Property>
+      </Properties>
     </Component>
   </NonVisualComponents>
   <Properties>
@@ -56,14 +61,11 @@
   <SubComponents>
     <Container class="erp.infra.form.Form" name="form1">
       <Properties>
-        <Property name="entity" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection component="pais1" type="bean"/>
-        </Property>
         <Property name="entityLayout" type="java.lang.Object" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection component="pais1" type="bean"/>
         </Property>
-        <Property name="mode" type="erp.infra.form.Form$Mode" editor="org.netbeans.modules.form.editors.EnumEditor">
-          <Value id="READ_ONLY"/>
+        <Property name="formModel" type="erp.infra.form.FormModel" editor="org.netbeans.modules.form.ComponentChooserEditor">
+          <ComponentRef name="formModelImpl1"/>
         </Property>
       </Properties>
 
@@ -76,11 +78,11 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="button1" min="-2" pref="116" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
+                  <Component id="button5" min="-2" pref="116" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Component id="button3" min="-2" pref="116" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="button4" min="-2" pref="116" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="button5" min="-2" pref="116" max="-2" attributes="0"/>
                   <EmptySpace pref="143" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -98,7 +100,7 @@
                       </Group>
                       <Component id="button2" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="330" max="32767" attributes="0"/>
+                  <EmptySpace pref="384" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
