@@ -1,14 +1,17 @@
 package erp.infra.field;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.Date;
 import javax.swing.AbstractAction;
+import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 import javax.swing.JPopupMenu;
 import javax.swing.KeyStroke;
+import javax.swing.SwingUtilities;
 
 /**
  * DateField class.
@@ -24,6 +27,7 @@ public class DateField extends TextField implements DatePicker.ModelListener {
     
     public DateField() {
         initComponents();
+        popup.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         popup.setLayout(new BorderLayout());
         popup.add(datePicker, BorderLayout.CENTER);
         popup.setPreferredSize(new Dimension(250, 150));
@@ -49,7 +53,16 @@ public class DateField extends TextField implements DatePicker.ModelListener {
             text.requestFocus();
             datePicker.setDate((Date) DateField.this.getValue());
             popup.show(text, 0, text.getHeight());
-            datePicker.requestFocus();
+            
+            // Garante que o foco fique em datePicker
+            // necessario para que o usuario possa selecionar
+            // a data atraves do teclado
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    datePicker.requestFocus();
+                }
+            });
         }
     }
 
