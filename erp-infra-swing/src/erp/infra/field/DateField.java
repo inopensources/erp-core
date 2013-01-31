@@ -66,6 +66,23 @@ public class DateField extends TextField implements DatePicker.ModelListener {
         }
     }
 
+    @Override
+    public void setEditable(boolean editable) {
+        super.setEditable(editable);
+        button.setEnabled(editable);
+        
+        button.removeActionListener(showPopupAction);
+        text.unregisterKeyboardAction(
+                KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0));
+        
+        if (editable) {
+            button.addActionListener(showPopupAction);
+            text.registerKeyboardAction(showPopupAction
+                    , KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0)
+                    , JComponent.WHEN_FOCUSED); 
+        }
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
