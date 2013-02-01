@@ -35,11 +35,10 @@ public class DatePicker extends javax.swing.JPanel implements ActionListener {
     
     private Color originalBackground;
     
-    
     public DatePicker() {
         initComponents();
         createDayButtons();
-        originalBackground = dayButtons[0][0].getBackground();
+        originalBackground = labelMonthYear.getBackground();
         registerAllKeyboardActions();
         updateView();
     }
@@ -82,6 +81,7 @@ public class DatePicker extends javax.swing.JPanel implements ActionListener {
                     
                     @Override
                     protected void paintComponent(Graphics g) {
+                        label.setFont(getFont());
                         label.setText(getText());
                         label.setBounds(0, 0, getWidth(), getHeight());
                         label.setHorizontalAlignment(CENTER);
@@ -96,6 +96,7 @@ public class DatePicker extends javax.swing.JPanel implements ActionListener {
                 Cursor handCursor
                         = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
                 
+                button.setFont(labelMonthYear.getFont());
                 button.setCursor(handCursor);
                 button.setOpaque(true);
                 button.setFocusable(false);
@@ -135,8 +136,10 @@ public class DatePicker extends javax.swing.JPanel implements ActionListener {
         jPanel1.setMinimumSize(new java.awt.Dimension(0, 20));
         jPanel1.setLayout(new java.awt.BorderLayout());
 
+        buttonNextMonth.setFont(new java.awt.Font("Arial", 1, 15)); // NOI18N
         buttonNextMonth.setText(">");
-        buttonNextMonth.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        buttonNextMonth.setBorder(null);
+        buttonNextMonth.setBorderPainted(false);
         buttonNextMonth.setFocusable(false);
         buttonNextMonth.setMaximumSize(new java.awt.Dimension(30, 23));
         buttonNextMonth.setMinimumSize(new java.awt.Dimension(30, 23));
@@ -148,8 +151,10 @@ public class DatePicker extends javax.swing.JPanel implements ActionListener {
         });
         jPanel1.add(buttonNextMonth, java.awt.BorderLayout.LINE_END);
 
+        buttonPreviousMonth.setFont(new java.awt.Font("Arial", 1, 15)); // NOI18N
         buttonPreviousMonth.setText("<");
-        buttonPreviousMonth.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        buttonPreviousMonth.setBorder(null);
+        buttonPreviousMonth.setBorderPainted(false);
         buttonPreviousMonth.setFocusable(false);
         buttonPreviousMonth.setMaximumSize(new java.awt.Dimension(30, 23));
         buttonPreviousMonth.setMinimumSize(new java.awt.Dimension(30, 23));
@@ -161,7 +166,7 @@ public class DatePicker extends javax.swing.JPanel implements ActionListener {
         });
         jPanel1.add(buttonPreviousMonth, java.awt.BorderLayout.LINE_START);
 
-        labelMonthYear.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        labelMonthYear.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         labelMonthYear.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelMonthYear.setText("Month 9999");
         labelMonthYear.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
