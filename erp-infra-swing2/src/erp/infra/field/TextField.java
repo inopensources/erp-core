@@ -104,12 +104,22 @@ public class TextField extends Field implements FocusListener {
                 textActionPerformed(evt);
             }
         });
+        text.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textFocusLost(evt);
+            }
+        });
         add(text, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void textActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textActionPerformed
         KeyboardFocusManager.getCurrentKeyboardFocusManager().focusNextComponent();
     }//GEN-LAST:event_textActionPerformed
+
+    private void textFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textFocusLost
+        // TODO permitir usuario definir se valida o valor agora ou nao ?
+        setValue(getValue());
+    }//GEN-LAST:event_textFocusLost
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     protected erp.infra.field.RegexText text;
