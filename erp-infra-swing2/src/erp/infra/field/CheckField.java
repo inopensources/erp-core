@@ -23,11 +23,6 @@ public class CheckField extends Field {
         return typeConfigs.containsKey(type);
     }
     
-    @Override
-    public Set<Class> acceptableTypes() {
-        return typeConfigs.keySet();
-    }
-    
     /**
      * Inicia as configuracoes padroes para cada tipo aceitavel.
      */

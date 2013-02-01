@@ -43,11 +43,6 @@ public class TextField extends Field implements FocusListener {
         return typeConfigs.containsKey(type);
     }
     
-    @Override
-    public Set<Class> acceptableTypes() {
-        return typeConfigs.keySet();
-    }
-    
     /**
      * Inicia as configuracoes padroes para cada tipo aceitavel.
      */

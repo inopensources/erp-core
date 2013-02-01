@@ -109,7 +109,6 @@ public abstract class Field extends JPanel {
     // --- methods that must be implemented ---
     
     public abstract boolean isAcceptableType(Class type);
-    public abstract Set<Class> acceptableTypes();
     public abstract void init(Class type);
     public abstract boolean isEditable();
     public abstract void setEditable(boolean editable);
