@@ -3,7 +3,6 @@ package erp.infra.field;
 import java.awt.Component;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 

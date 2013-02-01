@@ -1,7 +1,20 @@
 package erp.infra.field;
 
 import erp.infra.annotation.Form;
-import java.util.Set;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
+import javax.swing.BorderFactory;
+import javax.swing.JList;
+import javax.swing.JPopupMenu;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * LookupField class.
@@ -11,8 +24,36 @@ import java.util.Set;
  */
 public class LookupField extends Field {
 
+    private JPopupMenu popup = new JPopupMenu();
+    private Model model;
+    private String labelExpression;
+    private ModelListener modelListener = new ModelListenerImpl();
+    
     public LookupField() {
         initComponents();
+        setModel(new Model());
+
+        popup.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        popup.setLayout(new BorderLayout());
+        popup.add(new JList(new String[] {"aaa", "bbb", "ccc", "ddd"}), BorderLayout.CENTER);
+        popup.setPreferredSize(new Dimension(250, 150));
+    }
+
+    public Model getModel() {
+        return model;
+    }
+
+    public final void setModel(Model model) {
+        this.model = model;
+        model.addListener(modelListener);
+    }
+
+    public String getLabelExpression() {
+        return labelExpression;
+    }
+
+    public void setLabelExpression(String labelExpression) {
+        this.labelExpression = labelExpression;
     }
 
     /**
@@ -34,6 +75,22 @@ public class LookupField extends Field {
 
         splitPane.setBorder(null);
         splitPane.setDividerLocation(100);
+
+        text.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textActionPerformed(evt);
+            }
+        });
+        text.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                textFocusLost(evt);
+            }
+        });
+        text.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                textKeyTyped(evt);
+            }
+        });
         splitPane.setLeftComponent(text);
 
         panel.setLayout(new java.awt.BorderLayout());
@@ -43,13 +100,35 @@ public class LookupField extends Field {
         panel.add(label, java.awt.BorderLayout.CENTER);
 
         button.setText("...");
+        button.setFocusable(false);
         button.setPreferredSize(new java.awt.Dimension(32, 23));
+        button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonActionPerformed(evt);
+            }
+        });
         panel.add(button, java.awt.BorderLayout.LINE_START);
 
         splitPane.setRightComponent(panel);
 
         add(splitPane);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void textActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textActionPerformed
+        model.initLookup(text.getText());
+    }//GEN-LAST:event_textActionPerformed
+
+    private void textFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textFocusLost
+        model.initLookup(text.getText());
+    }//GEN-LAST:event_textFocusLost
+
+    private void buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonActionPerformed
+        throw new NotImplementedException();
+    }//GEN-LAST:event_buttonActionPerformed
+
+    private void textKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textKeyTyped
+        model.initUpdateList(text.getText());
+    }//GEN-LAST:event_textKeyTyped
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button;
@@ -67,7 +146,10 @@ public class LookupField extends Field {
 
     @Override
     public void init(Class type) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        if (!isAcceptableType(type)) {
+            throw new RuntimeException("Class " + type.getName() 
+                    + " is not a acceptable type for LookupField !");
+        }
     }
 
     @Override
@@ -83,12 +165,121 @@ public class LookupField extends Field {
 
     @Override
     public void setValue(Object value) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        model.setSelectedEntity(value);
     }
 
     @Override
     public Object getValue() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return model.getSelectedEntity();
+    }
+
+    public void updateView() {
+        try {
+            ScriptEngine se = new ScriptEngineManager().getEngineByName("JavaScript");
+            se.put("entity", model.getSelectedEntity());
+            text.setText(se.eval("entity." + model.getLookupProperty()).toString());
+            label.setText(se.eval(labelExpression).toString());
+        } catch (ScriptException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+    
+    public void updateList() {
+        popup.show(text, 0, text.getHeight());
+    }
+    
+    // --- Model ---
+    
+    public static class Model<T> {
+        protected T selectedEntity;
+        protected String lookupProperty;
+        private List<ModelListener> listeners 
+                = new ArrayList<ModelListener>();
+        private List<T> list = new ArrayList<T>();
+        
+        public T getSelectedEntity() {
+            return selectedEntity;
+        }
+
+        public void setSelectedEntity(T selectedEntity) {
+            this.selectedEntity = selectedEntity;
+        }
+
+        public String getLookupProperty() {
+            return lookupProperty;
+        }
+
+        public void setLookupProperty(String lookupProperty) {
+            this.lookupProperty = lookupProperty;
+        }
+        
+        private void initLookup(String value) {
+            Object old = selectedEntity;
+            lookup(value);
+            if (old != selectedEntity) {
+                fireSelectedEntityChanged();
+            }
+        }
+        
+        private void initUpdateList(String value) {
+            Object old = list;
+            updateList(value);
+            if (old != list) {
+                fireListChanged();
+            }
+        }
+        
+        public void lookup(String value) {
+            // must be implemented
+        }
+        
+        public void updateList(String value) {
+            // must be implemented
+        }
+        
+        // --- Listener ---
+        
+        public void addListener(ModelListener listener) {
+            listeners.add(listener);
+        }
+        
+        public void removeListener(ModelListener listener) {
+            listeners.remove(listener);
+        }
+        
+        private void fireSelectedEntityChanged() {
+            for (ModelListener listener : listeners) {
+                listener.selectedEntityChanged();
+            }
+        }
+
+        private void fireListChanged() {
+            for (ModelListener listener : listeners) {
+                listener.listChanged();
+            }
+        }
+        
+    }
+
+    // --- ModelListener ---
+    
+    public static interface ModelListener {
+        void selectedEntityChanged();
+        void listChanged();
+    }
+
+    // --- ModelListener implementation for this view ---
+    
+    private class ModelListenerImpl implements ModelListener {
+        @Override
+        public void selectedEntityChanged() {
+            updateView();
+        }
+
+        @Override
+        public void listChanged() {
+            updateList();
+        }
     }
     
 }

@@ -28,11 +28,14 @@ public class NewJFrame1 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lookupModel1 = new erp.infra.test.LookupModel();
         jButton1 = new javax.swing.JButton();
         dateField1 = new erp.infra.field.DateField();
         dateField2 = new erp.infra.field.DateField();
         datePicker2 = new erp.infra.field.DatePicker();
         lookupField1 = new erp.infra.field.LookupField();
+
+        lookupModel1.setLookupProperty("id");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -46,6 +49,9 @@ public class NewJFrame1 extends javax.swing.JFrame {
         datePicker2.setBackground(new java.awt.Color(255, 255, 255));
         datePicker2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
+        lookupField1.setLabelExpression("entity.id + ' - ' + entity.nome");
+        lookupField1.setModel(lookupModel1);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -56,19 +62,18 @@ public class NewJFrame1 extends javax.swing.JFrame {
                 .addGap(50, 50, 50))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(dateField2, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(layout.createSequentialGroup()
-                            .addGap(157, 157, 157)
-                            .addComponent(jButton1)
-                            .addGap(28, 28, 28)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(datePicker2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
-                        .addComponent(lookupField1, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(211, Short.MAX_VALUE))
+                        .addGap(112, 112, 112)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lookupField1, javax.swing.GroupLayout.PREFERRED_SIZE, 504, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(45, 45, 45)
+                                .addComponent(jButton1))
+                            .addComponent(dateField2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(71, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -81,9 +86,9 @@ public class NewJFrame1 extends javax.swing.JFrame {
                 .addComponent(jButton1)
                 .addGap(27, 27, 27)
                 .addComponent(dateField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lookupField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(64, 64, 64))
+                .addContainerGap(132, Short.MAX_VALUE))
         );
 
         pack();
@@ -135,5 +140,6 @@ public class NewJFrame1 extends javax.swing.JFrame {
     private erp.infra.field.DatePicker datePicker2;
     private javax.swing.JButton jButton1;
     private erp.infra.field.LookupField lookupField1;
+    private erp.infra.test.LookupModel lookupModel1;
     // End of variables declaration//GEN-END:variables
 }
