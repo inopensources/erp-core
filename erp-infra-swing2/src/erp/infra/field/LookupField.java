@@ -4,16 +4,27 @@ import erp.infra.annotation.Form;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import javax.swing.AbstractAction;
 import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
+import javax.swing.JComponent;
 import javax.swing.JList;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.KeyStroke;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
@@ -28,6 +39,10 @@ public class LookupField extends Field {
     private JList popupList = new JList(new PopupListModel());
     private JScrollPane popupScrollPane = new JScrollPane(popupList);
     
+    private EnterKeyAction enterKeyAction = new EnterKeyAction();
+    private UpKeyAction upKeyAction = new UpKeyAction();
+    private DownKeyAction downKeyAction = new DownKeyAction();
+    
     private Model model;
     private String labelExpression;
     private ModelListener modelListener = new ModelListenerImpl();
@@ -36,6 +51,7 @@ public class LookupField extends Field {
         initComponents();
         setModel(new Model());
 
+        popupList.addMouseListener(new ListMouseClicked());
         popupList.setBorder(null);
         popupScrollPane.setBorder(null);
         popup.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
@@ -43,6 +59,18 @@ public class LookupField extends Field {
         popup.add(popupScrollPane, BorderLayout.CENTER);
         popup.setPreferredSize(new Dimension(250, 150));
         popup.setFocusable(false);
+        
+        text.registerKeyboardAction(enterKeyAction
+                , KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0)
+                , JComponent.WHEN_FOCUSED); 
+        
+        text.registerKeyboardAction(upKeyAction
+                , KeyStroke.getKeyStroke(KeyEvent.VK_UP, 0)
+                , JComponent.WHEN_FOCUSED); 
+        
+        text.registerKeyboardAction(downKeyAction
+                , KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0)
+                , JComponent.WHEN_FOCUSED); 
     }
 
     public Model getModel() {
@@ -82,19 +110,14 @@ public class LookupField extends Field {
         splitPane.setBorder(null);
         splitPane.setDividerLocation(100);
 
-        text.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textActionPerformed(evt);
-            }
-        });
         text.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 textFocusLost(evt);
             }
         });
         text.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                textKeyTyped(evt);
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                textKeyReleased(evt);
             }
         });
         splitPane.setLeftComponent(text);
@@ -120,21 +143,28 @@ public class LookupField extends Field {
         add(splitPane);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textActionPerformed
-        model.initLookup(text.getText());
-    }//GEN-LAST:event_textActionPerformed
-
     private void textFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textFocusLost
         model.initLookup(text.getText());
+        popup.setVisible(false);
     }//GEN-LAST:event_textFocusLost
 
     private void buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonActionPerformed
         throw new NotImplementedException();
     }//GEN-LAST:event_buttonActionPerformed
 
-    private void textKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textKeyTyped
+    private void textKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textKeyReleased
+        if (evt.getKeyCode() == 27) {
+            popup.setVisible(false);
+            return;
+        }
+        System.out.println("textKeyReleased " + evt.getKeyCode());
+        if (!Character.isDefined(evt.getKeyChar()) 
+                || evt.getKeyCode() == 10 || evt.getKeyCode() == 13) {
+            
+            return;
+        }
         model.initUpdateList(text.getText());
-    }//GEN-LAST:event_textKeyTyped
+    }//GEN-LAST:event_textKeyReleased
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button;
@@ -183,7 +213,13 @@ public class LookupField extends Field {
         try {
             ScriptEngine se = new ScriptEngineManager().getEngineByName("JavaScript");
             se.put("entity", model.getSelectedEntity());
-            text.setText(se.eval("entity." + model.getLookupProperty()).toString());
+            System.out.println("--> " + model.getSelectedEntity());
+            System.out.println("--> " + "entity." + model.getLookupProperty());
+            Object ret = se.eval("entity." + model.getLookupProperty());
+            if (ret == null) {
+                ret = "";
+            }
+            text.setText(ret.toString());
             label.setText(se.eval(labelExpression).toString());
         } catch (ScriptException ex) {
             throw new RuntimeException(ex);
@@ -192,10 +228,13 @@ public class LookupField extends Field {
     
     public void updateList() {
         if (!popup.isVisible()) {
+            popup.setFocusable(false);
             popup.show(text, 0, text.getHeight());
         }
+        popupList.setSelectedIndex(0);
+        popupList.repaint();
         popupList.updateUI();
-        System.out.println("show popup ...");
+        System.out.println("update list");
     }
     
     // --- Model ---
@@ -212,7 +251,13 @@ public class LookupField extends Field {
         }
 
         public void setSelectedEntity(T selectedEntity) {
+            boolean valueChanged = (selectedEntity == null 
+                    || selectedEntity != this.selectedEntity);
+            
             this.selectedEntity = selectedEntity;
+            if (valueChanged) {
+                fireSelectedEntityChanged();
+            }
         }
 
         public String getLookupProperty() {
@@ -224,7 +269,12 @@ public class LookupField extends Field {
         }
 
         public void setList(List<T> list) {
+            boolean listChanged = (list == null || !list.equals(this.list));
+            System.out.println("setList listChanged " + listChanged);
             this.list = list;
+            if (listChanged) {
+                fireListChanged();
+            }
         }
 
         public void setLookupProperty(String lookupProperty) {
@@ -232,27 +282,21 @@ public class LookupField extends Field {
         }
         
         private void initLookup(String value) {
-            Object old = selectedEntity;
-            lookup(value);
-            if (old != selectedEntity) {
-                fireSelectedEntityChanged();
-            }
+            setSelectedEntity(lookup(value));
         }
         
         private void initUpdateList(String value) {
-            Object old = list;
-            updateList(value);
-            if (old == null || old.equals(list)) {
-                fireListChanged();
-            }
+            setList(updateList(value));
         }
         
-        public void lookup(String value) {
+        public T lookup(String value) {
             // must be implemented
+            return null;
         }
         
-        public void updateList(String value) {
+        public List<T> updateList(String value) {
             // must be implemented
+            return null;
         }
         
         // --- Listener ---
@@ -311,16 +355,69 @@ public class LookupField extends Field {
 
         @Override
         public Object getElementAt(int index) {
-            try {
-                ScriptEngine se = new ScriptEngineManager().getEngineByName("JavaScript");
-                se.put("entity", model.getList().get(index));
-                String labelText = se.eval(labelExpression).toString();
-                return labelText;
-            } catch (ScriptException ex) {
-                throw new RuntimeException(ex);
-            }
+            return model.getList().get(index);
         }
         
     }
-        
+
+    // --- Alow user to select list item through keyboard ---
+    
+    private class EnterKeyAction extends AbstractAction {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (popup.isVisible()) {
+                model.setSelectedEntity(popupList.getSelectedValue());
+                popup.setVisible(false);
+                System.out.println("model.setSelectedEntity(popupList.getSelectedValue());");
+            }
+            else {
+                model.initLookup(text.getText());
+                System.out.println("model.initLookup(text.getText());");
+            }
+        }
+    }
+    
+    private class UpKeyAction extends AbstractAction {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if (popup.isVisible()) {
+                int si = popupList.getSelectedIndex();
+                popupList.setSelectedIndex(--si);
+                popupList.ensureIndexIsVisible(si);
+            }
+        }
+    }
+
+    private class DownKeyAction extends AbstractAction {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            text.requestFocus();
+            if (!popup.isVisible()) {
+                popup.show(text, 0, text.getHeight());
+                popupList.setSelectedIndex(0);
+                popupList.ensureIndexIsVisible(0);
+            }
+            else {
+                int si = popupList.getSelectedIndex();
+                popupList.setSelectedIndex(++si);
+                popupList.ensureIndexIsVisible(si);
+            }
+        }
+    }
+    
+    // --- Allow user to select double clicking on a item ---
+    
+    private class ListMouseClicked extends MouseAdapter {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            if (e.getClickCount() != 2) {
+                return ;
+            }
+            System.out.println(e);
+            System.out.println("popupList.getSelectedValue()=" + popupList.getSelectedValue());
+            model.setSelectedEntity(popupList.getSelectedValue());
+            popup.setVisible(false);
+        }
+    }
+
 }
