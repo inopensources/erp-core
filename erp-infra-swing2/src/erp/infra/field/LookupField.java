@@ -3,15 +3,16 @@ package erp.infra.field;
 import erp.infra.annotation.Form;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
@@ -19,12 +20,13 @@ import javax.swing.AbstractAction;
 import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
+import javax.swing.ListCellRenderer;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
@@ -38,6 +40,7 @@ public class LookupField extends Field {
     private JPopupMenu popup = new JPopupMenu();
     private JList popupList = new JList(new PopupListModel());
     private JScrollPane popupScrollPane = new JScrollPane(popupList);
+    private JLabel popupListItemRenderComponent = new JLabel();
     
     private EnterKeyAction enterKeyAction = new EnterKeyAction();
     private UpKeyAction upKeyAction = new UpKeyAction();
@@ -49,11 +52,26 @@ public class LookupField extends Field {
     
     public LookupField() {
         initComponents();
-        setModel(new Model());
-
+        
+        setModel(new Model() {
+            @Override
+            public Object lookup(String value) throws Exception {
+                return getSelectedEntity();
+            }
+            @Override
+            public List updateList(String value) {
+                return getList();
+            }
+        });
+        
+        text.setText("");
+        label.setText("");
+        popupScrollPane.setBorder(null);
         popupList.addMouseListener(new ListMouseClicked());
         popupList.setBorder(null);
-        popupScrollPane.setBorder(null);
+        popupList.setFocusable(false);
+        popupList.setCellRenderer(new ListItemRenderer());
+        popup.setBackground(popupList.getBackground());
         popup.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         popup.setLayout(new BorderLayout());
         popup.add(popupScrollPane, BorderLayout.CENTER);
@@ -110,6 +128,7 @@ public class LookupField extends Field {
         splitPane.setBorder(null);
         splitPane.setDividerLocation(100);
 
+        text.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         text.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 textFocusLost(evt);
@@ -124,10 +143,12 @@ public class LookupField extends Field {
 
         panel.setLayout(new java.awt.BorderLayout());
 
+        label.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         label.setText("description");
         label.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 0));
         panel.add(label, java.awt.BorderLayout.CENTER);
 
+        button.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button.setText("...");
         button.setFocusable(false);
         button.setPreferredSize(new java.awt.Dimension(32, 23));
@@ -144,7 +165,7 @@ public class LookupField extends Field {
     }// </editor-fold>//GEN-END:initComponents
 
     private void textFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textFocusLost
-        model.initLookup(text.getText());
+        updateView();
         popup.setVisible(false);
     }//GEN-LAST:event_textFocusLost
 
@@ -157,7 +178,6 @@ public class LookupField extends Field {
             popup.setVisible(false);
             return;
         }
-        System.out.println("textKeyReleased " + evt.getKeyCode());
         if (!Character.isDefined(evt.getKeyChar()) 
                 || evt.getKeyCode() == 10 || evt.getKeyCode() == 13) {
             
@@ -211,10 +231,15 @@ public class LookupField extends Field {
 
     public void updateView() {
         try {
-            ScriptEngine se = new ScriptEngineManager().getEngineByName("JavaScript");
+            if (model.getSelectedEntity() == null) {
+                text.setText("");
+                label.setText("");
+                return;
+            }
+            ScriptEngine se = new ScriptEngineManager()
+                    .getEngineByName("JavaScript");
+            
             se.put("entity", model.getSelectedEntity());
-            System.out.println("--> " + model.getSelectedEntity());
-            System.out.println("--> " + "entity." + model.getLookupProperty());
             Object ret = se.eval("entity." + model.getLookupProperty());
             if (ret == null) {
                 ret = "";
@@ -227,24 +252,27 @@ public class LookupField extends Field {
     }
     
     public void updateList() {
-        if (!popup.isVisible()) {
+        if (!popup.isVisible() && model.getList().size() > 0) {
             popup.setFocusable(false);
             popup.show(text, 0, text.getHeight());
         }
-        popupList.setSelectedIndex(0);
-        popupList.repaint();
-        popupList.updateUI();
-        System.out.println("update list");
+        if (popup.isVisible() && model.getList().isEmpty()) {
+            popup.setVisible(false);
+        }
+        if (popup.isVisible()) {
+            popupList.setSelectedIndex(0);
+            popupList.updateUI();
+        }
     }
     
     // --- Model ---
     
-    public static class Model<T> {
-        protected T selectedEntity;
-        protected String lookupProperty;
-        protected List<ModelListener> listeners 
+    public abstract static class Model<T> {
+        private T selectedEntity;
+        private String lookupProperty;
+        private List<ModelListener> listeners 
                 = new ArrayList<ModelListener>();
-        protected List<T> list = new ArrayList<T>();
+        private List<T> list = new ArrayList<T>();
         
         public T getSelectedEntity() {
             return selectedEntity;
@@ -269,8 +297,9 @@ public class LookupField extends Field {
         }
 
         public void setList(List<T> list) {
-            boolean listChanged = (list == null || !list.equals(this.list));
-            System.out.println("setList listChanged " + listChanged);
+            boolean listChanged = (list == null 
+                    || !list.equals(this.list));
+            
             this.list = list;
             if (listChanged) {
                 fireListChanged();
@@ -281,7 +310,7 @@ public class LookupField extends Field {
             this.lookupProperty = lookupProperty;
         }
         
-        private void initLookup(String value) {
+        private void initLookup(String value) throws Exception {
             setSelectedEntity(lookup(value));
         }
         
@@ -289,15 +318,10 @@ public class LookupField extends Field {
             setList(updateList(value));
         }
         
-        public T lookup(String value) {
-            // must be implemented
-            return null;
-        }
+        // --- Must be implemented ---
         
-        public List<T> updateList(String value) {
-            // must be implemented
-            return null;
-        }
+        public abstract T lookup(String value) throws Exception;
+        public abstract List<T> updateList(String value);
         
         // --- Listener ---
         
@@ -346,7 +370,7 @@ public class LookupField extends Field {
     
     // --- PopupListModel implementation ---
     
-    private class PopupListModel extends AbstractListModel<Object> {
+    private class PopupListModel extends AbstractListModel {
 
         @Override
         public int getSize() {
@@ -368,11 +392,14 @@ public class LookupField extends Field {
             if (popup.isVisible()) {
                 model.setSelectedEntity(popupList.getSelectedValue());
                 popup.setVisible(false);
-                System.out.println("model.setSelectedEntity(popupList.getSelectedValue());");
             }
             else {
-                model.initLookup(text.getText());
-                System.out.println("model.initLookup(text.getText());");
+                try {
+                    model.initLookup(text.getText());
+                } catch (Exception ex) {
+                    Logger.getLogger(LookupField.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(getParent(), ex.getMessage(), ":: Atenção:", JOptionPane.ERROR_MESSAGE);
+                }
             }
         }
     }
@@ -380,7 +407,10 @@ public class LookupField extends Field {
     private class UpKeyAction extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (popup.isVisible()) {
+            if (popup.isVisible() && popupList.getSelectedIndex()==0) {
+                popup.setVisible(false);
+            }
+            else if (popup.isVisible()) {
                 int si = popupList.getSelectedIndex();
                 popupList.setSelectedIndex(--si);
                 popupList.ensureIndexIsVisible(si);
@@ -392,7 +422,7 @@ public class LookupField extends Field {
         @Override
         public void actionPerformed(ActionEvent e) {
             text.requestFocus();
-            if (!popup.isVisible()) {
+            if (!popup.isVisible() && model.getList().size() > 0) {
                 popup.show(text, 0, text.getHeight());
                 popupList.setSelectedIndex(0);
                 popupList.ensureIndexIsVisible(0);
@@ -413,11 +443,37 @@ public class LookupField extends Field {
             if (e.getClickCount() != 2) {
                 return ;
             }
-            System.out.println(e);
-            System.out.println("popupList.getSelectedValue()=" + popupList.getSelectedValue());
             model.setSelectedEntity(popupList.getSelectedValue());
             popup.setVisible(false);
         }
     }
 
+    // --- ListItemRenderer ---
+    
+    private class ListItemRenderer implements ListCellRenderer {
+        @Override
+        public Component getListCellRendererComponent(
+                JList jlist, Object entity, int i, boolean bln, boolean bln1) {
+            
+            try {
+                ScriptEngine se = new ScriptEngineManager().getEngineByName("JavaScript");
+                se.put("entity", entity);
+                popupListItemRenderComponent.setFont(label.getFont());
+                popupListItemRenderComponent.setOpaque(true);
+                popupListItemRenderComponent.setText(se.eval(labelExpression).toString());
+                if (bln) {
+                    popupListItemRenderComponent.setForeground(jlist.getSelectionForeground());
+                    popupListItemRenderComponent.setBackground(jlist.getSelectionBackground());
+                }
+                else {
+                    popupListItemRenderComponent.setForeground(jlist.getForeground());
+                    popupListItemRenderComponent.setBackground(jlist.getBackground());
+                }
+                return popupListItemRenderComponent;
+            } catch (ScriptException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+    }
+    
 }

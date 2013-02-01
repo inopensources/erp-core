@@ -22,7 +22,7 @@ public class LookupModel extends LookupField.Model<Pais> {
         List<Pais> paises = new ArrayList<Pais>();
         int n = (int) (Math.random() * 30);
         for (int i=0; i<n; i++) {
-            paises.add(new Pais(System.currentTimeMillis(), value, value, value));
+            paises.add(new Pais((long) (Math.random() * 999999), value, value, value));
         }
         return paises;
     }
