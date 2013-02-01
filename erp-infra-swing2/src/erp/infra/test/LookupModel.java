@@ -14,5 +14,15 @@ public class LookupModel extends LookupField.Model {
         Pais pais = new Pais(1L, value, value, value);
         setSelectedEntity(pais);
     }
+
+    @Override
+    public void updateList(String value) {
+        list.clear();
+        int n = (int) (Math.random() * 30);
+        for (int i=0; i<n; i++) {
+            list.add(new Pais(System.currentTimeMillis(), value, value, value));
+        }
+    }
+    
     
 }

@@ -6,14 +6,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
 import javax.swing.JList;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
@@ -25,6 +25,9 @@ import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 public class LookupField extends Field {
 
     private JPopupMenu popup = new JPopupMenu();
+    private JList popupList = new JList(new PopupListModel());
+    private JScrollPane popupScrollPane = new JScrollPane(popupList);
+    
     private Model model;
     private String labelExpression;
     private ModelListener modelListener = new ModelListenerImpl();
@@ -33,10 +36,13 @@ public class LookupField extends Field {
         initComponents();
         setModel(new Model());
 
+        popupList.setBorder(null);
+        popupScrollPane.setBorder(null);
         popup.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         popup.setLayout(new BorderLayout());
-        popup.add(new JList(new String[] {"aaa", "bbb", "ccc", "ddd"}), BorderLayout.CENTER);
+        popup.add(popupScrollPane, BorderLayout.CENTER);
         popup.setPreferredSize(new Dimension(250, 150));
+        popup.setFocusable(false);
     }
 
     public Model getModel() {
@@ -185,7 +191,11 @@ public class LookupField extends Field {
     }
     
     public void updateList() {
-        popup.show(text, 0, text.getHeight());
+        if (!popup.isVisible()) {
+            popup.show(text, 0, text.getHeight());
+        }
+        popupList.updateUI();
+        System.out.println("show popup ...");
     }
     
     // --- Model ---
@@ -193,9 +203,9 @@ public class LookupField extends Field {
     public static class Model<T> {
         protected T selectedEntity;
         protected String lookupProperty;
-        private List<ModelListener> listeners 
+        protected List<ModelListener> listeners 
                 = new ArrayList<ModelListener>();
-        private List<T> list = new ArrayList<T>();
+        protected List<T> list = new ArrayList<T>();
         
         public T getSelectedEntity() {
             return selectedEntity;
@@ -207,6 +217,14 @@ public class LookupField extends Field {
 
         public String getLookupProperty() {
             return lookupProperty;
+        }
+
+        public List<T> getList() {
+            return list;
+        }
+
+        public void setList(List<T> list) {
+            this.list = list;
         }
 
         public void setLookupProperty(String lookupProperty) {
@@ -224,7 +242,7 @@ public class LookupField extends Field {
         private void initUpdateList(String value) {
             Object old = list;
             updateList(value);
-            if (old != list) {
+            if (old == null || old.equals(list)) {
                 fireListChanged();
             }
         }
@@ -282,4 +300,27 @@ public class LookupField extends Field {
         }
     }
     
+    // --- PopupListModel implementation ---
+    
+    private class PopupListModel extends AbstractListModel<Object> {
+
+        @Override
+        public int getSize() {
+            return model.getList().size();
+        }
+
+        @Override
+        public Object getElementAt(int index) {
+            try {
+                ScriptEngine se = new ScriptEngineManager().getEngineByName("JavaScript");
+                se.put("entity", model.getList().get(index));
+                String labelText = se.eval(labelExpression).toString();
+                return labelText;
+            } catch (ScriptException ex) {
+                throw new RuntimeException(ex);
+            }
+        }
+        
+    }
+        
 }
