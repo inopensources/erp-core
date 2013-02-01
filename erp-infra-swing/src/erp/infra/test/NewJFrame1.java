@@ -57,17 +57,22 @@ public class NewJFrame1 extends javax.swing.JFrame {
 
         button2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/refresh16x16.png"))); // NOI18N
         button2.setText("Recarregar");
+        button2.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
 
         button1.setText("Inserir");
+        button1.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button1.setType(erp.infra.button.Button.Type.INSERT);
 
         button5.setText("Cancelar");
+        button5.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button5.setType(erp.infra.button.Button.Type.CANCEL);
 
         button3.setText("Editar");
+        button3.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button3.setType(erp.infra.button.Button.Type.UPDATE);
 
         button4.setText("Excluir");
+        button4.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         button4.setType(erp.infra.button.Button.Type.DELETE);
 
         textField1.setRequired(true);
@@ -138,7 +143,7 @@ public class NewJFrame1 extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Metal".equals(info.getName())) {
+                if ("GTK+".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

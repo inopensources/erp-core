@@ -7,6 +7,8 @@ import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.DateFormatSymbols;
 import java.util.Calendar;
 import java.util.Date;
@@ -16,6 +18,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.border.Border;
 
@@ -25,7 +28,7 @@ import javax.swing.border.Border;
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.00.00 (31/01/2013 10:58)
  */
-public class DatePicker extends javax.swing.JPanel implements ActionListener {
+public class DatePicker extends JPanel implements ActionListener {
     
     private Model model = new Model();
     private JButton[][] dayButtons = new JButton[7][7];
@@ -106,6 +109,7 @@ public class DatePicker extends javax.swing.JPanel implements ActionListener {
                 panel.add(button);
                 panel.putClientProperty(button, x + "," + y);
                 button.addActionListener(this);
+                button.addMouseListener(new OnFocusDayButton());
             }
         }
     }
@@ -197,6 +201,8 @@ public class DatePicker extends javax.swing.JPanel implements ActionListener {
     private javax.swing.JPanel panel;
     // End of variables declaration//GEN-END:variables
 
+    // --- Model ---
+    
     public class Model {
         
         private Date date = new Date();
@@ -367,6 +373,24 @@ public class DatePicker extends javax.swing.JPanel implements ActionListener {
         }
         model.setSelectedDate(model.getCellDate(col, row));
         requestFocus();
+    }
+    
+    // --- Implementation of MouseAdapter ---
+    
+    private class OnFocusDayButton extends MouseAdapter {
+        @Override
+        public void mouseEntered(MouseEvent e) {
+            String colRow = panel.getClientProperty(e.getSource()).toString();
+            int col = Integer.parseInt(colRow.split(",")[0]);
+            int row = Integer.parseInt(colRow.split(",")[1]);
+            // If it's day of week row, ignore
+            if (row == 0) {
+                return;
+            }
+            provSel.x = col;
+            provSel.y = row;
+            updateView();
+        }
     }
 
     // --- ModelListener ---
