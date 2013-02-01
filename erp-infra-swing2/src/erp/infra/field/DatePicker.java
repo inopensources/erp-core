@@ -95,9 +95,11 @@ public class DatePicker extends javax.swing.JPanel implements ActionListener {
                 };
                 Cursor handCursor
                         = Cursor.getPredefinedCursor(Cursor.HAND_CURSOR);
-                
+
+                if (y > 0) {
+                    button.setCursor(handCursor);
+                }
                 button.setFont(labelMonthYear.getFont());
-                button.setCursor(handCursor);
                 button.setOpaque(true);
                 button.setFocusable(false);
                 dayButtons[x][y] = button;
@@ -359,6 +361,10 @@ public class DatePicker extends javax.swing.JPanel implements ActionListener {
         String colRow = panel.getClientProperty(e.getSource()).toString();
         int col = Integer.parseInt(colRow.split(",")[0]);
         int row = Integer.parseInt(colRow.split(",")[1]);
+        // If it's day of week row, ignore
+        if (row == 0) {
+            return;
+        }
         model.setSelectedDate(model.getCellDate(col, row));
         requestFocus();
     }
