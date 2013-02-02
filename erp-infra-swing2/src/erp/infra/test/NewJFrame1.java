@@ -37,7 +37,7 @@ public class NewJFrame1 extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
 
-        lookupModel1.setLookupProperty("id");
+        lookupModel1.setLookupProperty("codigoBacen");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 

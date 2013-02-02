@@ -27,7 +27,6 @@ import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.KeyStroke;
 import javax.swing.ListCellRenderer;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 /**
  * LookupField class.
@@ -59,10 +58,22 @@ public class LookupField extends Field {
                 return getSelectedEntity();
             }
             @Override
-            public List updateList(String value) {
+            public List updatePopupList(String value) {
                 return getList();
             }
+
+            @Override
+            public Dimension getPopupListSize() {
+                return new Dimension(100, 50);
+            }
         });
+
+        popupListItemRenderComponent.setFont(label.getFont());
+        popupListItemRenderComponent.setOpaque(true);
+                
+        popupListItemRenderComponent.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY)
+                , BorderFactory.createEmptyBorder(0, 5, 0, 0)));
         
         text.setText("");
         label.setText("");
@@ -91,12 +102,23 @@ public class LookupField extends Field {
                 , JComponent.WHEN_FOCUSED); 
     }
 
+    public JLabel getPopupListItemRenderComponent() {
+        return popupListItemRenderComponent;
+    }
+
+    public void setPopupListItemRenderComponent(
+            JLabel popupListItemRenderComponent) {
+        
+        this.popupListItemRenderComponent = popupListItemRenderComponent;
+    }
+
     public Model getModel() {
         return model;
     }
 
     public final void setModel(Model model) {
         this.model = model;
+        model.view = this;
         model.addListener(modelListener);
     }
 
@@ -170,7 +192,7 @@ public class LookupField extends Field {
     }//GEN-LAST:event_textFocusLost
 
     private void buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonActionPerformed
-        throw new NotImplementedException();
+        throw new RuntimeException("Not implemented yet !");
     }//GEN-LAST:event_buttonActionPerformed
 
     private void textKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textKeyReleased
@@ -253,8 +275,8 @@ public class LookupField extends Field {
     
     public void updateList() {
         if (!popup.isVisible() && model.getList().size() > 0) {
-            popup.setFocusable(false);
-            popup.show(text, 0, text.getHeight());
+            popup.setVisible(false);
+            showPopupList();
         }
         if (popup.isVisible() && model.getList().isEmpty()) {
             popup.setVisible(false);
@@ -265,14 +287,25 @@ public class LookupField extends Field {
         }
     }
     
+    private void showPopupList() {
+        popup.setPreferredSize(model.getPopupListSize());
+        popup.show(text, 0, text.getHeight());
+    }
+    
     // --- Model ---
     
     public abstract static class Model<T> {
+        protected LookupField view;
         private T selectedEntity;
-        private String lookupProperty;
+        protected String lookupProperty;
         private List<ModelListener> listeners 
                 = new ArrayList<ModelListener>();
+        
         private List<T> list = new ArrayList<T>();
+
+        public LookupField getView() {
+            return view;
+        }
         
         public T getSelectedEntity() {
             return selectedEntity;
@@ -315,13 +348,26 @@ public class LookupField extends Field {
         }
         
         private void initUpdateList(String value) {
-            setList(updateList(value));
+            setList(updatePopupList(value));
+        }
+
+        public Dimension getPopupListSize() {
+            return new Dimension(view.getBounds().width
+                    , view.getBounds().height * 5);
+        }
+    
+        public String getPopupListItemExpression() {
+            String selectedText = view.text.getText();
+            return "'<html><body>' + entity." 
+                    + getLookupProperty() + ".replace('" + selectedText 
+                    + "', '<strong>" + selectedText + "</strong>') + "
+                    + view.getLabelExpression() + " + '</body></html>'";
         }
         
         // --- Must be implemented ---
         
         public abstract T lookup(String value) throws Exception;
-        public abstract List<T> updateList(String value);
+        public abstract List<T> updatePopupList(String value);
         
         // --- Listener ---
         
@@ -397,8 +443,12 @@ public class LookupField extends Field {
                 try {
                     model.initLookup(text.getText());
                 } catch (Exception ex) {
-                    Logger.getLogger(LookupField.class.getName()).log(Level.SEVERE, null, ex);
-                    JOptionPane.showMessageDialog(getParent(), ex.getMessage(), ":: Atenção:", JOptionPane.ERROR_MESSAGE);
+                    Logger.getLogger(LookupField.class.getName())
+                            .log(Level.SEVERE, null, ex);
+                    
+                    JOptionPane.showMessageDialog(getParent()
+                            , ex.getMessage(), ":: Atenção:"
+                            , JOptionPane.ERROR_MESSAGE);
                 }
             }
         }
@@ -423,7 +473,7 @@ public class LookupField extends Field {
         public void actionPerformed(ActionEvent e) {
             text.requestFocus();
             if (!popup.isVisible() && model.getList().size() > 0) {
-                popup.show(text, 0, text.getHeight());
+                showPopupList();
                 popupList.setSelectedIndex(0);
                 popupList.ensureIndexIsVisible(0);
             }
@@ -453,14 +503,18 @@ public class LookupField extends Field {
     private class ListItemRenderer implements ListCellRenderer {
         @Override
         public Component getListCellRendererComponent(
-                JList jlist, Object entity, int i, boolean bln, boolean bln1) {
-            
+                JList jlist, Object entity, int i
+                , boolean bln, boolean bln1) {
+
             try {
-                ScriptEngine se = new ScriptEngineManager().getEngineByName("JavaScript");
+                ScriptEngine se = new ScriptEngineManager()
+                        .getEngineByName("JavaScript");
+                
                 se.put("entity", entity);
-                popupListItemRenderComponent.setFont(label.getFont());
-                popupListItemRenderComponent.setOpaque(true);
-                popupListItemRenderComponent.setText(se.eval(labelExpression).toString());
+                popupListItemRenderComponent
+                        .setText(se.eval(
+                        model.getPopupListItemExpression()).toString());
+                
                 if (bln) {
                     popupListItemRenderComponent.setForeground(jlist.getSelectionForeground());
                     popupListItemRenderComponent.setBackground(jlist.getSelectionBackground());

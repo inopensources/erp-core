@@ -4,7 +4,7 @@
   <NonVisualComponents>
     <Component class="erp.infra.test.LookupModel" name="lookupModel1">
       <Properties>
-        <Property name="lookupProperty" type="java.lang.String" value="id"/>
+        <Property name="lookupProperty" type="java.lang.String" value="codigoBacen"/>
       </Properties>
     </Component>
   </NonVisualComponents>
