@@ -1,42 +1,63 @@
 package erp.infra.test;
 
 import erp.infra.field.LookupField;
-import erp.infra.test.entity.Pais;
-import java.awt.Dimension;
+import erp.infra.test.entity2.Pais2;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
+import javax.persistence.Query;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 
 /**
  *
  * @author leonardo
  */
-public class LookupModel extends LookupField.Model<Pais> {
+public class LookupModel extends LookupField.Model<Pais2> {
 
+    private EntityManagerFactory emf;
+    private EntityManager em;
+
+    public LookupModel() {
+        emf = Persistence.createEntityManagerFactory("erp-infra-swing2PU");
+        em = emf.createEntityManager();
+    }
+    
     @Override
-    public Pais lookup(String value) {
-        int tam = (int) (Math.random() * 20);
-        String resto = "";
-        for (int x=0; x<tam; x++) {
-            resto += ((int) (Math.random() * 999)) + "";
-        }
-        Pais pais = new Pais(1L, value + resto, value + resto, value + resto);
+    public Pais2 lookup(String value) {
+        Long id = Long.parseLong(value);
+        Pais2 pais = em.find(Pais2.class, id);
         return pais;
     }
 
     @Override
-    public List<Pais> updatePopupList(String value) {
-        List<Pais> paises = new ArrayList<Pais>();
-        int n = (int) (Math.random() * 30);
-        for (int i=0; i<n; i++) {
-            int tam = (int) (Math.random() * 20);
-            String resto = "";
-            for (int x=0; x<tam; x++) {
-                resto += ((int) (Math.random() * 999)) + "";
+    public List<Pais2> updatePopupList(String value) {
+        Query query = em.createQuery("select p from Pais2 as p", Pais2.class);
+        List<Pais2> paises = query.getResultList();
+        List<Pais2> filtered = new ArrayList<Pais2>();
+        ScriptEngine se = new ScriptEngineManager().getEngineByName("JavaScript");
+        for (Pais2 pais : paises) {
+            if (value.trim().isEmpty()) {
+                break;
             }
-            Pais pais = new Pais(1L, value + resto, value + resto, value + resto);
-            paises.add(pais);
+            try {
+                se.put("entity", pais);
+                String propertyValue = se.eval("entity." + getLookupProperty()).toString();
+                System.out.println("propertyValue='" + propertyValue + "'");
+                if (propertyValue.trim().toLowerCase().startsWith(value.trim().toLowerCase())) {
+                    filtered.add(pais);
+                }
+            } catch (ScriptException ex) {
+            }
         }
-        return paises;
+        return filtered;
     }
 
+    @Override
+    public boolean showPopupListOnKeypress() {
+        return false;
+    }
 }

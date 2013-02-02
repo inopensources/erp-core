@@ -37,7 +37,7 @@ public class NewJFrame1 extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jList1 = new javax.swing.JList();
 
-        lookupModel1.setLookupProperty("codigoBacen");
+        lookupModel1.setLookupProperty("nome");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -51,7 +51,7 @@ public class NewJFrame1 extends javax.swing.JFrame {
         datePicker2.setBackground(new java.awt.Color(255, 255, 255));
         datePicker2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
 
-        lookupField1.setLabelExpression("'<html><body><table><tr><td width=60 align=right><strong>' + entity.id + '</strong></td><td width=5></td><td>' + entity.nome + '</td></tr></body></html>'");
+        lookupField1.setLabelExpression("'<html><body><table><tr><td width=20 align=right><strong>' + entity.id + '</strong></td><td width=5></td><td>' + entity.nome + '</td></tr></body></html>'");
         lookupField1.setModel(lookupModel1);
 
         jList1.setModel(new javax.swing.AbstractListModel() {
@@ -83,8 +83,8 @@ public class NewJFrame1 extends javax.swing.JFrame {
                                 .addGap(45, 45, 45)
                                 .addComponent(jButton1))
                             .addComponent(dateField2, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lookupField1, javax.swing.GroupLayout.PREFERRED_SIZE, 473, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(102, Short.MAX_VALUE))
+                            .addComponent(lookupField1, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(195, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,15 +123,13 @@ public class NewJFrame1 extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            /*
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-            */ 
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(NewJFrame1.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {

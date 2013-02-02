@@ -196,7 +196,7 @@ public class LookupField extends Field {
     }//GEN-LAST:event_buttonActionPerformed
 
     private void textKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textKeyReleased
-        if (evt.getKeyCode() == 27) {
+        if (!model.showPopupListOnKeypress() || evt.getKeyCode() == 27) {
             popup.setVisible(false);
             return;
         }
@@ -312,13 +312,8 @@ public class LookupField extends Field {
         }
 
         public void setSelectedEntity(T selectedEntity) {
-            boolean valueChanged = (selectedEntity == null 
-                    || selectedEntity != this.selectedEntity);
-            
             this.selectedEntity = selectedEntity;
-            if (valueChanged) {
-                fireSelectedEntityChanged();
-            }
+            fireSelectedEntityChanged();
         }
 
         public String getLookupProperty() {
@@ -330,13 +325,8 @@ public class LookupField extends Field {
         }
 
         public void setList(List<T> list) {
-            boolean listChanged = (list == null 
-                    || !list.equals(this.list));
-            
             this.list = list;
-            if (listChanged) {
-                fireListChanged();
-            }
+            fireListChanged();
         }
 
         public void setLookupProperty(String lookupProperty) {
@@ -359,11 +349,15 @@ public class LookupField extends Field {
         public String getPopupListItemExpression() {
             String selectedText = view.text.getText();
             return "'<html><body>' + entity." 
-                    + getLookupProperty() + ".replace('" + selectedText 
+                    + getLookupProperty() + ".toString().replace('" + selectedText 
                     + "', '<strong>" + selectedText + "</strong>') + "
                     + view.getLabelExpression() + " + '</body></html>'";
         }
         
+        public boolean showPopupListOnKeypress() {
+            return true;
+        }
+
         // --- Must be implemented ---
         
         public abstract T lookup(String value) throws Exception;
