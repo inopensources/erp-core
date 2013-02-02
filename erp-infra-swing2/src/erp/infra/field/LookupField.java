@@ -19,6 +19,7 @@ import javax.script.ScriptException;
 import javax.swing.AbstractAction;
 import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
+import javax.swing.FocusManager;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -152,6 +153,9 @@ public class LookupField extends Field {
 
         text.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
         text.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                textFocusGained(evt);
+            }
             public void focusLost(java.awt.event.FocusEvent evt) {
                 textFocusLost(evt);
             }
@@ -196,7 +200,10 @@ public class LookupField extends Field {
     }//GEN-LAST:event_buttonActionPerformed
 
     private void textKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textKeyReleased
-        if (!model.showPopupListOnKeypress() || evt.getKeyCode() == 27) {
+        if (!model.isShowPopupListOnKeypress() && !popup.isVisible()) {
+            return;
+        }
+        if (evt.getKeyCode() == 27) {
             popup.setVisible(false);
             return;
         }
@@ -207,6 +214,10 @@ public class LookupField extends Field {
         }
         model.initUpdateList(text.getText());
     }//GEN-LAST:event_textKeyReleased
+
+    private void textFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textFocusGained
+        text.selectAll();
+    }//GEN-LAST:event_textFocusGained
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button;
@@ -275,7 +286,6 @@ public class LookupField extends Field {
     
     public void updateList() {
         if (!popup.isVisible() && model.getList().size() > 0) {
-            popup.setVisible(false);
             showPopupList();
         }
         if (popup.isVisible() && model.getList().isEmpty()) {
@@ -354,8 +364,14 @@ public class LookupField extends Field {
                     + view.getLabelExpression() + " + '</body></html>'";
         }
         
-        public boolean showPopupListOnKeypress() {
-            return true;
+        private boolean showPopupListOnKeypress = false;
+        
+        public boolean isShowPopupListOnKeypress() {
+            return showPopupListOnKeypress;
+        }
+
+        public void setShowPopupListOnKeypress(boolean show) {
+            this.showPopupListOnKeypress = show;
         }
 
         // --- Must be implemented ---
@@ -434,8 +450,47 @@ public class LookupField extends Field {
                 popup.setVisible(false);
             }
             else {
+                // se o texto for vazio, considera entity nulo
+                if (text.getText().trim().length() == 0) {
+                    model.setSelectedEntity(null);
+                    FocusManager.getCurrentManager().focusNextComponent();
+                    return;
+                }
+                
+                // Se text esta com valor preenchido e o model.getSelectedItem 
+                // nao eh nulo, e se o valor texto corresponde ao valor 
+                // do model.getSelectedItem, passa apenas para o proximo campo
+                if (text.getText().trim().length() > 0 && model.getSelectedEntity() != null) {
+                    try {
+                        ScriptEngine se = new ScriptEngineManager()
+                                .getEngineByName("JavaScript");
+
+                        se.put("entity", model.getSelectedEntity());
+                        Object ret = se.eval("entity." + model.getLookupProperty());
+                        if (ret == null) {
+                            ret = "";
+                        }
+                        if (text.getText().equals(ret)) {
+                            FocusManager.getCurrentManager().focusNextComponent();
+                            return;
+                        }
+                    } catch (ScriptException ex) {
+                        Logger.getLogger(LookupField.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+                
                 try {
-                    model.initLookup(text.getText());
+                    List list = model.updatePopupList(text.getText());
+                    if (list.isEmpty()) {
+                        throw new Exception("Entity not found !");
+                    }
+                    else if (list.size() == 1) {
+                        model.setSelectedEntity(list.get(0));
+                        FocusManager.getCurrentManager().focusNextComponent();
+                    }
+                    else {
+                        model.setList(list);
+                    }
                 } catch (Exception ex) {
                     Logger.getLogger(LookupField.class.getName())
                             .log(Level.SEVERE, null, ex);
@@ -453,6 +508,7 @@ public class LookupField extends Field {
         public void actionPerformed(ActionEvent e) {
             if (popup.isVisible() && popupList.getSelectedIndex()==0) {
                 popup.setVisible(false);
+                model.setShowPopupListOnKeypress(false);
             }
             else if (popup.isVisible()) {
                 int si = popupList.getSelectedIndex();
@@ -465,7 +521,14 @@ public class LookupField extends Field {
     private class DownKeyAction extends AbstractAction {
         @Override
         public void actionPerformed(ActionEvent e) {
-            text.requestFocus();
+            if (!popup.isVisible() && !model.isShowPopupListOnKeypress()) {
+                try {
+                    model.initUpdateList(text.getText());
+                    model.setShowPopupListOnKeypress(true);
+                } catch (Exception ex) {
+                    Logger.getLogger(LookupField.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
             if (!popup.isVisible() && model.getList().size() > 0) {
                 showPopupList();
                 popupList.setSelectedIndex(0);

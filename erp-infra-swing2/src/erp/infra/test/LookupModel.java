@@ -56,8 +56,4 @@ public class LookupModel extends LookupField.Model<Pais2> {
         return filtered;
     }
 
-    @Override
-    public boolean showPopupListOnKeypress() {
-        return false;
-    }
 }
