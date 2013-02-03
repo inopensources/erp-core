@@ -5,6 +5,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -21,6 +22,8 @@ import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
 import javax.swing.FocusManager;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
@@ -196,7 +199,11 @@ public class LookupField extends Field {
     }//GEN-LAST:event_textFocusLost
 
     private void buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonActionPerformed
-        throw new RuntimeException("Not implemented yet !");
+        Component obj = getParent();
+        while (!(obj instanceof JFrame)) {
+            obj = obj.getParent();
+        }
+        JDialog gridDialog = new GridDialog((JFrame) obj);
     }//GEN-LAST:event_buttonActionPerformed
 
     private void textKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textKeyReleased
@@ -586,5 +593,31 @@ public class LookupField extends Field {
             }
         }
     }
+
+    // --- Grid dialog ---
     
+    private class GridDialog extends JDialog {
+        
+        //private erp.infra.form.Form form = new erp.infra.form.Form();
+        //private Grid grid = new Grid();
+        //private JScrollPane scrollPane = new JScrollPane(grid);
+        
+        public GridDialog(Frame frame) {
+            super(frame, true);
+            
+            setLayout(new BorderLayout());
+            setSize(400, 300);
+            setLocationRelativeTo(null);
+
+            //form.setEntityLayout(model.getSelectedEntity());
+            //grid.setFormModel(form);
+            //grid.setController(new LookupGridModel());
+            //grid.reload();
+            
+            //add(scrollPane, BorderLayout.CENTER);
+            setVisible(true);
+        }
+        
+    }
+
 }

@@ -4,6 +4,8 @@
  */
 package erp.infra.test;
 
+import erp.infra.field.LookupField.ModelListener;
+
 /**
  *
  * @author leo
@@ -18,8 +20,22 @@ public class NewJFrame extends javax.swing.JFrame {
         LookupModel lookupModel = new LookupModel();
         lookupModel.setLookupProperty("nome");
         lookupField1.setModel(lookupModel);
+        lookupModel.addListener(new LookupModelListenerImpl());
     }
 
+    private class LookupModelListenerImpl implements ModelListener {
+
+        @Override
+        public void selectedEntityChanged() {
+            Object obj = lookupField1.getModel().getSelectedEntity();
+            form1.getModel().setEntity(obj);
+        }
+
+        @Override
+        public void listChanged() {
+        }
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -29,27 +45,42 @@ public class NewJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pais21 = new erp.infra.test.entity2.Pais2();
+        formModelImpl1 = new erp.infra.test.FormModelImpl();
         lookupField1 = new erp.infra.field.LookupField();
-        dateField1 = new erp.infra.field.DateField();
-        textField1 = new erp.infra.field.TextField();
+        form1 = new erp.infra.form.Form();
+
+        pais21.setCodigoBacen("1058");
+        pais21.setId(new java.lang.Long(1L));
+        pais21.setNome("BRASIL");
+        pais21.setSigla2("BR");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lookupField1.setLabelExpression("'<html><body><strong>' + entity.id + '</strong> ' + entity.codigoBacen + ' ' + entity.nome + '</body></html>'\n");
 
+        form1.setModel(formModelImpl1);
+
+        javax.swing.GroupLayout form1Layout = new javax.swing.GroupLayout(form1);
+        form1.setLayout(form1Layout);
+        form1Layout.setHorizontalGroup(
+            form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        form1Layout.setVerticalGroup(
+            form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 271, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lookupField1, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(dateField1, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(form1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(lookupField1, javax.swing.GroupLayout.DEFAULT_SIZE, 516, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -58,10 +89,8 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(lookupField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(dateField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(201, Short.MAX_VALUE))
+                .addComponent(form1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -102,8 +131,9 @@ public class NewJFrame extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private erp.infra.field.DateField dateField1;
+    private erp.infra.form.Form form1;
+    private erp.infra.test.FormModelImpl formModelImpl1;
     private erp.infra.field.LookupField lookupField1;
-    private erp.infra.field.TextField textField1;
+    private erp.infra.test.entity2.Pais2 pais21;
     // End of variables declaration//GEN-END:variables
 }

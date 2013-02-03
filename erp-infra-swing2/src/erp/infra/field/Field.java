@@ -1,6 +1,9 @@
 package erp.infra.field;
 
+import java.awt.Color;
 import java.awt.Component;
+import java.awt.FontMetrics;
+import java.awt.Graphics;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JLabel;
@@ -142,6 +145,27 @@ public abstract class Field extends JPanel {
         abstract void config();
         abstract T getValue();
         abstract void setValue(T value);
+    }
+    
+    // --- Paint label on parent form ---
+    
+    public void paintLabel(Graphics g) {
+        g.setFont(getLabel().getFont());
+        FontMetrics fm = g.getFontMetrics();
+        int fontWidth = fm.stringWidth(getLabel().getText());
+        int fontHeight = fm.getHeight();
+        getLabel().setSize(fontWidth, getComponent().getHeight());
+        Graphics g2 = g.create(this.getBounds().x - fontWidth - 5
+                , this.getBounds().y, getWidth(), getHeight());
+        
+        getLabel().paint(g2);
+        
+        // Desenha o required
+        if (isRequired()) {
+            g.setColor(new Color(255, 100, 100));
+            g.drawString("*", getBounds().x + getBounds().width + 3
+                    , getBounds().y + (fontHeight / 2));
+        }
     }
     
 }
