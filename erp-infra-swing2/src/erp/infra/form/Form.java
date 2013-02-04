@@ -172,8 +172,12 @@ public class Form extends JPanel implements EntityModelListener {
                 if (c instanceof Field) {
                     Field field = (Field) c;
                     if (model.getMode() == Mode.EMPTY) {
-                        field.setEditable(false);
-                    } else if (model.getMode() == Mode.READ_ONLY) {
+                        field.setEnabled(false);
+                    }
+                    else {
+                        field.setEnabled(true);
+                    }
+                    if (model.getMode() == Mode.READ_ONLY) {
                         field.setEditable(false);
                     } else if (model.getMode() == Mode.UPDATE) {
                         field.setEditable(field.isUpdatable());

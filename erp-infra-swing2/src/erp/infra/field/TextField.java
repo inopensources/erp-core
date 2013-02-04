@@ -8,7 +8,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Set;
 
 /**
  * TextField class.
@@ -68,7 +67,17 @@ public class TextField extends Field implements FocusListener {
     public boolean isEditable() {
         return text.isEditable();
     }
-
+    
+    @Override
+    public void setEnabled(boolean enabled) {
+        text.setEnabled(enabled);
+    }
+    
+    @Override
+    public boolean isEnabled() {
+        return text.isEnabled();
+    }
+    
     @Override
     public void setValue(Object value) {
         if (typeConfig == null) {

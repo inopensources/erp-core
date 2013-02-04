@@ -114,6 +114,8 @@ public abstract class Field extends JPanel {
     public abstract void init(Class type);
     public abstract boolean isEditable();
     public abstract void setEditable(boolean editable);
+    public abstract boolean isEnabled();
+    public abstract void setEnabled(boolean enabled);
     public abstract void setValue(Object value);
     public abstract Object getValue();
     

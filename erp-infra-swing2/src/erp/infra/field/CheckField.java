@@ -43,6 +43,16 @@ public class CheckField extends Field {
     public boolean isEditable() {
         return checkBox.isEnabled();
     }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        checkBox.setEnabled(enabled);
+    }
+    
+    @Override
+    public boolean isEnabled() {
+        return checkBox.isEnabled();
+    }
     
     @Override
     public void setValue(Object value) {

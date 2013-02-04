@@ -257,7 +257,18 @@ public class LookupField extends Field {
         text.setEditable(editable);
         button.setEnabled(editable);
     }
+    
+    @Override
+    public boolean isEnabled() {
+        return text.isEnabled();
+    }
 
+    @Override
+    public void setEnabled(boolean enabled) {
+        text.setEnabled(enabled);
+        button.setEnabled(enabled);
+    }
+    
     @Override
     public void setValue(Object value) {
         model.getEntityModel().setEntity(value);
