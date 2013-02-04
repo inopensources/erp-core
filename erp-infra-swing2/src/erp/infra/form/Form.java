@@ -1,5 +1,6 @@
 package erp.infra.form;
 
+import erp.infra.entity.EntityModelListener;
 import erp.infra.field.Field;
 import erp.infra.form.FormModel.Mode;
 import java.awt.Component;
@@ -17,7 +18,7 @@ import javax.swing.JPanel;
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.00.00 (27/01/2013 20:52)
  */
-public class Form extends JPanel {
+public class Form extends JPanel implements EntityModelListener {
 
     private FormModel model;
     private FormModelListener listener 
@@ -37,6 +38,7 @@ public class Form extends JPanel {
         }
         this.model = model;
         model.addListener(listener);
+        model.getEntityModel().addListener(this);
         try {
             Object obj = model.newInstance();
             FormUtils.createAndAddFieldsFromEntityToForm(
@@ -49,7 +51,7 @@ public class Form extends JPanel {
     
     public void updateModel() {
         try {
-            updateModelPrivate(model.getEntity());
+            updateModelPrivate(model.getEntityModel().getEntity());
         } catch (Exception ex) {
             Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -86,7 +88,7 @@ public class Form extends JPanel {
 
     public void reload() {
         try {
-            reloadPrivate(model.getEntity());
+            reloadPrivate(model.getEntityModel().getEntity());
         } catch (Exception ex) {
             Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -184,13 +186,26 @@ public class Form extends JPanel {
         }
 
         @Override
-        public void entityChanged() {
-            reload();
+        public void updateModel() {
+            updateModel();
         }
 
         @Override
-        public void updateModel() {
-            updateModel();
+        public void entityModelChanged() {
+            model.getEntityModel().addListener(Form.this);
+        }
+    }
+    
+    // --- EntityModelListener implementation ---
+
+    @Override
+    public void entityChanged() {
+        reload();
+        if (model.getEntityModel().getEntity() == null) {
+            model.setMode(Mode.EMPTY);
+        }
+        else {
+            model.setMode(Mode.READ_ONLY);
         }
     }
     

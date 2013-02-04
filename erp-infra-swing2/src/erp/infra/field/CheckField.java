@@ -1,7 +1,5 @@
 package erp.infra.field;
 
-import java.util.Set;
-
 /**
  * CheckField class.
  * 

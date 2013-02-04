@@ -1,5 +1,7 @@
 package erp.infra.form;
 
+import erp.infra.entity.EntityModel;
+import erp.infra.entity.EntityModelListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,21 +14,24 @@ import java.util.List;
 public abstract class FormModel<T> {
 
     public enum Mode { EMPTY, READ_ONLY, INSERT, UPDATE }
-    private T entity = null;
+    private EntityModel<T> entityModel = new EntityModel<T>();
     private String property = "";
     private Mode mode = Mode.EMPTY;
     private List<FormModelListener> listeners 
             = new ArrayList<FormModelListener>();
-    
-    public T getEntity() {
-        return entity;
-    }
-    
-    public void setEntity(T entity){
-        this.entity = entity;
-        fireEntityChanged();
+
+    public EntityModel<T> getEntityModel() {
+        return entityModel;
     }
 
+    public void setEntityModel(EntityModel<T> entityModel) {
+        if (entityModel == null) {
+            return;
+        }
+        this.entityModel = entityModel;
+        fireEntityModelChanged();
+    }
+        
     public String getProperty() {
         return property;
     }
@@ -54,7 +59,7 @@ public abstract class FormModel<T> {
     
     void initReload() throws Exception {
         System.out.println("reload");
-        setEntity(reload());
+        entityModel.setEntity(reload());
     }
 
     void initUpdate() throws Exception {
@@ -66,16 +71,16 @@ public abstract class FormModel<T> {
 
     public void initInsert() throws Exception {
         if (mode == Mode.READ_ONLY) {
-            setEntity(newInstance());
+            entityModel.setEntity(newInstance());
             setMode(Mode.INSERT);
         }
         throw new RuntimeException("Can't insert in actual mode !");
     }
 
     public void initDelete() throws Exception {
-        if (mode == Mode.READ_ONLY && getEntity() != null) {
+        if (mode == Mode.READ_ONLY && entityModel.getEntity() != null) {
             System.out.println("delete");
-            delete(getEntity());
+            delete(entityModel.getEntity());
         }
         else {
             throw new RuntimeException("Can't delete in actual mode !");
@@ -96,13 +101,13 @@ public abstract class FormModel<T> {
         if (mode == Mode.UPDATE) {
             System.out.println("update");
             fireUpdateModel();
-            update(getEntity());
+            update(entityModel.getEntity());
             setMode(Mode.READ_ONLY);
         }
         else if (mode == Mode.INSERT) {
             System.out.println("insert");
             fireUpdateModel();
-            insert(getEntity());
+            insert(entityModel.getEntity());
             setMode(Mode.READ_ONLY);
         }
         else {
@@ -123,6 +128,12 @@ public abstract class FormModel<T> {
         listeners.remove(listener);
     }
 
+    protected void fireEntityModelChanged() {
+        for (FormModelListener listener : listeners) {
+            listener.entityModelChanged();
+        }
+    }
+
     protected void fireUpdateModel() {
         for (FormModelListener listener : listeners) {
             listener.updateModel();
@@ -132,12 +143,6 @@ public abstract class FormModel<T> {
     protected void fireModeChanged() {
         for (FormModelListener listener : listeners) {
             listener.modeChanged();
-        }
-    }
-
-    protected void fireEntityChanged() {
-        for (FormModelListener listener : listeners) {
-            listener.entityChanged();
         }
     }
 

@@ -27,13 +27,6 @@ public class LookupModel extends LookupField.Model<Pais2> {
     }
     
     @Override
-    public Pais2 lookup(String value) {
-        Long id = Long.parseLong(value);
-        Pais2 pais = em.find(Pais2.class, id);
-        return pais;
-    }
-
-    @Override
     public List<Pais2> updatePopupList(String value) {
         Query query = em.createQuery("select p from Pais2 as p", Pais2.class);
         List<Pais2> paises = query.getResultList();

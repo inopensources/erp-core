@@ -1,6 +1,8 @@
 package erp.infra.field;
 
 import erp.infra.annotation.Form;
+import erp.infra.entity.EntityModel;
+import erp.infra.entity.EntityModelListener;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -57,10 +59,6 @@ public class LookupField extends Field {
         initComponents();
         
         setModel(new Model() {
-            @Override
-            public Object lookup(String value) throws Exception {
-                return getSelectedEntity();
-            }
             @Override
             public List updatePopupList(String value) {
                 return getList();
@@ -124,6 +122,7 @@ public class LookupField extends Field {
         this.model = model;
         model.view = this;
         model.addListener(modelListener);
+        model.getEntityModel().addListener(new EntityModelListenerImpl());
     }
 
     public String getLabelExpression() {
@@ -261,17 +260,17 @@ public class LookupField extends Field {
 
     @Override
     public void setValue(Object value) {
-        model.setSelectedEntity(value);
+        model.getEntityModel().setEntity(value);
     }
 
     @Override
     public Object getValue() {
-        return model.getSelectedEntity();
+        return model.getEntityModel().getEntity();
     }
 
     public void updateView() {
         try {
-            if (model.getSelectedEntity() == null) {
+            if (model.getEntityModel().getEntity() == null) {
                 text.setText("");
                 label.setText("");
                 return;
@@ -279,7 +278,7 @@ public class LookupField extends Field {
             ScriptEngine se = new ScriptEngineManager()
                     .getEngineByName("JavaScript");
             
-            se.put("entity", model.getSelectedEntity());
+            se.put("entity", model.getEntityModel().getEntity());
             Object ret = se.eval("entity." + model.getLookupProperty());
             if (ret == null) {
                 ret = "";
@@ -313,7 +312,7 @@ public class LookupField extends Field {
     
     public abstract static class Model<T> {
         protected LookupField view;
-        private T selectedEntity;
+        private EntityModel<T> entityModel = new EntityModel<T>();
         protected String lookupProperty;
         private List<ModelListener> listeners 
                 = new ArrayList<ModelListener>();
@@ -323,14 +322,17 @@ public class LookupField extends Field {
         public LookupField getView() {
             return view;
         }
-        
-        public T getSelectedEntity() {
-            return selectedEntity;
+
+        public EntityModel<T> getEntityModel() {
+            return entityModel;
         }
 
-        public void setSelectedEntity(T selectedEntity) {
-            this.selectedEntity = selectedEntity;
-            fireSelectedEntityChanged();
+        public void setEntityModel(EntityModel<T> entityModel) {
+            if (entityModel == null) {
+                return;
+            }
+            this.entityModel = entityModel;
+            fireEntityModelChanged();
         }
 
         public String getLookupProperty() {
@@ -348,10 +350,6 @@ public class LookupField extends Field {
 
         public void setLookupProperty(String lookupProperty) {
             this.lookupProperty = lookupProperty;
-        }
-        
-        private void initLookup(String value) throws Exception {
-            setSelectedEntity(lookup(value));
         }
         
         private void initUpdateList(String value) {
@@ -383,7 +381,6 @@ public class LookupField extends Field {
 
         // --- Must be implemented ---
         
-        public abstract T lookup(String value) throws Exception;
         public abstract List<T> updatePopupList(String value);
         
         // --- Listener ---
@@ -396,9 +393,9 @@ public class LookupField extends Field {
             listeners.remove(listener);
         }
         
-        private void fireSelectedEntityChanged() {
+        private void fireEntityModelChanged() {
             for (ModelListener listener : listeners) {
-                listener.selectedEntityChanged();
+                listener.entityModelChanged();
             }
         }
 
@@ -413,16 +410,25 @@ public class LookupField extends Field {
     // --- ModelListener ---
     
     public static interface ModelListener {
-        void selectedEntityChanged();
+        void entityModelChanged();
         void listChanged();
     }
 
+    // --- EntityModelListener implementation ---
+    
+    private class EntityModelListenerImpl implements EntityModelListener {
+        @Override
+        public void entityChanged() {
+            updateView();
+        }
+    }
+    
     // --- ModelListener implementation for this view ---
     
     private class ModelListenerImpl implements ModelListener {
         @Override
-        public void selectedEntityChanged() {
-            updateView();
+        public void entityModelChanged() {
+            model.getEntityModel().addListener(new EntityModelListenerImpl());
         }
 
         @Override
@@ -453,13 +459,13 @@ public class LookupField extends Field {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (popup.isVisible()) {
-                model.setSelectedEntity(popupList.getSelectedValue());
+                model.getEntityModel().setEntity(popupList.getSelectedValue());
                 popup.setVisible(false);
             }
             else {
                 // se o texto for vazio, considera entity nulo
                 if (text.getText().trim().length() == 0) {
-                    model.setSelectedEntity(null);
+                    model.getEntityModel().setEntity(null);
                     FocusManager.getCurrentManager().focusNextComponent();
                     return;
                 }
@@ -467,12 +473,12 @@ public class LookupField extends Field {
                 // Se text esta com valor preenchido e o model.getSelectedItem 
                 // nao eh nulo, e se o valor texto corresponde ao valor 
                 // do model.getSelectedItem, passa apenas para o proximo campo
-                if (text.getText().trim().length() > 0 && model.getSelectedEntity() != null) {
+                if (text.getText().trim().length() > 0 && model.getEntityModel().getEntity() != null) {
                     try {
                         ScriptEngine se = new ScriptEngineManager()
                                 .getEngineByName("JavaScript");
 
-                        se.put("entity", model.getSelectedEntity());
+                        se.put("entity", model.getEntityModel().getEntity());
                         Object ret = se.eval("entity." + model.getLookupProperty());
                         if (ret == null) {
                             ret = "";
@@ -492,7 +498,7 @@ public class LookupField extends Field {
                         throw new Exception("Entity not found !");
                     }
                     else if (list.size() == 1) {
-                        model.setSelectedEntity(list.get(0));
+                        model.getEntityModel().setEntity(list.get(0));
                         FocusManager.getCurrentManager().focusNextComponent();
                     }
                     else {
@@ -557,7 +563,7 @@ public class LookupField extends Field {
             if (e.getClickCount() != 2) {
                 return ;
             }
-            model.setSelectedEntity(popupList.getSelectedValue());
+            model.getEntityModel().setEntity(popupList.getSelectedValue());
             popup.setVisible(false);
         }
     }

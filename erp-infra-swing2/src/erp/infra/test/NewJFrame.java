@@ -4,8 +4,6 @@
  */
 package erp.infra.test;
 
-import erp.infra.field.LookupField.ModelListener;
-
 /**
  *
  * @author leo
@@ -20,22 +18,10 @@ public class NewJFrame extends javax.swing.JFrame {
         LookupModel lookupModel = new LookupModel();
         lookupModel.setLookupProperty("nome");
         lookupField1.setModel(lookupModel);
-        lookupModel.addListener(new LookupModelListenerImpl());
+        form1.getModel().setEntityModel(lookupModel.getEntityModel());
+        //lookupModel.setEntityModel(form1.getModel().getEntityModel());
     }
 
-    private class LookupModelListenerImpl implements ModelListener {
-
-        @Override
-        public void selectedEntityChanged() {
-            Object obj = lookupField1.getModel().getSelectedEntity();
-            form1.getModel().setEntity(obj);
-        }
-
-        @Override
-        public void listChanged() {
-        }
-        
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
