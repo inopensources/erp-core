@@ -2,14 +2,6 @@
 
 <Form version="1.3" maxVersion="1.8" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
-    <Component class="erp.infra.test.entity2.Pais2" name="pais21">
-      <Properties>
-        <Property name="codigoBacen" type="java.lang.String" value="1058"/>
-        <Property name="id" type="java.lang.Long" value="1"/>
-        <Property name="nome" type="java.lang.String" value="BRASIL"/>
-        <Property name="sigla2" type="java.lang.String" value="BR"/>
-      </Properties>
-    </Component>
     <Component class="erp.infra.test.FormModelImpl" name="formModelImpl1">
     </Component>
   </NonVisualComponents>

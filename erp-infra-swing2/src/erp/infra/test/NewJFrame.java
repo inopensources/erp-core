@@ -33,16 +33,10 @@ public class NewJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pais21 = new erp.infra.test.entity2.Pais2();
         formModelImpl1 = new erp.infra.test.FormModelImpl();
         lookupField1 = new erp.infra.field.LookupField();
         form1 = new erp.infra.form.Form();
         buttonLimpar = new javax.swing.JButton();
-
-        pais21.setCodigoBacen("1058");
-        pais21.setId(new java.lang.Long(1L));
-        pais21.setNome("BRASIL");
-        pais21.setSigla2("BR");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -141,6 +135,5 @@ public class NewJFrame extends javax.swing.JFrame {
     private erp.infra.form.Form form1;
     private erp.infra.test.FormModelImpl formModelImpl1;
     private erp.infra.field.LookupField lookupField1;
-    private erp.infra.test.entity2.Pais2 pais21;
     // End of variables declaration//GEN-END:variables
 }
