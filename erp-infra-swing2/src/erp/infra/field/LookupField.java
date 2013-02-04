@@ -1,6 +1,7 @@
 package erp.infra.field;
 
 import erp.infra.annotation.Form;
+import erp.infra.entity.EntityDao;
 import erp.infra.entity.EntityModel;
 import erp.infra.entity.EntityModelListener;
 import java.awt.BorderLayout;
@@ -58,17 +59,7 @@ public class LookupField extends Field {
     public LookupField() {
         initComponents();
         
-        setModel(new Model() {
-            @Override
-            public List updatePopupList(String value) {
-                return getList();
-            }
-
-            @Override
-            public Dimension getPopupListSize() {
-                return new Dimension(100, 50);
-            }
-        });
+        setModel(new Model());
 
         popupListItemRenderComponent.setFont(label.getFont());
         popupListItemRenderComponent.setOpaque(true);
@@ -218,7 +209,12 @@ public class LookupField extends Field {
             
             return;
         }
-        model.initUpdateList(text.getText());
+        try {
+            model.initUpdateList(text.getText());
+        } catch (Exception ex) {
+            Logger.getLogger(LookupField.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
     }//GEN-LAST:event_textKeyReleased
 
     private void textFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textFocusGained
@@ -321,9 +317,10 @@ public class LookupField extends Field {
     
     // --- Model ---
     
-    public abstract static class Model<T> {
+    public static class Model<T> {
         protected LookupField view;
         private EntityModel<T> entityModel = new EntityModel<T>();
+        private EntityDao entityDao;
         protected String lookupProperty;
         private List<ModelListener> listeners 
                 = new ArrayList<ModelListener>();
@@ -346,6 +343,14 @@ public class LookupField extends Field {
             fireEntityModelChanged();
         }
 
+        public EntityDao getEntityDao() {
+            return entityDao;
+        }
+
+        public void setEntityDao(EntityDao entityDao) {
+            this.entityDao = entityDao;
+        }
+
         public String getLookupProperty() {
             return lookupProperty;
         }
@@ -363,8 +368,11 @@ public class LookupField extends Field {
             this.lookupProperty = lookupProperty;
         }
         
-        private void initUpdateList(String value) {
-            setList(updatePopupList(value));
+        private void initUpdateList(String value) throws Exception {
+            if (entityDao != null) {
+                List<T> list = entityDao.reload(value);
+                setList(list);
+            }
         }
 
         public Dimension getPopupListSize() {
@@ -390,10 +398,6 @@ public class LookupField extends Field {
             this.showPopupListOnKeypress = show;
         }
 
-        // --- Must be implemented ---
-        
-        public abstract List<T> updatePopupList(String value);
-        
         // --- Listener ---
         
         public void addListener(ModelListener listener) {
@@ -504,7 +508,10 @@ public class LookupField extends Field {
                 }
                 
                 try {
-                    List list = model.updatePopupList(text.getText());
+                    List list = new ArrayList();
+                    if (model.getEntityDao() != null) {
+                        list = model.getEntityDao().reload(text.getText());
+                    }
                     if (list.isEmpty()) {
                         throw new Exception("Entity not found !");
                     }

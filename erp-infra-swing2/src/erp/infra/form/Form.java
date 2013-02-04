@@ -40,10 +40,12 @@ public class Form extends JPanel implements EntityModelListener {
         model.addListener(listener);
         model.getEntityModel().addListener(this);
         try {
-            Object obj = model.newInstance();
-            FormUtils.createAndAddFieldsFromEntityToForm(
-                    obj.getClass().getName(), this);
-            
+            Object obj = null;
+            if (model.getEntityDao() != null) {
+                obj = model.getEntityDao().createNewInstance();
+                FormUtils.createAndAddFieldsFromEntityToForm(
+                        obj.getClass().getName(), this);
+            }
             updateView();
         } catch (Exception ex) {
         }

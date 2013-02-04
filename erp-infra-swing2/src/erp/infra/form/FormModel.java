@@ -1,7 +1,7 @@
 package erp.infra.form;
 
+import erp.infra.entity.EntityDao;
 import erp.infra.entity.EntityModel;
-import erp.infra.entity.EntityModelListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,15 +11,16 @@ import java.util.List;
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.00.00 (03/02/2013 20:26)
  */
-public abstract class FormModel<T> {
+public class FormModel<T> {
 
     public enum Mode { EMPTY, READ_ONLY, INSERT, UPDATE }
     private EntityModel<T> entityModel = new EntityModel<T>();
     private String property = "";
     private Mode mode = Mode.EMPTY;
+    private EntityDao<T> entityDao;
     private List<FormModelListener> listeners 
             = new ArrayList<FormModelListener>();
-
+    
     public EntityModel<T> getEntityModel() {
         return entityModel;
     }
@@ -60,11 +61,22 @@ public abstract class FormModel<T> {
         fireModeChanged();
     }
 
+    public EntityDao<T> getEntityDao() {
+        return entityDao;
+    }
+
+    public void setEntityDao(EntityDao<T> entityDao) {
+        this.entityDao = entityDao;
+    }
+
     // -- Private wrapper methods ---
     
     void initReload() throws Exception {
         System.out.println("reload");
-        entityModel.setEntity(reload());
+        if (entityDao != null) {
+            T entity = entityDao.reload().get(0);
+            entityModel.setEntity(entity);
+        }
     }
 
     void initUpdate() throws Exception {
@@ -75,17 +87,20 @@ public abstract class FormModel<T> {
     }
 
     public void initInsert() throws Exception {
-        if (mode == Mode.READ_ONLY) {
-            entityModel.setEntity(newInstance());
+        if (mode == Mode.READ_ONLY && entityDao != null) {
+            T newInstance = entityDao.createNewInstance();
+            entityModel.setEntity(newInstance);
             setMode(Mode.INSERT);
         }
         throw new RuntimeException("Can't insert in actual mode !");
     }
 
     public void initDelete() throws Exception {
-        if (mode == Mode.READ_ONLY && entityModel.getEntity() != null) {
+        if (mode == Mode.READ_ONLY && entityModel.getEntity() != null && entityDao != null) {
             System.out.println("delete");
-            delete(entityModel.getEntity());
+            List<T> ts = new ArrayList<T>();
+            ts.add(entityModel.getEntity());
+            entityDao.delete(ts);
         }
         else {
             throw new RuntimeException("Can't delete in actual mode !");
@@ -103,16 +118,20 @@ public abstract class FormModel<T> {
     }    
  
     void save() throws Exception {
-        if (mode == Mode.UPDATE) {
+        if (mode == Mode.UPDATE && entityDao != null) {
             System.out.println("update");
             fireUpdateModel();
-            update(entityModel.getEntity());
+            List<T> ts = new ArrayList<T>();
+            ts.add(entityModel.getEntity());
+            entityDao.update(ts);
             setMode(Mode.READ_ONLY);
         }
-        else if (mode == Mode.INSERT) {
+        else if (mode == Mode.INSERT && entityDao != null) {
             System.out.println("insert");
             fireUpdateModel();
-            insert(entityModel.getEntity());
+            List<T> ts = new ArrayList<T>();
+            ts.add(entityModel.getEntity());
+            entityDao.insert(ts);
             setMode(Mode.READ_ONLY);
         }
         else {
@@ -151,12 +170,4 @@ public abstract class FormModel<T> {
         }
     }
 
-    // --- Must be implemented by client ---
-    
-    public abstract T reload() throws Exception;
-    public abstract void update(T entity) throws Exception;
-    public abstract void insert(T entity) throws Exception;
-    public abstract void delete(T entity) throws Exception;
-    public abstract T newInstance() throws Exception;
-    
 }
