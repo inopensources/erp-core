@@ -44,8 +44,72 @@ public class Form extends JPanel implements EntityModelListener {
             FormUtils.createAndAddFieldsFromEntityToForm(
                     obj.getClass().getName(), this);
             
-            reload();
+            updateView();
         } catch (Exception ex) {
+        }
+    }
+
+    public void updateView() {
+        // Fields
+        try {
+            updateViewPrivate(model.getEntityModel().getEntity());
+        } catch (Exception ex) {
+            Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+        
+        // Mode
+        for (Component c : getComponents()) {
+            if (c instanceof Field) {
+                Field field = (Field) c;
+                if (model.getMode() == Mode.EMPTY) {
+                    field.setEnabled(false);
+                }
+                else {
+                    field.setEnabled(true);
+                }
+                if (model.getMode() == Mode.READ_ONLY) {
+                    field.setEditable(false);
+                } else if (model.getMode() == Mode.UPDATE) {
+                    field.setEditable(field.isUpdatable());
+                } else if (model.getMode() == Mode.INSERT) {
+                    field.setEditable(field.isInsertable());
+                } else {
+                    field.setEditable(true);
+                }
+            }
+        }
+    }
+
+    private void updateViewPrivate(Object entityPrivate) throws Exception {
+        ScriptEngine se = new ScriptEngineManager()
+                .getEngineByName("JavaScript");
+
+        for (Component c : getComponents()) {
+            if (c instanceof Field) {
+                
+                Field field = (Field) c;
+                if (entityPrivate != null) {
+                    se.put("entity", entityPrivate);
+                }
+                se.put("field", field);
+                if (field.getExpression() != null 
+                        && !field.getExpression().trim().isEmpty()) {
+                    
+                    se.eval("field.fieldText = " 
+                            + field.getExpression().toString());
+                    
+                } else if (field.getProperty() == null 
+                        || field.getProperty().trim().isEmpty()) {
+                    
+                    continue;
+                } else if (entityPrivate != null) {
+                    Object value = se.eval("entity." + field.getProperty());
+                    field.setValue(value);
+                } else if (entityPrivate == null) {
+                    field.setValue(null);
+                }
+            }
         }
     }
     
@@ -81,48 +145,6 @@ public class Form extends JPanel implements EntityModelListener {
                     Object value = field.getValue();
                     se.put("value", value);
                     se.eval("entity." + field.getProperty() + " = value");
-                }
-            }
-        }
-    }
-
-    public void reload() {
-        try {
-            reloadPrivate(model.getEntityModel().getEntity());
-        } catch (Exception ex) {
-            Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        }
-
-    }
-
-    private void reloadPrivate(Object entityPrivate) throws Exception {
-        ScriptEngine se = new ScriptEngineManager()
-                .getEngineByName("JavaScript");
-
-        for (Component c : getComponents()) {
-            if (c instanceof Field) {
-                
-                Field field = (Field) c;
-                if (entityPrivate != null) {
-                    se.put("entity", entityPrivate);
-                }
-                se.put("field", field);
-                if (field.getExpression() != null 
-                        && !field.getExpression().trim().isEmpty()) {
-                    
-                    se.eval("field.fieldText = " 
-                            + field.getExpression().toString());
-                    
-                } else if (field.getProperty() == null 
-                        || field.getProperty().trim().isEmpty()) {
-                    
-                    continue;
-                } else if (entityPrivate != null) {
-                    Object value = se.eval("entity." + field.getProperty());
-                    field.setValue(value);
-                } else if (entityPrivate == null) {
-                    field.setValue(null);
                 }
             }
         }
@@ -168,26 +190,7 @@ public class Form extends JPanel implements EntityModelListener {
     private class FormModelListenerImpl implements FormModelListener {
         @Override
         public void modeChanged() {
-            for (Component c : getComponents()) {
-                if (c instanceof Field) {
-                    Field field = (Field) c;
-                    if (model.getMode() == Mode.EMPTY) {
-                        field.setEnabled(false);
-                    }
-                    else {
-                        field.setEnabled(true);
-                    }
-                    if (model.getMode() == Mode.READ_ONLY) {
-                        field.setEditable(false);
-                    } else if (model.getMode() == Mode.UPDATE) {
-                        field.setEditable(field.isUpdatable());
-                    } else if (model.getMode() == Mode.INSERT) {
-                        field.setEditable(field.isInsertable());
-                    } else {
-                        field.setEditable(true);
-                    }
-                }
-            }
+            updateView();
         }
 
         @Override
@@ -205,7 +208,7 @@ public class Form extends JPanel implements EntityModelListener {
 
     @Override
     public void entityChanged() {
-        reload();
+        updateView();
         if (model.getEntityModel().getEntity() == null) {
             model.setMode(Mode.EMPTY);
         }
