@@ -23,19 +23,13 @@ public class TesteFilter {
 
     public static void main(String[] args) {
         Field codigoBacenField = FormUtils.createFieldById("codbc", Pais2.class);
-        String codigoBacenProperty = FormUtils.getPropertyById("codbc", Pais2.class);
         System.out.println(codigoBacenField);
-        System.out.println(codigoBacenProperty);
         
         Field nomeField = FormUtils.createFieldById("nome", Pais2.class);
-        String nomeProperty = FormUtils.getPropertyById("nome", Pais2.class);
         System.out.println(nomeField);
-        System.out.println(nomeProperty);
         
         Field sigla2Field = FormUtils.createFieldById("s2", Pais2.class);
-        String sigla2Property = FormUtils.getPropertyById("s2", Pais2.class);
         System.out.println(nomeField);
-        System.out.println(sigla2Property);
         
         codigoBacenField.setValue("01058");
         nomeField.setValue(" BRASIL");
@@ -44,13 +38,11 @@ public class TesteFilter {
         EqualOperation equalOperation = new EqualOperation(Pais2.class);
         Condition cond1 = new Condition();
         cond1.setField(codigoBacenField);
-        cond1.setProperty(codigoBacenProperty);
         cond1.setOperation(equalOperation);
         
         LikeOperation likeOperation = new LikeOperation(Pais2.class);
         Condition cond2 = new Condition();
         cond2.setField(nomeField);
-        cond2.setProperty(nomeProperty);
         cond2.setOperation(likeOperation);
         
         AndOperation andOperation = new AndOperation(Pais2.class);
@@ -59,7 +51,6 @@ public class TesteFilter {
 
         Condition cond3 = new Condition();
         cond3.setField(sigla2Field);
-        cond3.setProperty(sigla2Property);
         cond3.setOperation(equalOperation);
         
         OrOperation orOperation = new OrOperation((Pais2.class));

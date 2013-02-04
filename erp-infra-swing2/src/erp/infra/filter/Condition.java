@@ -12,17 +12,8 @@ import java.util.List;
  */
 public class Condition implements Query {
     
-    private String property;
     private Operation operation;
     private Field field;
-
-    public String getProperty() {
-        return property;
-    }
-
-    public void setProperty(String property) {
-        this.property = property.trim();
-    }
 
     public Operation getOperation() {
         return operation;
@@ -42,19 +33,19 @@ public class Condition implements Query {
 
     @Override
     public String getQuery() {
-        return operation.getClassAlias() + "." + property + " " + operation.getQuery() + " :" + property;
+        return operation.getClassAlias() + "." + field.getProperty() + " " + operation.getQuery() + " :" + field.getProperty();
     }
 
     @Override
     public List<String> getParameters() {
         List<String> parameters = new ArrayList<String>();
-        parameters.add(property);
+        parameters.add(field.getProperty());
         return parameters;
     }
 
     @Override
     public Object getParameterValue(String parameter) {
-        if (!property.equals(parameter)) {
+        if (!field.getProperty().equals(parameter)) {
             return null;
         }
         return field.getValue();

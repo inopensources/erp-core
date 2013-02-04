@@ -20,14 +20,12 @@ public class TesteFilter2 {
 
     public static void main(String[] args) {
         Field nomeField = FormUtils.createFieldById("nome", Pais2.class);
-        String nomeProperty = FormUtils.getPropertyById("nome", Pais2.class);
         
         nomeField.setValue(" CH%");
         
         LikeOperation likeOperation = new LikeOperation(Pais2.class);
         Condition cond2 = new Condition();
         cond2.setField(nomeField);
-        cond2.setProperty(nomeProperty);
         cond2.setOperation(likeOperation);
         
         Filter filter = new Filter(Pais2.class);
