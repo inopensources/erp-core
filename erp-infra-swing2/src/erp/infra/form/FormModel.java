@@ -52,6 +52,11 @@ public abstract class FormModel<T> {
             mode = Mode.EMPTY;
         }
         this.mode = mode;
+        if (mode == Mode.EMPTY) {
+            if (getEntityModel().getEntity() != null) {
+                getEntityModel().setEntity(null);
+            }
+        }
         fireModeChanged();
     }
 

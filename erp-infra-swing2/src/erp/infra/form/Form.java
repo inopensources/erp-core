@@ -97,9 +97,6 @@ public class Form extends JPanel implements EntityModelListener {
     }
 
     private void reloadPrivate(Object entityPrivate) throws Exception {
-        if (entityPrivate == null) {
-            return;
-        }
         ScriptEngine se = new ScriptEngineManager()
                 .getEngineByName("JavaScript");
 
@@ -107,7 +104,9 @@ public class Form extends JPanel implements EntityModelListener {
             if (c instanceof Field) {
                 
                 Field field = (Field) c;
-                se.put("entity", entityPrivate);
+                if (entityPrivate != null) {
+                    se.put("entity", entityPrivate);
+                }
                 se.put("field", field);
                 if (field.getExpression() != null 
                         && !field.getExpression().trim().isEmpty()) {
@@ -119,9 +118,11 @@ public class Form extends JPanel implements EntityModelListener {
                         || field.getProperty().trim().isEmpty()) {
                     
                     continue;
-                } else {
+                } else if (entityPrivate != null) {
                     Object value = se.eval("entity." + field.getProperty());
                     field.setValue(value);
+                } else if (entityPrivate == null) {
+                    field.setValue(null);
                 }
             }
         }
