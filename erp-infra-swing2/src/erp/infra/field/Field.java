@@ -17,12 +17,15 @@ import javax.swing.JPanel;
  */
 public abstract class Field extends JPanel {
     
+    // Carrega o componente de edicao. 
+    // Por exemplo: se for TextField, component sera igual a JTextField
+    //              se for CheckField, component sera igual a JCheckBox
     protected Component component;
     
     private String property;
     private String expression;
     
-    private String labelText;
+    private String labelText = "";
     private String labelSeparator = ":";
     
     private boolean insertable = true;
@@ -131,7 +134,6 @@ public abstract class Field extends JPanel {
         label = new javax.swing.JLabel();
 
         label.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        label.setText("label");
 
         setMinimumSize(new java.awt.Dimension(110, 30));
         setPreferredSize(new java.awt.Dimension(100, 25));
@@ -156,7 +158,7 @@ public abstract class Field extends JPanel {
         FontMetrics fm = g.getFontMetrics();
         int fontWidth = fm.stringWidth(getLabel().getText());
         int fontHeight = fm.getHeight();
-        getLabel().setSize(fontWidth, getComponent().getHeight());
+        getLabel().setSize(fontWidth, getHeight());
         Graphics g2 = g.create(this.getBounds().x - fontWidth - 5
                 , this.getBounds().y, getWidth(), getHeight());
         

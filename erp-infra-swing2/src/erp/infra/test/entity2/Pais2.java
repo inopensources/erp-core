@@ -102,7 +102,7 @@ public class Pais2 implements Serializable {
 
     @Override
     public String toString() {
-        return "erp.infra.test.entity2.Pais[ id=" + id + " ]";
+        return "Pais2{" + "id=" + id + ", codigoBacen=" + codigoBacen + ", nome=" + nome + ", sigla2=" + sigla2 + '}';
     }
     
 }

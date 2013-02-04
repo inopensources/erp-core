@@ -53,7 +53,7 @@ public class LookupField extends Field {
     private DownKeyAction downKeyAction = new DownKeyAction();
     
     private Model model;
-    private String labelExpression;
+    private String labelExpression = "''";
     private ModelListener modelListener = new ModelListenerImpl();
     
     public LookupField() {

@@ -131,5 +131,67 @@ public class FormUtils {
         }
         return field;
     }
+
+    public static Field createFieldById(String fieldId, Class entityClass) {
+        erp.infra.annotation.Form af = (erp.infra.annotation.Form) 
+                entityClass.getAnnotation(erp.infra.annotation.Form.class);
+        
+        if (af == null) {
+            throw new RuntimeException("@Form annotation not found !");
+        }
+        // Extrai todas anotacoes Field
+        Map<String, erp.infra.annotation.Field> fields = new HashMap<String, erp.infra.annotation.Field>();
+        Map<String, String> properties = new HashMap<String, String>();
+        Map<String, Class> types = new HashMap<String, Class>();
+        for (Method m : entityClass.getMethods()) {
+            erp.infra.annotation.Field fa = m.getAnnotation(erp.infra.annotation.Field.class);
+            if (fa != null) {
+                System.out.println(m.getName() + " field: " + fa);
+                fields.put(fa.id().trim(), fa);
+                String property = m.getName().replaceFirst("(get|set)", "");
+                property = property.substring(0, 1).toLowerCase() + property.substring(1);
+                properties.put(fa.id(), property);
+                types.put(fa.id(), m.getReturnType());
+            }
+        }
+        erp.infra.annotation.Field f = fields.get(fieldId);
+        if (f == null) {
+            return null;
+        }
+        int layoutScale = af.layoutScale();
+        Field fv = createDefaultFieldFromType(types.get(fieldId));
+        fv.setInsertable(f.insertable());
+        fv.setUpdatable(f.updatable());
+        fv.setBounds(0, 0, 100, 25);
+        // Seta a propriedade do Field corretamente
+        String property = properties.get(fieldId);
+        fv.setProperty(property);
+        return fv;
+    }
+
+    public static erp.infra.annotation.Field getFieldById(String fieldId, Class entityClass) {
+        // Extrai todas anotacoes Field
+        for (Method m : entityClass.getMethods()) {
+            erp.infra.annotation.Field fa = m.getAnnotation(erp.infra.annotation.Field.class);
+            if (fa != null && fa.id().equals(fieldId)) {
+                return fa;
+            }
+        }
+        return null;
+    }
+
+    public static String getPropertyById(String fieldId, Class entityClass) {
+        // Extrai todas anotacoes Field
+        for (Method m : entityClass.getMethods()) {
+            erp.infra.annotation.Field fa = m.getAnnotation(erp.infra.annotation.Field.class);
+            if (fa != null && fa.id().equals(fieldId)) {
+                String property = m.getName();
+                property = property.replaceAll("get|set", "");
+                property = property.substring(0, 1).toLowerCase() + property.substring(1);
+                return property;
+            }
+        }
+        return null;
+    }
     
 }
