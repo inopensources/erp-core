@@ -1,7 +1,7 @@
-package erp.infra.filter2;
+package erp.infra.filter;
 
 import erp.infra.field.Field;
-import erp.infra.filter.Operation;
+import java.util.List;
 
 /**
  *
@@ -30,8 +30,22 @@ public class ConditionContainer extends Container {
 
     @Override
     public String getQuery() {
-        String query = operation.getClassAlias() + "." + field.getProperty() + " " + operation.getQuery() + " :" + field.getProperty();
+        String query = getClassAlias() + "." + field.getProperty() + " " + operation.getQuery() + " :" + field.getProperty();
         return query;
+    }
+
+    @Override
+    public void getParameters(List<String> parameters) {
+        parameters.add(field.getProperty());
+    }
+
+    @Override
+    public Object getParameterValue(String parameter) {
+        Object value = null;
+        if (field.getProperty().equals(parameter)) {
+            value = field.getValue();
+        }
+        return value;
     }
     
 }

@@ -132,7 +132,7 @@ public class FormUtils {
         return field;
     }
 
-    public static Field createFieldById(String fieldId, Class entityClass) {
+    public static Field createFieldByProperty(String property, Class entityClass) {
         erp.infra.annotation.Form af = (erp.infra.annotation.Form) 
                 entityClass.getAnnotation(erp.infra.annotation.Form.class);
         
@@ -141,30 +141,27 @@ public class FormUtils {
         }
         // Extrai todas anotacoes Field
         Map<String, erp.infra.annotation.Field> fields = new HashMap<String, erp.infra.annotation.Field>();
-        Map<String, String> properties = new HashMap<String, String>();
         Map<String, Class> types = new HashMap<String, Class>();
         for (Method m : entityClass.getMethods()) {
             erp.infra.annotation.Field fa = m.getAnnotation(erp.infra.annotation.Field.class);
             if (fa != null) {
-                System.out.println(m.getName() + " field: " + fa);
-                fields.put(fa.id().trim(), fa);
-                String property = m.getName().replaceFirst("(get|set)", "");
-                property = property.substring(0, 1).toLowerCase() + property.substring(1);
-                properties.put(fa.id(), property);
-                types.put(fa.id(), m.getReturnType());
+                // System.out.println(m.getName() + " field: " + fa);
+                String propertyLocal = m.getName().replaceFirst("(get|set)", "");
+                propertyLocal = propertyLocal.substring(0, 1).toLowerCase() + propertyLocal.substring(1);
+                fields.put(propertyLocal, fa);
+                types.put(propertyLocal, m.getReturnType());
             }
         }
-        erp.infra.annotation.Field f = fields.get(fieldId);
+        erp.infra.annotation.Field f = fields.get(property);
         if (f == null) {
             return null;
         }
         int layoutScale = af.layoutScale();
-        Field fv = createDefaultFieldFromType(types.get(fieldId));
+        Field fv = createDefaultFieldFromType(types.get(property));
         fv.setInsertable(f.insertable());
         fv.setUpdatable(f.updatable());
         fv.setBounds(0, 0, 100, 25);
         // Seta a propriedade do Field corretamente
-        String property = properties.get(fieldId);
         fv.setProperty(property);
         return fv;
     }

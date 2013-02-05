@@ -1,7 +1,5 @@
 package erp.infra.filter;
 
-import erp.infra.filter2.Container;
-
 /**
  *
  * @author leonardo
@@ -36,6 +34,9 @@ public class Linker {
 
     public void setLeftContainer(Container leftContainer) {
         this.leftContainer = leftContainer;
+        if (leftContainer.getRightLinker() != this) {
+            leftContainer.setRightLinker(this);
+        }
     }
 
     public Container getRightContainer() {
@@ -44,6 +45,9 @@ public class Linker {
 
     public void setRightContainer(Container rightContainer) {
         this.rightContainer = rightContainer;
+        if (rightContainer.getLeftLinker() != this) {
+            rightContainer.setLeftLinker(this);
+        }
     }
     
 }

@@ -4,30 +4,19 @@
  */
 package erp.infra.test;
 
-import erp.infra.field.LookupField;
-import erp.infra.form.FormModel;
-import erp.infra.test.entity2.Pais2;
+import erp.infra.test.entity.Pais;
 
 /**
  *
- * @author leo
+ * @author leonardo
  */
 public class NewJFrame extends javax.swing.JFrame {
-    
-    private LookupField.Model<Pais2> lookupModel = new LookupField.Model<Pais2>();
-    private FormModel<Pais2> formModel = new FormModel<Pais2>();
-    
+
     /**
      * Creates new form NewJFrame
      */
     public NewJFrame() {
         initComponents();
-        lookupModel.setLookupProperty("nome");
-        formModel.setEntityDao(pais2Dao1);
-        lookupModel.setEntityDao(pais2Dao1);
-        formModel.setEntityModel(lookupModel.getEntityModel());
-        lookupField1.setModel(lookupModel);
-        form1.setModel(formModel);
     }
 
     /**
@@ -39,54 +28,49 @@ public class NewJFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        pais2Dao1 = new erp.infra.test.Pais2Dao();
         form1 = new erp.infra.form.Form();
-        form2 = new erp.infra.form.Form();
         lookupField1 = new erp.infra.field.LookupField();
+        form2 = new erp.infra.form.Form();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        form1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        lookupField1.setEntityClass(Pais.class);
 
         javax.swing.GroupLayout form1Layout = new javax.swing.GroupLayout(form1);
         form1.setLayout(form1Layout);
         form1Layout.setHorizontalGroup(
             form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addComponent(lookupField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
         );
         form1Layout.setVerticalGroup(
             form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 157, Short.MAX_VALUE)
+            .addGroup(form1Layout.createSequentialGroup()
+                .addGap(20, 20, 20)
+                .addComponent(lookupField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        lookupField1.setLabelExpression("'<html><strong>' + entity.id + '</strong> ' + entity.nome + '</html>'");
-        lookupField1.setLabelText("Nome do país");
+        form2.setEntityClass(Pais.class);
 
         javax.swing.GroupLayout form2Layout = new javax.swing.GroupLayout(form2);
         form2.setLayout(form2Layout);
         form2Layout.setHorizontalGroup(
             form2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, form2Layout.createSequentialGroup()
-                .addContainerGap(131, Short.MAX_VALUE)
-                .addComponent(lookupField1, javax.swing.GroupLayout.PREFERRED_SIZE, 437, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         form2Layout.setVerticalGroup(
             form2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(form2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lookupField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 196, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(form2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(form2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(form1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -94,9 +78,9 @@ public class NewJFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(form2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(form1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(form1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(form2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -114,7 +98,7 @@ public class NewJFrame extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
+                if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
@@ -141,6 +125,5 @@ public class NewJFrame extends javax.swing.JFrame {
     private erp.infra.form.Form form1;
     private erp.infra.form.Form form2;
     private erp.infra.field.LookupField lookupField1;
-    private erp.infra.test.Pais2Dao pais2Dao1;
     // End of variables declaration//GEN-END:variables
 }

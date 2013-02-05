@@ -1,6 +1,7 @@
 package erp.infra.form;
 
 import erp.infra.entity.EntityModelListener;
+import erp.infra.entity.GenericDao;
 import erp.infra.field.Field;
 import erp.infra.form.FormModel.Mode;
 import java.awt.Component;
@@ -20,12 +21,38 @@ import javax.swing.JPanel;
  */
 public class Form extends JPanel implements EntityModelListener {
 
+    private Class entityClass;
     private FormModel model;
     private FormModelListener listener 
             = new FormModelListenerImpl();
 
     public Form() {
         initComponents();
+    }
+
+    public Class getEntityClass() {
+        return entityClass;
+    }
+
+    public void setEntityClass(Class entityClass) {
+        this.entityClass = entityClass;
+        FormModel formModel = createFormModel(entityClass);
+        formModel.setEntityDao(createGenericDao(entityClass));
+        setModel(formModel);
+    }
+    
+    private <T> FormModel<T> createFormModel(Class<T> entityClass) {
+        return new FormModel<T>();
+    }
+
+    private <T> GenericDao<T> createGenericDao(final Class<T> entityClass) {
+        return new GenericDao<T>() {
+            @Override
+            public Class getEntityClass() throws Exception {
+                return entityClass;
+            }
+            
+        };
     }
 
     public FormModel getModel() {

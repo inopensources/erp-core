@@ -74,7 +74,8 @@ public class FormModel<T> {
     void initReload() throws Exception {
         System.out.println("reload");
         if (entityDao != null) {
-            T entity = entityDao.reload().get(0);
+            //T entity = entityDao.reload().get(0);
+            T entity = entityModel.getEntity();
             entityModel.setEntity(entity);
         }
     }

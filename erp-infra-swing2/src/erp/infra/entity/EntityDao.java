@@ -1,5 +1,6 @@
 package erp.infra.entity;
 
+import erp.infra.filter.Filter;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
@@ -11,10 +12,14 @@ import java.util.List;
  */
 public abstract class EntityDao<T> {
     
-    public T createNewInstance() throws Exception {
+    public Class getEntityClass() throws Exception {
         Class entityClass = (Class) ((ParameterizedType) getClass()
                 .getGenericSuperclass()).getActualTypeArguments()[0];
-        return (T) entityClass.newInstance();
+        return entityClass;
+    }
+
+    public T createNewInstance() throws Exception {
+        return (T) getEntityClass().newInstance();
     }
     
     // --- Must be implemented by client ---
@@ -22,6 +27,6 @@ public abstract class EntityDao<T> {
     public abstract void insert(List<T> entities) throws Exception;
     public abstract void update(List<T> entities) throws Exception;
     public abstract void delete(List<T> entities) throws Exception;
-    public abstract List<T> reload(String ... filter) throws Exception;
+    public abstract List<T> executeQuery(Filter filter) throws Exception;
 
 }

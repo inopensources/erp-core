@@ -4,6 +4,15 @@ import erp.infra.annotation.Form;
 import erp.infra.entity.EntityDao;
 import erp.infra.entity.EntityModel;
 import erp.infra.entity.EntityModelListener;
+import erp.infra.entity.GenericDao;
+import erp.infra.filter.ConditionContainer;
+import erp.infra.filter.EqualOperation;
+import erp.infra.filter.Filter;
+import erp.infra.filter.LikeOperation;
+import erp.infra.filter.Linker;
+import erp.infra.filter.OrOperation;
+import erp.infra.form.FormModel;
+import erp.infra.test.entity2.Pais2;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -43,6 +52,8 @@ import javax.swing.ListCellRenderer;
  */
 public class LookupField extends Field {
 
+    private Class entityClass;
+    
     private JPopupMenu popup = new JPopupMenu();
     private JList popupList = new JList(new PopupListModel());
     private JScrollPane popupScrollPane = new JScrollPane(popupList);
@@ -94,7 +105,31 @@ public class LookupField extends Field {
                 , KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0)
                 , JComponent.WHEN_FOCUSED); 
     }
+    
+    public Class getEntityClass() {
+        return entityClass;
+    }
 
+    public void setEntityClass(Class entityClass) {
+        this.entityClass = entityClass;
+        setModel(createModel(entityClass));
+        getModel().setEntityDao(createGenericDao(entityClass));
+    }
+    
+    private <T> Model<T> createModel(Class<T> entityClass) {
+        return new Model<T>();
+    }
+    
+    private <T> GenericDao<T> createGenericDao(final Class<T> entityClass) {
+        return new GenericDao<T>() {
+            @Override
+            public Class getEntityClass() throws Exception {
+                return entityClass;
+            }
+            
+        };
+    }
+    
     public JLabel getPopupListItemRenderComponent() {
         return popupListItemRenderComponent;
     }
@@ -370,8 +405,12 @@ public class LookupField extends Field {
         
         private void initUpdateList(String value) throws Exception {
             if (entityDao != null) {
-                List<T> list = entityDao.reload(value);
-                setList(list);
+                Filter filter = new Filter(entityDao.getEntityClass());
+                ConditionContainer condition = filter.createCondition(view.getModel().getLookupProperty(), new LikeOperation());
+                condition.getField().setValue("%" + value.trim() + "%");
+                filter.getContainers().add(condition);
+                List<T> returnList = entityDao.executeQuery(filter);
+                setList(returnList);
             }
         }
 
@@ -510,7 +549,11 @@ public class LookupField extends Field {
                 try {
                     List list = new ArrayList();
                     if (model.getEntityDao() != null) {
-                        list = model.getEntityDao().reload(text.getText());
+                        Filter filter = new Filter(getModel().getEntityDao().getEntityClass());
+                        ConditionContainer condition = filter.createCondition(getModel().getLookupProperty(), new LikeOperation());
+                        condition.getField().setValue("%" + text.getText().trim() + "%");
+                        filter.getContainers().add(condition);
+                        list = model.getEntityDao().executeQuery(filter);
                     }
                     if (list.isEmpty()) {
                         throw new Exception("Entity not found !");

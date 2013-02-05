@@ -1,17 +1,16 @@
 package erp.infra.filter;
 
 /**
- * EqualOperation class.
+ * LikeOperation class.
  * 
  * @author Leonardo Ono (ono.leo@gmail.com)
- * @since 1.00.00 (04/02/2013 17:10)
+ * @since 1.00.00 (04/02/2013 21:50)
  */
 public class LikeOperation extends Operation {
-    
-    public LikeOperation(Class entityClass) {
-        super(entityClass);
-        setQuery("like");
+
+    public LikeOperation() {
         setName("like");
+        setQuery("like");
     }
-    
+
 }
