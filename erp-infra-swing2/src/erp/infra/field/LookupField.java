@@ -8,6 +8,7 @@ import erp.infra.entity.GenericDao;
 import erp.infra.filter.ConditionContainer;
 import erp.infra.filter.Filter;
 import erp.infra.filter.LikeOperation;
+import erp.infra.form.FormUtils;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -61,7 +62,13 @@ public class LookupField extends Field {
     private Model model;
     private String labelExpression = "''";
     private ModelListener modelListener = new ModelListenerImpl();
+
+    // --- Popup that allow user to select a field to lookup ---
     
+    private JPopupMenu popupFields = new JPopupMenu();
+    private JList popupFieldsList = new JList(new PopupFieldsListModel());
+    private JScrollPane popupFieldsScrollPane = new JScrollPane(popupFieldsList);
+
     public LookupField() {
         initComponents();
         
@@ -99,6 +106,18 @@ public class LookupField extends Field {
         text.registerKeyboardAction(downKeyAction
                 , KeyStroke.getKeyStroke(KeyEvent.VK_DOWN, 0)
                 , JComponent.WHEN_FOCUSED); 
+        
+        // --- Popup that allow user to select a field to lookup ---
+        popupFieldsScrollPane.setBorder(null);
+        popupFieldsList.addMouseListener(new ListFieldsMouseClicked());
+        popupFieldsList.setBorder(null);
+        popupFieldsList.setFocusable(false);
+        popupFields.setBackground(popupList.getBackground());
+        popupFields.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        popupFields.setLayout(new BorderLayout());
+        popupFields.add(popupFieldsScrollPane, BorderLayout.CENTER);
+        popupFields.setPreferredSize(new Dimension(250, 150));
+        popupFields.setFocusable(false);
     }
     
     public Class getEntityClass() {
@@ -175,12 +194,17 @@ public class LookupField extends Field {
         splitPane.setDividerLocation(100);
 
         text.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        text.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                textFocusGained(evt);
+        text.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                textMouseClicked(evt);
             }
+        });
+        text.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 textFocusLost(evt);
+            }
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                textFocusGained(evt);
             }
         });
         text.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -250,6 +274,12 @@ public class LookupField extends Field {
     private void textFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textFocusGained
         text.selectAll();
     }//GEN-LAST:event_textFocusGained
+
+    private void textMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textMouseClicked
+        // TODO add your handling code here:
+        // Temporariamente somente para teste
+        popupFields.show(this, 0, text.getHeight());
+    }//GEN-LAST:event_textMouseClicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button;
@@ -500,6 +530,34 @@ public class LookupField extends Field {
             return model.getList().get(index);
         }
         
+    }
+    
+    // --- PopupFieldsListModel implementation ---
+    
+    private class PopupFieldsListModel extends AbstractListModel {
+
+        @Override
+        public int getSize() {
+            return FormUtils.getAllFieldsAnnotation(entityClass).size();
+        }
+
+        @Override
+        public Object getElementAt(int index) {
+            return FormUtils.getAllFieldsAnnotation(entityClass).get(index).label();
+        }
+        
+    }
+
+    // --- Allow user to select a lookup property by double clicking on a item ---
+    
+    private class ListFieldsMouseClicked extends MouseAdapter {
+        @Override
+        public void mouseClicked(MouseEvent e) {
+            erp.infra.annotation.Field field = FormUtils.getAllFieldsAnnotation(entityClass).get(popupFieldsList.getSelectedIndex());
+            System.out.println("mouseClicked " + FormUtils.getPropertyById(field.id(), entityClass));
+            model.setLookupProperty(FormUtils.getPropertyById(field.id(), entityClass));
+            popupFields.setVisible(false);
+        }
     }
 
     // --- Alow user to select list item through keyboard ---

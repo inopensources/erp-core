@@ -5,11 +5,11 @@ import erp.infra.field.DateField;
 import erp.infra.field.Field;
 import erp.infra.field.TextField;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -182,6 +182,30 @@ public class FormUtils {
         for (Method m : entityClass.getMethods()) {
             erp.infra.annotation.Field fa = m.getAnnotation(erp.infra.annotation.Field.class);
             if (fa != null && fa.id().equals(fieldId)) {
+                String property = m.getName();
+                property = property.replaceAll("get|set", "");
+                property = property.substring(0, 1).toLowerCase() + property.substring(1);
+                return property;
+            }
+        }
+        return null;
+    }
+    
+    public static List<erp.infra.annotation.Field> getAllFieldsAnnotation(Class entityClass) {
+        List<erp.infra.annotation.Field> fields = new ArrayList<>();
+        for (Method m : entityClass.getMethods()) {
+            erp.infra.annotation.Field fa = m.getAnnotation(erp.infra.annotation.Field.class);
+            if (fa != null) {
+                fields.add(fa);
+            }
+        }
+        return fields;
+    }
+    
+    public static String getPropertyByFieldAnnotation(Field field, Class entityClass) {
+        for (Method m : entityClass.getMethods()) {
+            erp.infra.annotation.Field fa = m.getAnnotation(erp.infra.annotation.Field.class);
+            if (fa != null && field.equals(fa)) {
                 String property = m.getName();
                 property = property.replaceAll("get|set", "");
                 property = property.substring(0, 1).toLowerCase() + property.substring(1);
