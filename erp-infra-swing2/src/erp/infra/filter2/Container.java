@@ -1,10 +1,12 @@
-package erp.infra.filter;
+package erp.infra.filter2;
+
+import erp.infra.filter.Linker;
 
 /**
  *
  * @author leonardo
  */
-public class Container {
+public abstract class Container {
 
     private Linker leftLinker;
     private Linker rightLinker;
@@ -24,5 +26,7 @@ public class Container {
     public void setRightLinker(Linker rightLinker) {
         this.rightLinker = rightLinker;
     }
+    
+    public abstract String getQuery();
     
 }

@@ -1,5 +1,7 @@
 package erp.infra.filter;
 
+import erp.infra.filter2.Container;
+
 /**
  *
  * @author leonardo
