@@ -10,7 +10,7 @@ public class EqualOperation extends Operation {
 
     public EqualOperation() {
         setName("igual");
-        setQuery("=");
+        setQuery("{field} = {value}");
     }
 
 }

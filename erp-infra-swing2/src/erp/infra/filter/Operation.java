@@ -11,6 +11,9 @@ public class Operation {
     private String name = "";
     private String query = "";
 
+    private String field;
+    private String value;
+    
     public String getName() {
         return name;
     }
@@ -26,5 +29,27 @@ public class Operation {
     public void setQuery(String query) {
         this.query = query;
     }
+    public String getField() {
+        return field;
+    }
 
+    public void setField(String field) {
+        this.field = field;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
+
+    public String getReplacedQuery() {
+        String replacedQuery = getQuery();
+        replacedQuery = replacedQuery.replace("{field}", field);
+        replacedQuery = replacedQuery.replace("{value}", value);
+        return replacedQuery;
+    }
+    
 }

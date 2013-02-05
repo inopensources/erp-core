@@ -30,7 +30,9 @@ public class ConditionContainer extends Container {
 
     @Override
     public String getQuery() {
-        String query = getClassAlias() + "." + field.getProperty() + " " + operation.getQuery() + " :" + field.getProperty();
+        operation.setField(getClassAlias() + "." + field.getProperty());
+        operation.setValue(":" + field.getProperty());
+        String query = " " + operation.getReplacedQuery() + " ";
         return query;
     }
 
