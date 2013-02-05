@@ -82,6 +82,12 @@ public class DateField extends TextField implements DatePicker.ModelListener {
                     , JComponent.WHEN_FOCUSED); 
         }
     }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        button.setEnabled(enabled);
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.

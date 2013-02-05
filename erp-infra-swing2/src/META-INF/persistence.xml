@@ -3,6 +3,8 @@
   <persistence-unit name="erp-infra-swing2PU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>erp.infra.test.entity2.Pais2</class>
+    <class>erp.infra.test.entity.Pais</class>
+    <class>erp.infra.test.entity.Produto</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/erp"/>
       <property name="javax.persistence.jdbc.password" value="erp"/>

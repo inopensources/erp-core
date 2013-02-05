@@ -27,14 +27,14 @@ import javax.persistence.Transient;
  */
 @Entity
 @Table(name = "pais")
-@Form(id = "pais", verticalPadding=3, layout = "\n\n"
-        + "              [id__]           [objeto_________]      \n"
-        + "              [codbc_]                                \n"
-        + "              [nome_________________________]         \n"
-        + "              [s2__   ]                               \n"
-        + "              [quente ]                               \n"
-        + "              [datacad]                               \n"
-        + "              [c]                                     \n"
+@Form(id = "pais", layoutScale=15, verticalPadding=3, layout = "\n\n"
+        + "         [id__]           [objeto_____]      \n"
+        + "         [codbc_]                            \n"
+        + "         [nome_____________________]         \n"
+        + "         [s2__   ]                           \n"
+        + "         [quente ]                           \n"
+        + "         [datacad]                           \n"
+        + "         [c]                                 \n"
 )
 public class Pais implements Serializable {
     
@@ -49,6 +49,7 @@ public class Pais implements Serializable {
     
     private String nome;
     
+    @Column(name="sigla_2")
     private String sigla2;
 
     @Transient
