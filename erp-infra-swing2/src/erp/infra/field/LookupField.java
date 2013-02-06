@@ -33,6 +33,7 @@ import javax.swing.AbstractAction;
 import javax.swing.AbstractListModel;
 import javax.swing.BorderFactory;
 import javax.swing.FocusManager;
+import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -41,6 +42,8 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
+import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListCellRenderer;
 
@@ -175,6 +178,18 @@ public class LookupField extends Field {
 
     public void setLabelExpression(String labelExpression) {
         this.labelExpression = labelExpression;
+    }
+
+    public JButton getButton() {
+        return button;
+    }
+
+    public JSplitPane getSplitPane() {
+        return splitPane;
+    }
+
+    public JTextField getText() {
+        return text;
     }
 
     /**

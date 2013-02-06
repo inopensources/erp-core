@@ -5,14 +5,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
-import javax.persistence.DiscriminatorType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
@@ -57,13 +53,13 @@ public class Produto {
     @Column(name="codigo_servico")
     private String codigoServico;
     
-    @Column(name="aliquota_icms")
+    @Column(name="aliquota_icms", precision=10, scale=2)
     private BigDecimal aliquotaIcms;
     
-    @Column(name="custo_unitario")
+    @Column(name="custo_unitario", precision=10, scale=2)
     private BigDecimal custoUnitario;
     
-    @Column(name="valor_venda")
+    @Column(name="valor_venda", precision=10, scale=2)
     private BigDecimal valorVenda;
     
     @Column(name="unidade_estoque")

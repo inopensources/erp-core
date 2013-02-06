@@ -20,6 +20,7 @@ public class NewJFrame extends javax.swing.JFrame {
         initComponents();
         lookupField1.getModel().setLookupProperty("descricao");
         lookupField1.setLabelText("Produto");
+        lookupField1.getSplitPane().setDividerLocation(200);
         lookupField1.setModeModel(form1.getModel().getModeModel());
         lookupField1.getEnablingMap().put(ModeModel.EMPTY, Boolean.TRUE);
         lookupField1.getEnablingMap().put(ModeModel.READY_ONLY, Boolean.TRUE);
@@ -46,70 +47,45 @@ public class NewJFrame extends javax.swing.JFrame {
 
         form1 = new erp.infra.form.Form();
         crudToolBar1 = new erp.infra.button.CrudToolBar();
-        form2 = new erp.infra.form.Form();
         lookupField1 = new erp.infra.field.LookupField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        form1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        form1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         form1.setEntityClass(Produto.class);
 
-        crudToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        crudToolBar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
         crudToolBar1.setRollover(true);
+
+        lookupField1.setEntityClass(Produto.class);
 
         javax.swing.GroupLayout form1Layout = new javax.swing.GroupLayout(form1);
         form1.setLayout(form1Layout);
         form1Layout.setHorizontalGroup(
             form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(crudToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, form1Layout.createSequentialGroup()
+                .addGap(0, 139, Short.MAX_VALUE)
+                .addComponent(lookupField1, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         form1Layout.setVerticalGroup(
             form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(form1Layout.createSequentialGroup()
-                .addComponent(crudToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 380, Short.MAX_VALUE))
-        );
-
-        form2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        lookupField1.setEntityClass(Produto.class);
-
-        javax.swing.GroupLayout form2Layout = new javax.swing.GroupLayout(form2);
-        form2.setLayout(form2Layout);
-        form2Layout.setHorizontalGroup(
-            form2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(form2Layout.createSequentialGroup()
-                .addGap(95, 95, 95)
-                .addComponent(lookupField1, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(282, Short.MAX_VALUE))
-        );
-        form2Layout.setVerticalGroup(
-            form2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, form2Layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
+                .addComponent(crudToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(lookupField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(0, 329, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(form1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(form2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+            .addComponent(form1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(form2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(form1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(form1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -152,7 +128,9 @@ public class NewJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private erp.infra.button.CrudToolBar crudToolBar1;
     private erp.infra.form.Form form1;
-    private erp.infra.form.Form form2;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private erp.infra.field.LookupField lookupField1;
+    private erp.infra.field.LookupField lookupField2;
     // End of variables declaration//GEN-END:variables
 }

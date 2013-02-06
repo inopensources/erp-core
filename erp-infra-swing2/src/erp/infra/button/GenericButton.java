@@ -2,6 +2,7 @@ package erp.infra.button;
 
 import erp.infra.form.FormModel;
 import erp.infra.mode.ModeListener;
+import java.awt.Dimension;
 import javax.swing.JButton;
 
 /**

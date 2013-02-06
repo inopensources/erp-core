@@ -4,6 +4,7 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.lang.reflect.Constructor;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -35,6 +36,7 @@ public class TextField extends Field implements FocusListener {
         new BooleanTypeImplementation();
         new NumericTypeImplementation();
         new DateTypeImplementation();
+        new BigDecimalTypeImplementation();
     }
     
     @Override
@@ -377,6 +379,49 @@ public class TextField extends Field implements FocusListener {
         void setValue(Date value) {
             try {
                 text.setText(sdf.format(value));
+            }
+            catch (Exception e) {
+                text.setText("");
+            }
+        }
+    }
+    
+    private class BigDecimalTypeImplementation extends TypeImplementation<BigDecimal> {
+        
+        BigDecimalTypeImplementation() {
+            setTypeConfig();
+        }
+        
+        private void setTypeConfig() {
+            typeConfigs.put(BigDecimal.class, this);
+        }
+        
+        @Override
+        public void config() {
+            // TODO internationalization
+            text.setRegex("[0-9,]*");
+        }
+
+        @Override
+        BigDecimal getValue() {
+            BigDecimal ret = null;
+            try {
+                String stringValue = text.getText();
+                stringValue = stringValue.replace(".", "");
+                stringValue = stringValue.replace(",", ".");
+                ret = new BigDecimal(stringValue);
+                System.out.println("TextField getValue() BigDecimal=" + ret);
+            } catch (Exception ex) {
+            }
+            return ret;
+        }
+
+        @Override
+        void setValue(BigDecimal value) {
+            try {
+                String stringValue = value.toString();
+                stringValue = stringValue.replace(".", ",");
+                text.setText(stringValue);
             }
             catch (Exception e) {
                 text.setText("");

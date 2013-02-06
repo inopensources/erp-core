@@ -21,7 +21,7 @@ import javax.persistence.Temporal;
  */
 @Entity
 @Table(name="produto")
-@Form(id="produto", verticalPadding=5, layout="\n\n\n"
+@Form(id="produto", verticalPadding=5, layout="\n\n\n\n"
         + "              [id____]                                                             \n"
         + "              [codint____]                                                         \n"
         + "              [desc_______________________________]                                \n"
@@ -55,13 +55,13 @@ public class Produto implements Serializable {
     @Column(name="codigo_servico")
     private String codigoServico;
     
-    @Column(name="aliquota_icms")
+    @Column(name="aliquota_icms", precision=10, scale=2)
     private BigDecimal aliquotaIcms;
     
-    @Column(name="custo_unitario")
+    @Column(name="custo_unitario", precision=10, scale=2)
     private BigDecimal custoUnitario;
     
-    @Column(name="valor_venda")
+    @Column(name="valor_venda", precision=10, scale=2)
     private BigDecimal valorVenda;
     
     @Column(name="unidade_estoque")
