@@ -17,59 +17,62 @@ public class GenericJpaDao<T> extends EntityDao<T> {
     private EntityManagerFactory emf;
     private EntityManager em;
 
-    @Override
-    public void insert(List<T> entities) throws Exception {
+    private void initCon() {
+        if (em != null && em.isOpen()) {
+            return;
+        }
         emf = Persistence.createEntityManagerFactory(PU);
         em = emf.createEntityManager();
+    }
+    
+    @Override
+    public void insert(List<T> entities) throws Exception {
+        initCon();
         em.getTransaction().begin();
         for (Object entity : entities) {
             em.persist(entity);
         }
         em.getTransaction().commit();
-        em.close();
-        emf.close();
     }
 
     @Override
     public void update(List<T> entities) throws Exception {
-        emf = Persistence.createEntityManagerFactory(PU);
-        em = emf.createEntityManager();
+        initCon();
         em.getTransaction().begin();
         for (Object entity : entities) {
             em.merge(entity);
         }
         em.getTransaction().commit();
-        em.close();
-        emf.close();
     }
 
     @Override
     public void delete(List<T> entities) throws Exception {
-        emf = Persistence.createEntityManagerFactory(PU);
-        em = emf.createEntityManager();
+        initCon();
         em.getTransaction().begin();
         for (Object entity : entities) {
             entity = em.merge(entity);
             em.remove(entity);
         }
         em.getTransaction().commit();
-        em.close();
-        emf.close();
     }
 
     @Override
     public List<T> executeQuery(Filter filter) throws Exception {
-        emf = Persistence.createEntityManagerFactory(PU);
-        em = emf.createEntityManager();
+        initCon();
         Query query = em.createQuery(filter.getQuery(), getEntityClass());
         for (String parameter : filter.getParameters()) {
             System.out.println("parameter=" + parameter + " / value=" + filter.getParameterValue(parameter));
             query.setParameter(parameter, filter.getParameterValue(parameter));
         }
         List<T> entities = query.getResultList();
+        return entities;
+    }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
         em.close();
         emf.close();
-        return entities;
     }
     
 }

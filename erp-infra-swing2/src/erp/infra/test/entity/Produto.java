@@ -2,6 +2,7 @@ package erp.infra.test.entity;
 
 import erp.infra.annotation.Field;
 import erp.infra.annotation.Form;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.persistence.Column;
@@ -20,16 +21,17 @@ import javax.persistence.Temporal;
  */
 @Entity
 @Table(name="produto")
-@Form(id="produto", layout="\n"
-        + "              [id____]                 [codint____]                                \n"
-        + "              [desc______________________________________________________]         \n"
+@Form(id="produto", verticalPadding=5, layout="\n\n\n"
+        + "              [id____]                                                             \n"
+        + "              [codint____]                                                         \n"
+        + "              [desc_______________________________]                                \n"
         + "              [tipo__]                                                             \n"
         + "              [codncm__]               [codgen____]           [codserv___]         \n"
         + "              [aliqicms__]             [custunit__]           [vlrvnd____]         \n"
         + "              [unidestoq_]             [pesounit__]                                \n"
         + "              [datacad___]             [dataultatu]                                \n"
 )
-public class Produto {
+public class Produto implements Serializable {
     
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
