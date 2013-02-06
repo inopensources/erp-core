@@ -4,10 +4,13 @@ import erp.infra.button.GenericButton;
 import erp.infra.entity.EntityModelListener;
 import erp.infra.entity.GenericJpaDao;
 import erp.infra.field.Field;
+import erp.infra.field.LookupField;
 import erp.infra.mode.ModeModel;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Cursor;
 import java.awt.Graphics;
+import java.awt.Rectangle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.script.ScriptEngine;
@@ -169,6 +172,17 @@ public class Form extends JPanel implements EntityModelListener {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                formMouseClicked(evt);
+            }
+        });
+        addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                formMouseMoved(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -180,6 +194,40 @@ public class Form extends JPanel implements EntityModelListener {
             .addGap(0, 300, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    // --- Lookup PopupField tests ---
+    
+    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
+        for (Component c : getComponents()) {
+            if (c instanceof LookupField) {
+                LookupField lookupField = (LookupField) c;
+                Rectangle r = new Rectangle(lookupField.getBounds());
+                r.setSize(lookupField.getText().getWidth(), r.height);
+                r.setLocation(r.x, r.y-10);
+                if (r.contains(evt.getPoint())) {
+                    lookupField.showPopupFields();
+                    break;
+                }
+            }
+        }
+    }//GEN-LAST:event_formMouseClicked
+
+    private void formMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseMoved
+        for (Component c : getComponents()) {
+            if (c instanceof LookupField) {
+                LookupField lookupField = (LookupField) c;
+                Rectangle r = new Rectangle(lookupField.getBounds());
+                r.setSize(lookupField.getText().getWidth(), r.height);
+                r.setLocation(r.x, r.y-10);
+                if (r.contains(evt.getPoint())) {
+                    setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+                    return;
+                }
+            }
+        }
+        setCursor(Cursor.getDefaultCursor());
+    }//GEN-LAST:event_formMouseMoved
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
 

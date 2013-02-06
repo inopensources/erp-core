@@ -17,6 +17,7 @@ import java.awt.Font;
 import java.awt.Frame;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
@@ -46,6 +47,7 @@ import javax.swing.JSplitPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ListCellRenderer;
+import javax.swing.SwingUtilities;
 
 /**
  * LookupField class.
@@ -118,7 +120,7 @@ public class LookupField extends Field {
         popupFieldsScrollPane.setBorder(null);
         popupFieldsList.addMouseListener(new ListFieldsMouseClicked());
         popupFieldsList.setBorder(null);
-        popupFieldsList.setFocusable(false);
+        popupFieldsList.setFocusable(true);
         popupFields.setBackground(popupList.getBackground());
         popupFields.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         popupFields.setLayout(new BorderLayout());
@@ -213,11 +215,6 @@ public class LookupField extends Field {
         splitPane.setDividerLocation(100);
 
         text.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
-        text.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                textMouseClicked(evt);
-            }
-        });
         text.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
                 textFocusLost(evt);
@@ -294,12 +291,16 @@ public class LookupField extends Field {
         text.selectAll();
     }//GEN-LAST:event_textFocusGained
 
-    private void textMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_textMouseClicked
-        // TODO add your handling code here:
-        // Temporariamente somente para teste
-        popupFields.show(this, 0, text.getHeight());
-    }//GEN-LAST:event_textMouseClicked
-
+    public void showPopupFields() {
+        popupFields.show(this, 0, 0);
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                popupFieldsList.requestFocus();
+            }
+        });
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton button;
     private javax.swing.JLabel label;
@@ -746,8 +747,14 @@ public class LookupField extends Field {
         if (popupFieldsList.getSelectedValue() != null) {
             g2d.setFont(new Font("arial", Font.PLAIN, 8));
             g2d.drawString(popupFieldsList.getSelectedValue().toString().toUpperCase() 
-                    + getLabelSeparator(), getBounds().x + 5, getBounds().y - 1);
+                    + getLabelSeparator(), getBounds().x + 10, getBounds().y - 2);
         }
+        Polygon p = new Polygon();
+        p.addPoint(getBounds().x, getBounds().y - 8);
+        p.addPoint(getBounds().x + 7, getBounds().y - 8);
+        p.addPoint(getBounds().x + 3, getBounds().y - 3);
+        g.setColor(Color.GRAY);
+        g.fillPolygon(p);
     }
     
     // --- Grid dialog ---
