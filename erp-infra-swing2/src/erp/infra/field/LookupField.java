@@ -9,6 +9,7 @@ import erp.infra.filter.ConditionContainer;
 import erp.infra.filter.Filter;
 import erp.infra.filter.LikeOperation;
 import erp.infra.form.FormUtils;
+import erp.infra.grid.Grid;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
@@ -761,26 +762,39 @@ public class LookupField extends Field {
     
     private class GridDialog extends JDialog {
         
-        //private erp.infra.form.Form form = new erp.infra.form.Form();
-        //private Grid grid = new Grid();
-        //private JScrollPane scrollPane = new JScrollPane(grid);
+        private erp.infra.form.Form form = new erp.infra.form.Form();
+        private Grid grid = new Grid();
+        private JScrollPane scrollPane = new JScrollPane(grid);
+        private GridDoubleClickAction gridDoubleClickAction = new GridDoubleClickAction();
         
         public GridDialog(Frame frame) {
             super(frame, true);
             
             setLayout(new BorderLayout());
-            setSize(400, 300);
-            setLocationRelativeTo(null);
+            setSize(600, 400);
+            setLocationRelativeTo(frame);
 
-            //form.setEntityLayout(model.getSelectedEntity());
-            //grid.setFormModel(form);
-            //grid.setController(new LookupGridModel());
-            //grid.reload();
+            form.setEntityClass(entityClass);
             
-            //add(scrollPane, BorderLayout.CENTER);
+            grid.addMouseListener(gridDoubleClickAction);
+            grid.setFormModel(form);
+            grid.reload();
+            
+            add(scrollPane, BorderLayout.CENTER);
             setVisible(true);
         }
         
-    }
+        private class GridDoubleClickAction extends MouseAdapter {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getClickCount() != 2) {
+                    return;
+                }
+                model.getEntityModel().setEntity(grid.getEntities().get(grid.getSelectedRow()));
+                GridDialog.this.dispose();
+            }
+        }
 
+    }
+    
 }

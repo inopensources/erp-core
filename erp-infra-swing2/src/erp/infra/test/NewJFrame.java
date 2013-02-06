@@ -5,7 +5,7 @@
 package erp.infra.test;
 
 import erp.infra.mode.ModeModel;
-import erp.infra.test.entity.Produto;
+import erp.infra.test.entity.Pais;
 
 /**
  *
@@ -19,9 +19,10 @@ public class NewJFrame extends javax.swing.JFrame {
     public NewJFrame() {
         initComponents();
         lookupField1.getModel().setLookupProperty("descricao");
-        lookupField1.setLabelText("Produto");
+        lookupField1.setLabelText("Pais");
         lookupField1.getSplitPane().setDividerLocation(200);
         lookupField1.setModeModel(form1.getModel().getModeModel());
+        
         lookupField1.getEnablingMap().put(ModeModel.EMPTY, Boolean.TRUE);
         lookupField1.getEnablingMap().put(ModeModel.READY_ONLY, Boolean.TRUE);
         lookupField1.getEnablingMap().put(ModeModel.INSERT, Boolean.FALSE);
@@ -34,6 +35,8 @@ public class NewJFrame extends javax.swing.JFrame {
         
         form1.getModel().setEntityModel(lookupField1.getModel().getEntityModel());
         form1.getModel().getModeModel().setMode(ModeModel.EMPTY);
+        
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -46,35 +49,40 @@ public class NewJFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         form1 = new erp.infra.form.Form();
+        jToolBar2 = new javax.swing.JToolBar();
         crudToolBar1 = new erp.infra.button.CrudToolBar();
         lookupField1 = new erp.infra.field.LookupField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         form1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        form1.setEntityClass(Produto.class);
+        form1.setEntityClass(Pais.class);
 
-        crudToolBar1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(153, 153, 153)));
+        jToolBar2.setRollover(true);
+
+        crudToolBar1.setBackground(new java.awt.Color(153, 153, 153));
+        crudToolBar1.setBorder(null);
         crudToolBar1.setRollover(true);
+        jToolBar2.add(crudToolBar1);
 
-        lookupField1.setEntityClass(Produto.class);
+        lookupField1.setEntityClass(Pais.class);
 
         javax.swing.GroupLayout form1Layout = new javax.swing.GroupLayout(form1);
         form1.setLayout(form1Layout);
         form1Layout.setHorizontalGroup(
             form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(crudToolBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, form1Layout.createSequentialGroup()
-                .addGap(0, 139, Short.MAX_VALUE)
-                .addComponent(lookupField1, javax.swing.GroupLayout.PREFERRED_SIZE, 652, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 105, Short.MAX_VALUE)
+                .addComponent(lookupField1, javax.swing.GroupLayout.PREFERRED_SIZE, 683, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         form1Layout.setVerticalGroup(
             form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(form1Layout.createSequentialGroup()
-                .addComponent(crudToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(lookupField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 329, Short.MAX_VALUE))
+                .addComponent(lookupField1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 327, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -129,9 +137,7 @@ public class NewJFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private erp.infra.button.CrudToolBar crudToolBar1;
     private erp.infra.form.Form form1;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JToolBar jToolBar2;
     private erp.infra.field.LookupField lookupField1;
-    private erp.infra.field.LookupField lookupField2;
     // End of variables declaration//GEN-END:variables
 }

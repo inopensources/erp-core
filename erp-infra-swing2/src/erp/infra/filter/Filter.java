@@ -30,8 +30,12 @@ public class Filter {
     }
 
     public String getQuery() {
-        String query = "select " + getClassAlias() + " from " + entityClass.getSimpleName() + " as " + getClassAlias() + " where ";
-        query +=  containers.getQuery();
+        String query = "select " + getClassAlias() + " from " + entityClass.getSimpleName() + " as " + getClassAlias();
+        String condition = containers.getQuery();
+        if (condition != null && !condition.trim().equals("( )")) {
+            query +=  " where " + condition;
+        }
+        System.out.println("============> Query: " + query);
         return query;
     }
     

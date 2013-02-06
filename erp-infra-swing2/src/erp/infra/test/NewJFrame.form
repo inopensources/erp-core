@@ -40,50 +40,58 @@
           </Border>
         </Property>
         <Property name="entityClass" type="java.lang.Class" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="Produto.class" type="code"/>
+          <Connection code="Pais.class" type="code"/>
         </Property>
       </Properties>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <Component id="crudToolBar1" max="32767" attributes="0"/>
+              <Component id="jToolBar2" max="32767" attributes="0"/>
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace min="0" pref="139" max="32767" attributes="0"/>
-                  <Component id="lookupField1" min="-2" pref="652" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="105" max="32767" attributes="0"/>
+                  <Component id="lookupField1" min="-2" pref="683" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Component id="crudToolBar1" min="-2" max="-2" attributes="0"/>
+                  <Component id="jToolBar2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="lookupField1" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="0" pref="329" max="32767" attributes="0"/>
+                  <Component id="lookupField1" min="-2" pref="27" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="327" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="erp.infra.button.CrudToolBar" name="crudToolBar1">
+        <Container class="javax.swing.JToolBar" name="jToolBar2">
           <Properties>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                <LineBorder>
-                  <Color PropertyName="color" blue="99" green="99" red="99" type="rgb"/>
-                </LineBorder>
-              </Border>
-            </Property>
             <Property name="rollover" type="boolean" value="true"/>
           </Properties>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
+          <SubComponents>
+            <Container class="erp.infra.button.CrudToolBar" name="crudToolBar1">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="99" green="99" red="99" type="rgb"/>
+                </Property>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="null"/>
+                </Property>
+                <Property name="rollover" type="boolean" value="true"/>
+              </Properties>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
+            </Container>
+          </SubComponents>
         </Container>
         <Component class="erp.infra.field.LookupField" name="lookupField1">
           <Properties>
             <Property name="entityClass" type="java.lang.Class" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-              <Connection code="Produto.class" type="code"/>
+              <Connection code="Pais.class" type="code"/>
             </Property>
           </Properties>
         </Component>
