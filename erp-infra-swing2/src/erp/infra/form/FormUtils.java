@@ -192,7 +192,7 @@ public class FormUtils {
     }
     
     public static List<erp.infra.annotation.Field> getAllFieldsAnnotation(Class entityClass) {
-        List<erp.infra.annotation.Field> fields = new ArrayList<>();
+        List<erp.infra.annotation.Field> fields = new ArrayList<erp.infra.annotation.Field>();
         for (Method m : entityClass.getMethods()) {
             erp.infra.annotation.Field fa = m.getAnnotation(erp.infra.annotation.Field.class);
             if (fa != null) {

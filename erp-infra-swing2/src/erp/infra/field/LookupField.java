@@ -13,7 +13,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Frame;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -557,6 +561,7 @@ public class LookupField extends Field {
             System.out.println("mouseClicked " + FormUtils.getPropertyById(field.id(), entityClass));
             model.setLookupProperty(FormUtils.getPropertyById(field.id(), entityClass));
             popupFields.setVisible(false);
+            LookupField.this.getParent().repaint();
         }
     }
 
@@ -714,6 +719,22 @@ public class LookupField extends Field {
         }
     }
 
+    // --- Paint implementation ---
+
+    @Override
+    public void paintLabel(Graphics g) {
+        super.paintLabel(g);
+        Graphics2D g2d = (Graphics2D) g;
+        g2d.setRenderingHint(
+                RenderingHints.KEY_TEXT_ANTIALIASING,
+                RenderingHints.VALUE_TEXT_ANTIALIAS_ON);        
+        if (popupFieldsList.getSelectedValue() != null) {
+            g2d.setFont(new Font("arial", Font.PLAIN, 8));
+            g2d.drawString(popupFieldsList.getSelectedValue().toString().toUpperCase() 
+                    + getLabelSeparator(), getBounds().x + 5, getBounds().y - 1);
+        }
+    }
+    
     // --- Grid dialog ---
     
     private class GridDialog extends JDialog {
