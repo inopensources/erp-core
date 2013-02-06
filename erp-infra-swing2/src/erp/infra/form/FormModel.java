@@ -2,6 +2,7 @@ package erp.infra.form;
 
 import erp.infra.entity.EntityDao;
 import erp.infra.entity.EntityModel;
+import erp.infra.mode.ModeModel;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,10 +14,9 @@ import java.util.List;
  */
 public class FormModel<T> {
 
-    public enum Mode { EMPTY, READ_ONLY, INSERT, UPDATE }
     private EntityModel<T> entityModel = new EntityModel<T>();
     private String property = "";
-    private Mode mode = Mode.EMPTY;
+    private ModeModel modeModel = new ModeModel();
     private EntityDao<T> entityDao;
     private List<FormModelListener> listeners 
             = new ArrayList<FormModelListener>();
@@ -44,21 +44,12 @@ public class FormModel<T> {
         this.property = property;
     }
 
-    public Mode getMode() {
-        return mode;
+    public ModeModel getModeModel() {
+        return modeModel;
     }
 
-    public void setMode(Mode mode) {
-        if (mode == null) {
-            mode = Mode.EMPTY;
-        }
-        this.mode = mode;
-        if (mode == Mode.EMPTY) {
-            if (getEntityModel().getEntity() != null) {
-                getEntityModel().setEntity(null);
-            }
-        }
-        fireModeChanged();
+    public void setModeModel(ModeModel modeModel) {
+        this.modeModel = modeModel;
     }
 
     public EntityDao<T> getEntityDao() {
@@ -74,69 +65,76 @@ public class FormModel<T> {
     void initReload() throws Exception {
         System.out.println("reload");
         if (entityDao != null) {
-            //T entity = entityDao.reload().get(0);
             T entity = entityModel.getEntity();
             entityModel.setEntity(entity);
         }
     }
 
     void initUpdate() throws Exception {
-        if (mode == Mode.READ_ONLY) {
-            setMode(Mode.UPDATE);
+        if (modeModel.getMode().equals(ModeModel.READY_ONLY)) {
+            modeModel.setMode(ModeModel.UPDATE);
         }
-        throw new RuntimeException("Can't update in actual mode !");
+        else {
+            throw new Exception("Can't update in actual mode !");
+        }
     }
 
     public void initInsert() throws Exception {
-        if (mode == Mode.READ_ONLY && entityDao != null) {
+        if (modeModel.getMode().equals(ModeModel.READY_ONLY) && entityDao != null) {
             T newInstance = entityDao.createNewInstance();
             entityModel.setEntity(newInstance);
-            setMode(Mode.INSERT);
+            modeModel.setMode(ModeModel.INSERT);
         }
-        throw new RuntimeException("Can't insert in actual mode !");
+        else {
+            throw new Exception("Can't insert in actual mode !");
+        }
     }
 
     public void initDelete() throws Exception {
-        if (mode == Mode.READ_ONLY && entityModel.getEntity() != null && entityDao != null) {
+        if (modeModel.getMode().equals(ModeModel.READY_ONLY) 
+                && entityModel.getEntity() != null && entityDao != null) {
+            
             System.out.println("delete");
             List<T> ts = new ArrayList<T>();
             ts.add(entityModel.getEntity());
             entityDao.delete(ts);
         }
         else {
-            throw new RuntimeException("Can't delete in actual mode !");
+            throw new Exception("Can't delete in actual mode !");
         }
     }
     
     public void initCancel() throws Exception {
-        if (mode == Mode.UPDATE || mode == Mode.INSERT) {
+        if (modeModel.getMode().equals(ModeModel.UPDATE) 
+                || modeModel.getMode().equals(ModeModel.INSERT)) {
+            
             System.out.println("cancel");
-            setMode(Mode.READ_ONLY);
+            modeModel.setMode(ModeModel.READY_ONLY);
         }
         else {
-            throw new RuntimeException("Can't cancel in actual mode !");
+            throw new Exception("Can't cancel in actual mode !");
         }
     }    
  
     void save() throws Exception {
-        if (mode == Mode.UPDATE && entityDao != null) {
+        if (modeModel.getMode().equals(ModeModel.UPDATE) && entityDao != null) {
             System.out.println("update");
             fireUpdateModel();
             List<T> ts = new ArrayList<T>();
             ts.add(entityModel.getEntity());
             entityDao.update(ts);
-            setMode(Mode.READ_ONLY);
+            modeModel.setMode(ModeModel.READY_ONLY);
         }
-        else if (mode == Mode.INSERT && entityDao != null) {
+        else if (modeModel.getMode().equals(ModeModel.INSERT) && entityDao != null) {
             System.out.println("insert");
             fireUpdateModel();
             List<T> ts = new ArrayList<T>();
             ts.add(entityModel.getEntity());
             entityDao.insert(ts);
-            setMode(Mode.READ_ONLY);
+            modeModel.setMode(ModeModel.READY_ONLY);
         }
         else {
-            throw new RuntimeException("Can't save in actual mode !");
+            throw new Exception("Can't save in actual mode !");
         }
     }
     
@@ -165,10 +163,4 @@ public class FormModel<T> {
         }
     }
     
-    protected void fireModeChanged() {
-        for (FormModelListener listener : listeners) {
-            listener.modeChanged();
-        }
-    }
-
 }

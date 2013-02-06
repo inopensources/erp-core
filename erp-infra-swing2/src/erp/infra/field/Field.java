@@ -1,5 +1,7 @@
 package erp.infra.field;
 
+import erp.infra.mode.ModeListener;
+import erp.infra.mode.ModeModel;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FontMetrics;
@@ -15,7 +17,7 @@ import javax.swing.JPanel;
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.00.00 (27/01/2013 21:12)
  */
-public abstract class Field extends JPanel {
+public abstract class Field extends JPanel implements ModeListener {
     
     // Carrega o componente de edicao. 
     // Por exemplo: se for TextField, component sera igual a JTextField
@@ -37,8 +39,26 @@ public abstract class Field extends JPanel {
     protected Map<Class, TypeImplementation> typeConfigs 
             = new HashMap<Class, TypeImplementation>();
     
+    // --- Mode ---
+    protected ModeModel modeModel;
+    protected Map<String, Boolean> enablingMap 
+            = new HashMap<String, Boolean>();
+    
+    protected Map<String, Boolean> editableMap 
+            = new HashMap<String, Boolean>();
+    
     public Field() {
         initComponents();
+        
+        enablingMap.put(ModeModel.EMPTY, Boolean.FALSE);
+        enablingMap.put(ModeModel.READY_ONLY, Boolean.TRUE);
+        enablingMap.put(ModeModel.INSERT, Boolean.TRUE);
+        enablingMap.put(ModeModel.UPDATE, Boolean.TRUE);
+        
+        editableMap.put(ModeModel.EMPTY, Boolean.FALSE);
+        editableMap.put(ModeModel.READY_ONLY, Boolean.FALSE);
+        editableMap.put(ModeModel.INSERT, Boolean.TRUE);
+        editableMap.put(ModeModel.UPDATE, Boolean.TRUE);
     }
 
     public String getProperty() {
@@ -111,16 +131,45 @@ public abstract class Field extends JPanel {
         return component;
     }
 
+    // --- Mode ---
+    
+    public ModeModel getModeModel() {
+        return modeModel;
+    }
+
+    public void setModeModel(ModeModel modeModel) {
+        this.modeModel = modeModel;
+        modeModel.addListener(this);
+    }
+
+    public Map<String, Boolean> getEnablingMap() {
+        return enablingMap;
+    }
+
+    public void setEnablingMap(Map<String, Boolean> enablingMap) {
+        this.enablingMap = enablingMap;
+    }
+
+    public Map<String, Boolean> getEditableMap() {
+        return editableMap;
+    }
+
+    public void setEditableMap(Map<String, Boolean> editableMap) {
+        this.editableMap = editableMap;
+    }
+    
     // --- methods that must be implemented ---
     
     public abstract boolean isAcceptableType(Class type);
     public abstract void init(Class type);
-    public abstract boolean isEditable();
-    public abstract void setEditable(boolean editable);
-    public abstract boolean isEnabled();
-    public abstract void setEnabled(boolean enabled);
     public abstract void setValue(Object value);
     public abstract Object getValue();
+    public abstract boolean isEditable();
+    public abstract void setEditable(boolean editable);
+    @Override
+    public abstract boolean isEnabled();
+    @Override
+    public abstract void setEnabled(boolean enabled);
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -169,6 +218,20 @@ public abstract class Field extends JPanel {
             g.setColor(new Color(255, 100, 100));
             g.drawString("*", getBounds().x + getBounds().width + 3
                     , getBounds().y + (fontHeight / 2));
+        }
+    }
+    
+    // --- ModeListener implementation ---
+
+    @Override
+    public void modeChanged() {
+        Boolean enabled = getEnablingMap().get(modeModel.getMode());
+        if (enabled != null) {
+            setEnabled(enabled);
+        }
+        Boolean editable = getEditableMap().get(modeModel.getMode());
+        if (editable != null) {
+            setEditable(editable);
         }
     }
     

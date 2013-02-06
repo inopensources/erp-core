@@ -3,7 +3,7 @@ package erp.infra.form;
 import erp.infra.entity.EntityModelListener;
 import erp.infra.entity.GenericDao;
 import erp.infra.field.Field;
-import erp.infra.form.FormModel.Mode;
+import erp.infra.mode.ModeModel;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.util.logging.Level;
@@ -39,6 +39,7 @@ public class Form extends JPanel implements EntityModelListener {
         FormModel formModel = createFormModel(entityClass);
         formModel.setEntityDao(createGenericDao(entityClass));
         setModel(formModel);
+        getModel().getModeModel().setMode(ModeModel.EMPTY);
     }
     
     private <T> FormModel<T> createFormModel(Class<T> entityClass) {
@@ -85,30 +86,6 @@ public class Form extends JPanel implements EntityModelListener {
         } catch (Exception ex) {
             Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, ex.getMessage());
-        }
-        
-        // Mode
-        for (Component c : getComponents()) {
-            if (c instanceof Field) {
-                Field field = (Field) c;
-                if (model.getMode() == Mode.EMPTY) {
-                    field.setEnabled(false);
-                    field.setEditable(false);
-                }
-                else {
-                    field.setEnabled(true);
-                    field.setEditable(true);
-                    if (model.getMode() == Mode.READ_ONLY) {
-                        field.setEditable(false);
-                    } else if (model.getMode() == Mode.UPDATE) {
-                        field.setEditable(field.isUpdatable());
-                    } else if (model.getMode() == Mode.INSERT) {
-                        field.setEditable(field.isInsertable());
-                    } else {
-                        field.setEditable(true);
-                    }
-                }
-            }
         }
     }
 
@@ -220,11 +197,6 @@ public class Form extends JPanel implements EntityModelListener {
 
     private class FormModelListenerImpl implements FormModelListener {
         @Override
-        public void modeChanged() {
-            updateView();
-        }
-
-        @Override
         public void updateModel() {
             updateModel();
         }
@@ -240,12 +212,13 @@ public class Form extends JPanel implements EntityModelListener {
     @Override
     public void entityChanged() {
         updateView();
-        if (model.getEntityModel().getEntity() == null) {
-            model.setMode(Mode.EMPTY);
+        if (getModel() != null && model.getEntityModel().getEntity() == null && !getModel().getModeModel().getMode().equals(ModeModel.EMPTY)) {
+            getModel().getModeModel().setMode(ModeModel.EMPTY);
         }
-        else {
-            model.setMode(Mode.READ_ONLY);
+        else if (getModel() != null && model.getEntityModel().getEntity() != null && getModel().getModeModel().getMode().equals(ModeModel.EMPTY)) {
+            getModel().getModeModel().setMode(ModeModel.READY_ONLY);
         }
+        System.out.println("entityChanged <---------- " + model.getEntityModel().getEntity());
     }
     
 }

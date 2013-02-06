@@ -4,6 +4,7 @@ import erp.infra.field.CheckField;
 import erp.infra.field.DateField;
 import erp.infra.field.Field;
 import erp.infra.field.TextField;
+import erp.infra.mode.ModeModel;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
@@ -102,6 +103,13 @@ public class FormUtils {
                 // Seta a propriedade do Field corretamente
                 String property = properties.get(id);
                 fv.setProperty(property);
+                
+                // Mode
+                fv.getEnablingMap().put(ModeModel.INSERT, Boolean.TRUE);
+                fv.getEnablingMap().put(ModeModel.UPDATE, Boolean.TRUE);
+                fv.getEditableMap().put(ModeModel.INSERT, f.insertable());
+                fv.getEditableMap().put(ModeModel.UPDATE, f.updatable());
+                fv.setModeModel(form.getModel().getModeModel());
                 
                 form.add(fv);
             }

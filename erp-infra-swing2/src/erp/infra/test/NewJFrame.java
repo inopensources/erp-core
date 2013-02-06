@@ -5,7 +5,6 @@
 package erp.infra.test;
 
 import erp.infra.test.entity.Pais;
-import erp.infra.test.entity.Produto;
 
 /**
  *
@@ -18,8 +17,8 @@ public class NewJFrame extends javax.swing.JFrame {
      */
     public NewJFrame() {
         initComponents();
-        lookupField1.getModel().setLookupProperty("codigoInterno");
-        lookupField1.setLabelText("Produto");
+        lookupField1.getModel().setLookupProperty("nome");
+        lookupField1.setLabelText("País");
         form1.getModel().setEntityModel(lookupField1.getModel().getEntityModel());
     }
 
@@ -35,26 +34,35 @@ public class NewJFrame extends javax.swing.JFrame {
         form1 = new erp.infra.form.Form();
         form2 = new erp.infra.form.Form();
         lookupField1 = new erp.infra.field.LookupField();
+        text = new javax.swing.JTextField();
+        buttonAlterar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         form1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        form1.setEntityClass(Produto.class);
+        form1.setEntityClass(Pais.class);
 
         javax.swing.GroupLayout form1Layout = new javax.swing.GroupLayout(form1);
         form1.setLayout(form1Layout);
         form1Layout.setHorizontalGroup(
             form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 802, Short.MAX_VALUE)
         );
         form1Layout.setVerticalGroup(
             form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 263, Short.MAX_VALUE)
+            .addGap(0, 278, Short.MAX_VALUE)
         );
 
         form2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        lookupField1.setEntityClass(Produto.class);
+        lookupField1.setEntityClass(Pais.class);
+
+        buttonAlterar.setText("alterar");
+        buttonAlterar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAlterarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout form2Layout = new javax.swing.GroupLayout(form2);
         form2.setLayout(form2Layout);
@@ -62,13 +70,22 @@ public class NewJFrame extends javax.swing.JFrame {
             form2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(form2Layout.createSequentialGroup()
                 .addGap(95, 95, 95)
-                .addComponent(lookupField1, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(313, Short.MAX_VALUE))
+                .addGroup(form2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lookupField1, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(form2Layout.createSequentialGroup()
+                        .addComponent(text, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(buttonAlterar)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         form2Layout.setVerticalGroup(
             form2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, form2Layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
+                .addContainerGap(23, Short.MAX_VALUE)
+                .addGroup(form2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(buttonAlterar))
+                .addGap(18, 18, 18)
                 .addComponent(lookupField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -88,7 +105,7 @@ public class NewJFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(form2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(form2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(form1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -96,6 +113,11 @@ public class NewJFrame extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void buttonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAlterarActionPerformed
+        // TODO add your handling code here:
+        form1.getModel().getModeModel().setMode(text.getText());
+    }//GEN-LAST:event_buttonAlterarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -132,8 +154,10 @@ public class NewJFrame extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton buttonAlterar;
     private erp.infra.form.Form form1;
     private erp.infra.form.Form form2;
     private erp.infra.field.LookupField lookupField1;
+    private javax.swing.JTextField text;
     // End of variables declaration//GEN-END:variables
 }
