@@ -60,9 +60,9 @@ public class FormModel<T> {
         this.entityDao = entityDao;
     }
 
-    // -- Private wrapper methods ---
+    // -- methods for CRUD ---
     
-    void initReload() throws Exception {
+    public void reload() throws Exception {
         System.out.println("reload");
         if (entityDao != null) {
             T entity = entityModel.getEntity();
@@ -70,7 +70,7 @@ public class FormModel<T> {
         }
     }
 
-    void initUpdate() throws Exception {
+    public void update() throws Exception {
         if (modeModel.getMode().equals(ModeModel.READY_ONLY)) {
             modeModel.setMode(ModeModel.UPDATE);
         }
@@ -79,7 +79,7 @@ public class FormModel<T> {
         }
     }
 
-    public void initInsert() throws Exception {
+    public void insert() throws Exception {
         if (modeModel.getMode().equals(ModeModel.READY_ONLY) && entityDao != null) {
             T newInstance = entityDao.createNewInstance();
             entityModel.setEntity(newInstance);
@@ -90,7 +90,7 @@ public class FormModel<T> {
         }
     }
 
-    public void initDelete() throws Exception {
+    public void delete() throws Exception {
         if (modeModel.getMode().equals(ModeModel.READY_ONLY) 
                 && entityModel.getEntity() != null && entityDao != null) {
             
@@ -104,7 +104,7 @@ public class FormModel<T> {
         }
     }
     
-    public void initCancel() throws Exception {
+    public void cancel() throws Exception {
         if (modeModel.getMode().equals(ModeModel.UPDATE) 
                 || modeModel.getMode().equals(ModeModel.INSERT)) {
             
@@ -116,7 +116,7 @@ public class FormModel<T> {
         }
     }    
  
-    void save() throws Exception {
+    public void save() throws Exception {
         if (modeModel.getMode().equals(ModeModel.UPDATE) && entityDao != null) {
             System.out.println("update");
             fireUpdateModel();
