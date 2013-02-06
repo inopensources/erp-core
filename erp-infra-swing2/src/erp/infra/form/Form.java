@@ -1,10 +1,12 @@
 package erp.infra.form;
 
+import erp.infra.button.GenericButton;
 import erp.infra.entity.EntityModelListener;
-import erp.infra.entity.GenericDao;
+import erp.infra.entity.GenericJpaDao;
 import erp.infra.field.Field;
 import erp.infra.mode.ModeModel;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.Graphics;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,8 +48,8 @@ public class Form extends JPanel implements EntityModelListener {
         return new FormModel<T>();
     }
 
-    private <T> GenericDao<T> createGenericDao(final Class<T> entityClass) {
-        return new GenericDao<T>() {
+    private <T> GenericJpaDao<T> createGenericDao(final Class<T> entityClass) {
+        return new GenericJpaDao<T>() {
             @Override
             public Class getEntityClass() throws Exception {
                 return entityClass;
@@ -198,7 +200,7 @@ public class Form extends JPanel implements EntityModelListener {
     private class FormModelListenerImpl implements FormModelListener {
         @Override
         public void updateModel() {
-            updateModel();
+            Form.this.updateModel();
         }
 
         @Override
@@ -219,6 +221,28 @@ public class Form extends JPanel implements EntityModelListener {
             getModel().getModeModel().setMode(ModeModel.READY_ONLY);
         }
         System.out.println("entityChanged <---------- " + model.getEntityModel().getEntity());
+    }
+
+    // --- Set FormModel automatically if added component is GenericButton ---
+
+    @Override
+    public Component add(Component comp) {
+        addFormModelToGenericButton(comp);
+        return super.add(comp);
+    }
+    
+    private void addFormModelToGenericButton(Component comp) {
+        if (comp instanceof Container) {
+            Container container = (Container) comp;
+            for (Component c : container.getComponents()) {
+                addFormModelToGenericButton(c);
+            }
+        }
+        if (comp instanceof GenericButton) {
+            GenericButton genericButton = (GenericButton) comp;
+            genericButton.setFormModel(getModel());
+            System.out.println("-------> ADICIONANDO FormModel no GenericButton " + genericButton);
+        }
     }
     
 }

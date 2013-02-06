@@ -36,9 +36,9 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="form2" max="32767" attributes="0"/>
+              <Component id="form2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="form1" min="-2" max="-2" attributes="0"/>
+              <Component id="form1" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -60,15 +60,74 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="802" max="32767" attributes="0"/>
+              <Group type="102" alignment="0" attributes="0">
+                  <EmptySpace max="-2" attributes="0"/>
+                  <Component id="jToolBar1" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+              </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="278" max="32767" attributes="0"/>
+              <Group type="102" alignment="1" attributes="0">
+                  <EmptySpace pref="221" max="32767" attributes="0"/>
+                  <Component id="jToolBar1" min="-2" pref="49" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
+              </Group>
           </Group>
         </DimensionLayout>
       </Layout>
+      <SubComponents>
+        <Container class="javax.swing.JToolBar" name="jToolBar1">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+                <EtchetBorder/>
+              </Border>
+            </Property>
+            <Property name="rollover" type="boolean" value="true"/>
+          </Properties>
+
+          <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
+          <SubComponents>
+            <Component class="erp.infra.button.ReloadButton" name="reloadButton1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="reloadButton1"/>
+              </Properties>
+            </Component>
+            <Component class="erp.infra.button.InsertButton" name="insertButton1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="insertButton1"/>
+              </Properties>
+            </Component>
+            <Component class="erp.infra.button.UpdateButton" name="updateButton1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="updateButton1"/>
+              </Properties>
+            </Component>
+            <Component class="erp.infra.button.DeleteButton" name="deleteButton1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="deleteButton1"/>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
+                <Property name="verticalTextPosition" type="int" value="3"/>
+              </Properties>
+            </Component>
+            <Component class="erp.infra.button.SaveButton" name="saveButton1">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="saveButton1"/>
+              </Properties>
+            </Component>
+            <Component class="erp.infra.button.CancelButton" name="cancelButton2">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="cancelButton2"/>
+                <Property name="focusable" type="boolean" value="false"/>
+                <Property name="horizontalTextPosition" type="int" value="0"/>
+                <Property name="verticalTextPosition" type="int" value="3"/>
+              </Properties>
+            </Component>
+          </SubComponents>
+        </Container>
+      </SubComponents>
     </Container>
     <Container class="erp.infra.form.Form" name="form2">
       <Properties>
@@ -92,14 +151,14 @@
                           <Component id="buttonAlterar" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <EmptySpace pref="313" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <EmptySpace pref="23" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="text" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="buttonAlterar" alignment="3" min="-2" max="-2" attributes="0"/>

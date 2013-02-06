@@ -6,14 +6,14 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- * CancelButton class.
+ * DeleteButton class.
  *
  * @author Leonardo Ono (ono.leo@gmail.com)
- * @since 1.00.00 (06/02/2013 13:24)
+ * @since 1.00.00 (06/02/2013 14:02)
  */
-public class CancelButton extends GenericButton {
+public class DeleteButton extends GenericButton {
 
-    public CancelButton() {
+    public DeleteButton() {
         initComponents();
     }
 
@@ -26,7 +26,7 @@ public class CancelButton extends GenericButton {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setIcon(new javax.swing.ImageIcon(getClass().getResource("/erp/infra/images/cancel16x16.gif"))); // NOI18N
+        setIcon(new javax.swing.ImageIcon(getClass().getResource("/erp/infra/images/delete16x16.gif"))); // NOI18N
         addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 formActionPerformed(evt);
@@ -36,7 +36,7 @@ public class CancelButton extends GenericButton {
 
     private void formActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_formActionPerformed
         try {
-            formModel.cancel();
+            formModel.delete();
         } catch (Exception ex) {
             Logger.getLogger(CancelButton.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -48,8 +48,7 @@ public class CancelButton extends GenericButton {
 
     @Override
     public void modeChanged() {
-        boolean enabled = formModel.getModeModel().getMode().equals(ModeModel.INSERT);
-        enabled = enabled || formModel.getModeModel().getMode().equals(ModeModel.UPDATE);
+        boolean enabled = formModel.getModeModel().getMode().equals(ModeModel.READY_ONLY);
         setEnabled(enabled);
     }
 

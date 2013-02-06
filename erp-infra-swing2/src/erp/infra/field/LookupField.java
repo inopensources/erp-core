@@ -4,7 +4,7 @@ import erp.infra.annotation.Form;
 import erp.infra.entity.EntityDao;
 import erp.infra.entity.EntityModel;
 import erp.infra.entity.EntityModelListener;
-import erp.infra.entity.GenericDao;
+import erp.infra.entity.GenericJpaDao;
 import erp.infra.filter.ConditionContainer;
 import erp.infra.filter.Filter;
 import erp.infra.filter.LikeOperation;
@@ -138,8 +138,8 @@ public class LookupField extends Field {
         return new Model<T>();
     }
     
-    private <T> GenericDao<T> createGenericDao(final Class<T> entityClass) {
-        return new GenericDao<T>() {
+    private <T> GenericJpaDao<T> createGenericDao(final Class<T> entityClass) {
+        return new GenericJpaDao<T>() {
             @Override
             public Class getEntityClass() throws Exception {
                 return entityClass;

@@ -80,7 +80,10 @@ public class FormModel<T> {
     }
 
     public void insert() throws Exception {
-        if (modeModel.getMode().equals(ModeModel.READY_ONLY) && entityDao != null) {
+        if ((modeModel.getMode().equals(ModeModel.EMPTY) 
+                || modeModel.getMode().equals(ModeModel.READY_ONLY)) 
+                && entityDao != null) {
+            
             T newInstance = entityDao.createNewInstance();
             entityModel.setEntity(newInstance);
             modeModel.setMode(ModeModel.INSERT);
@@ -102,18 +105,20 @@ public class FormModel<T> {
         else {
             throw new Exception("Can't delete in actual mode !");
         }
+        entityModel.setEntity(null);
     }
     
     public void cancel() throws Exception {
-        if (modeModel.getMode().equals(ModeModel.UPDATE) 
-                || modeModel.getMode().equals(ModeModel.INSERT)) {
-            
-            System.out.println("cancel");
+        if (modeModel.getMode().equals(ModeModel.UPDATE)) {
             modeModel.setMode(ModeModel.READY_ONLY);
+        }
+        else if (modeModel.getMode().equals(ModeModel.INSERT)) {
+            entityModel.setEntity(null);
         }
         else {
             throw new Exception("Can't cancel in actual mode !");
         }
+        reload();
     }    
  
     public void save() throws Exception {
@@ -136,6 +141,7 @@ public class FormModel<T> {
         else {
             throw new Exception("Can't save in actual mode !");
         }
+        reload();
     }
     
     // --- Listener ---

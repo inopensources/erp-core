@@ -1,6 +1,9 @@
 package erp.infra.button;
 
-import javax.swing.JButton;
+import erp.infra.mode.ModeModel;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 
 /**
  * InsertButton class.
@@ -8,7 +11,7 @@ import javax.swing.JButton;
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.00.00 (06/02/2013 12:56)
  */
-public class InsertButton extends JButton {
+public class InsertButton extends GenericButton {
 
     public InsertButton() {
         initComponents();
@@ -24,10 +27,30 @@ public class InsertButton extends JButton {
     private void initComponents() {
 
         setIcon(new javax.swing.ImageIcon(getClass().getResource("/erp/infra/images/insert16x16.gif"))); // NOI18N
-        setMaximumSize(new java.awt.Dimension(32, 32));
-        setMinimumSize(new java.awt.Dimension(32, 32));
-        setPreferredSize(new java.awt.Dimension(32, 32));
+        addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                formActionPerformed(evt);
+            }
+        });
     }// </editor-fold>//GEN-END:initComponents
+
+    private void formActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_formActionPerformed
+        try {
+            formModel.insert();
+        } catch (Exception ex) {
+            Logger.getLogger(CancelButton.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+    }//GEN-LAST:event_formActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void modeChanged() {
+        boolean enabled = formModel.getModeModel().getMode().equals(ModeModel.EMPTY);
+        enabled = enabled || formModel.getModeModel().getMode().equals(ModeModel.READY_ONLY);
+        setEnabled(enabled);
+    }
+
 }

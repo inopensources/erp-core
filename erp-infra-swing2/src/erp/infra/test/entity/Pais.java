@@ -3,14 +3,12 @@ package erp.infra.test.entity;
 import erp.infra.annotation.Field;
 import erp.infra.annotation.Form;
 import java.io.Serializable;
-import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 /**
  * Entidade Pais.
@@ -28,13 +26,10 @@ import javax.persistence.Transient;
 @Entity
 @Table(name = "pais")
 @Form(id = "pais", layoutScale=15, verticalPadding=3, layout = "\n\n"
-        + "         [id__]           [objeto_____]      \n"
+        + "         [id__]                              \n"
         + "         [codbc_]                            \n"
         + "         [nome_____________________]         \n"
         + "         [s2__   ]                           \n"
-        + "         [quente ]                           \n"
-        + "         [datacad]                           \n"
-        + "         [c]                                 \n"
 )
 public class Pais implements Serializable {
     
@@ -52,18 +47,6 @@ public class Pais implements Serializable {
     @Column(name="sigla_2")
     private String sigla2;
 
-    @Transient
-    private Object objeto;
-    
-    @Transient
-    private Boolean quente;
-    
-    @Transient
-    private Date dataCadastro;
-    
-    @Transient
-    private Character caracter;
-    
     public Pais() {
     }
 
@@ -74,15 +57,6 @@ public class Pais implements Serializable {
         this.sigla2 = sigla2;
     }
 
-    @Field(id="objeto", label="Objeto")
-    public Object getObjeto() {
-        return objeto;
-    }
-
-    public void setObjeto(Object objeto) {
-        this.objeto = objeto;
-    }
-    
     @Field(id="id", label="Id", insertable=false, updatable=false)
     public Long getId() {
         return id;
@@ -119,33 +93,6 @@ public class Pais implements Serializable {
         this.sigla2 = sigla2;
     }
 
-    @Field(id="quente", label="Quente")
-    public Boolean getQuente() {
-        return quente;
-    }
-
-    public void setQuente(Boolean quente) {
-        this.quente = quente;
-    }
-
-    @Field(id="datacad", label="Data de cadastro")
-    public Date getDataCadastro() {
-        return dataCadastro;
-    }
-
-    public void setDataCadastro(Date dataCadastro) {
-        this.dataCadastro = dataCadastro;
-    }
-
-    @Field(id="c", label="Caracter")
-    public Character getCaracter() {
-        return caracter;
-    }
-
-    public void setCaracter(Character caracter) {
-        this.caracter = caracter;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -169,7 +116,7 @@ public class Pais implements Serializable {
 
     @Override
     public String toString() {
-        return "Pais{" + "id=" + id + ", codigoBacen=" + codigoBacen + ", nome=" + nome + ", sigla2=" + sigla2 + ", objeto=" + objeto + ", quente=" + quente + ", dataCadastro=" + dataCadastro + ", caracter=" + caracter + '}';
+        return "Pais{" + "id=" + id + ", codigoBacen=" + codigoBacen + ", nome=" + nome + ", sigla2=" + sigla2 + '}';
     }
 
 }

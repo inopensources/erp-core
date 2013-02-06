@@ -4,6 +4,7 @@
  */
 package erp.infra.test;
 
+import erp.infra.mode.ModeModel;
 import erp.infra.test.entity.Pais;
 
 /**
@@ -20,6 +21,7 @@ public class NewJFrame extends javax.swing.JFrame {
         lookupField1.getModel().setLookupProperty("nome");
         lookupField1.setLabelText("País");
         form1.getModel().setEntityModel(lookupField1.getModel().getEntityModel());
+        form1.getModel().getModeModel().setMode(ModeModel.EMPTY);
     }
 
     /**
@@ -32,6 +34,13 @@ public class NewJFrame extends javax.swing.JFrame {
     private void initComponents() {
 
         form1 = new erp.infra.form.Form();
+        jToolBar1 = new javax.swing.JToolBar();
+        reloadButton1 = new erp.infra.button.ReloadButton();
+        insertButton1 = new erp.infra.button.InsertButton();
+        updateButton1 = new erp.infra.button.UpdateButton();
+        deleteButton1 = new erp.infra.button.DeleteButton();
+        saveButton1 = new erp.infra.button.SaveButton();
+        cancelButton2 = new erp.infra.button.CancelButton();
         form2 = new erp.infra.form.Form();
         lookupField1 = new erp.infra.field.LookupField();
         text = new javax.swing.JTextField();
@@ -42,15 +51,47 @@ public class NewJFrame extends javax.swing.JFrame {
         form1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         form1.setEntityClass(Pais.class);
 
+        jToolBar1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jToolBar1.setRollover(true);
+
+        reloadButton1.setText("reloadButton1");
+        jToolBar1.add(reloadButton1);
+
+        insertButton1.setText("insertButton1");
+        jToolBar1.add(insertButton1);
+
+        updateButton1.setText("updateButton1");
+        jToolBar1.add(updateButton1);
+
+        deleteButton1.setText("deleteButton1");
+        deleteButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        deleteButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(deleteButton1);
+
+        saveButton1.setText("saveButton1");
+        jToolBar1.add(saveButton1);
+
+        cancelButton2.setText("cancelButton2");
+        cancelButton2.setFocusable(false);
+        cancelButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        cancelButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(cancelButton2);
+
         javax.swing.GroupLayout form1Layout = new javax.swing.GroupLayout(form1);
         form1.setLayout(form1Layout);
         form1Layout.setHorizontalGroup(
             form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 802, Short.MAX_VALUE)
+            .addGroup(form1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         form1Layout.setVerticalGroup(
             form1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 278, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, form1Layout.createSequentialGroup()
+                .addContainerGap(221, Short.MAX_VALUE)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         form2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -76,12 +117,12 @@ public class NewJFrame extends javax.swing.JFrame {
                         .addComponent(text, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(buttonAlterar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(313, Short.MAX_VALUE))
         );
         form2Layout.setVerticalGroup(
             form2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, form2Layout.createSequentialGroup()
-                .addContainerGap(23, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(form2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(text, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(buttonAlterar))
@@ -105,9 +146,9 @@ public class NewJFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(form2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(form2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(form1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(form1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -155,9 +196,16 @@ public class NewJFrame extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton buttonAlterar;
+    private erp.infra.button.CancelButton cancelButton2;
+    private erp.infra.button.DeleteButton deleteButton1;
     private erp.infra.form.Form form1;
     private erp.infra.form.Form form2;
+    private erp.infra.button.InsertButton insertButton1;
+    private javax.swing.JToolBar jToolBar1;
     private erp.infra.field.LookupField lookupField1;
+    private erp.infra.button.ReloadButton reloadButton1;
+    private erp.infra.button.SaveButton saveButton1;
     private javax.swing.JTextField text;
+    private erp.infra.button.UpdateButton updateButton1;
     // End of variables declaration//GEN-END:variables
 }
