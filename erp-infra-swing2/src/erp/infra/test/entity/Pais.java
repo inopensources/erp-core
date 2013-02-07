@@ -25,7 +25,7 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "pais")
-@Form(id = "pais", layoutScale=15, verticalPadding=3, layout = "\n\n\n\n"
+@Form(id = "pais", layoutScale=15, verticalPadding=3, layout = "\n"
         + "         [id__]                              \n"
         + "         [codbc_]                            \n"
         + "         [nome_____________________]         \n"

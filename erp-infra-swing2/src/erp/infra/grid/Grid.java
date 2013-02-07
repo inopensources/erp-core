@@ -5,6 +5,7 @@ import erp.infra.field.Field;
 import erp.infra.filter.Filter;
 import erp.infra.form.Form;
 import java.awt.Component;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -31,6 +32,7 @@ public class Grid extends JTable implements GridModelListener, EntityModelListen
     public Grid() {
         setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         setAutoResizeMode(AUTO_RESIZE_OFF);
+        setAutoCreateRowSorter(true);
     }
 
     public GridModel getGridModel() {
@@ -72,7 +74,7 @@ public class Grid extends JTable implements GridModelListener, EntityModelListen
 
         @Override
         public int getRowCount() {
-            if (gridModel.getEntities() == null){
+            if (gridModel == null || gridModel.getEntities() == null){
                 return 0;
             }
             return gridModel.getEntities().size();
@@ -162,6 +164,8 @@ public class Grid extends JTable implements GridModelListener, EntityModelListen
         System.out.println("===========> entityChanged() " + gridModel.getEntities().indexOf(gridModel.getEntityModel().getEntity()));
         setRowSelectionAllowed(true);
         getSelectionModel().setLeadSelectionIndex(gridModel.getEntities().indexOf(gridModel.getEntityModel().getEntity()));
+        Rectangle rect = getCellRect(getSelectedRow(), getSelectedColumn(), true);
+        scrollRectToVisible(rect);        
     }
 
     // --- GridModelListener implementation ---

@@ -4,9 +4,8 @@
  */
 package erp.infra.test;
 
-import erp.infra.button.GenericCrudButton;
 import erp.infra.button.GenericNavigatorButton;
-import erp.infra.test.entity.Produto;
+import erp.infra.test.entity.Pais;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
@@ -22,13 +21,14 @@ public class NewJFrame2 extends javax.swing.JFrame {
      */
     public NewJFrame2() {
         initComponents();
+        setSize(1000, 700);
+        setLocationRelativeTo(null);
         grid1.reload();
-
+        jSplitPane2.setDividerLocation(400);
         form2.add(crudToolBar2);
         jPanel4.add(crudToolBar2, BorderLayout.NORTH);
-        
         addGridModelToNavigationGenericButton(navigatorToolBar1);
-        
+        form2.getModel().getEntityModel().setEntity(null);
     }
     
     private void addGridModelToNavigationGenericButton(Component comp) {
@@ -59,9 +59,17 @@ public class NewJFrame2 extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jSplitPane2 = new javax.swing.JSplitPane();
         jPanel4 = new javax.swing.JPanel();
-        crudToolBar2 = new erp.infra.button.CrudToolBar();
+        jTabbedPane2 = new javax.swing.JTabbedPane();
+        jPanel1 = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         form2 = new erp.infra.form.Form();
+        crudToolBar2 = new erp.infra.button.CrudToolBar();
+        jPanel2 = new javax.swing.JPanel();
+        jToolBar1 = new javax.swing.JToolBar();
+        jButton2 = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
+        jPanel6 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         grid1 = new erp.infra.grid.Grid();
@@ -76,16 +84,17 @@ public class NewJFrame2 extends javax.swing.JFrame {
 
         jSplitPane1.setDividerLocation(200);
 
-        jSplitPane2.setDividerLocation(180);
+        jSplitPane2.setDividerLocation(200);
         jSplitPane2.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
 
         jPanel4.setLayout(new java.awt.BorderLayout());
 
-        crudToolBar2.setRollover(true);
-        jPanel4.add(crudToolBar2, java.awt.BorderLayout.PAGE_START);
+        jPanel1.setLayout(new java.awt.BorderLayout());
+
+        jPanel7.setLayout(new java.awt.BorderLayout());
 
         form2.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        form2.setEntityClass(Produto.class);
+        form2.setEntityClass(Pais.class);
 
         javax.swing.GroupLayout form2Layout = new javax.swing.GroupLayout(form2);
         form2.setLayout(form2Layout);
@@ -95,12 +104,61 @@ public class NewJFrame2 extends javax.swing.JFrame {
         );
         form2Layout.setVerticalGroup(
             form2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 144, Short.MAX_VALUE)
+            .addGap(0, 220, Short.MAX_VALUE)
         );
 
         jScrollPane2.setViewportView(form2);
 
-        jPanel4.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+        jPanel7.add(jScrollPane2, java.awt.BorderLayout.CENTER);
+
+        crudToolBar2.setRollover(true);
+        jPanel7.add(crudToolBar2, java.awt.BorderLayout.PAGE_START);
+
+        jPanel1.add(jPanel7, java.awt.BorderLayout.CENTER);
+
+        jTabbedPane2.addTab("Formulário", jPanel1);
+
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        jToolBar1.setRollover(true);
+
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erp/infra/images/formEdit16x16.png"))); // NOI18N
+        jButton2.setFocusable(false);
+        jButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jButton2);
+
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erp/infra/images/filter16x16.gif"))); // NOI18N
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton1);
+
+        jPanel2.add(jToolBar1, java.awt.BorderLayout.PAGE_START);
+
+        jPanel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 438, Short.MAX_VALUE)
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 141, Short.MAX_VALUE)
+        );
+
+        jPanel2.add(jPanel6, java.awt.BorderLayout.CENTER);
+
+        jTabbedPane2.addTab("Filtro para grade", jPanel2);
+
+        jPanel4.add(jTabbedPane2, java.awt.BorderLayout.CENTER);
 
         jSplitPane2.setTopComponent(jPanel4);
 
@@ -148,6 +206,10 @@ public class NewJFrame2 extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -186,18 +248,26 @@ public class NewJFrame2 extends javax.swing.JFrame {
     private erp.infra.button.CrudToolBar crudToolBar2;
     private erp.infra.form.Form form2;
     private erp.infra.grid.Grid grid1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JSplitPane jSplitPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTree jTree1;
     private erp.infra.button.NavigatorToolBar navigatorToolBar1;
     // End of variables declaration//GEN-END:variables

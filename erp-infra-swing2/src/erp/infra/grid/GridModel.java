@@ -22,7 +22,17 @@ public class GridModel<T> {
     private List<T> entities = new ArrayList<T>();
     private List<GridModelListener> listeners 
             = new ArrayList<GridModelListener>();
+    
+    // --- Pagination ---
+    
+    private int rowsPerPage = 20;
+    private int row = 1;
+    private int totalRows = 20;
+    private int page = 1;
+    private int totalPages = 23;
 
+    // --- Order ---
+    
     public Form getFormModel() {
         return formModel;
     }
@@ -50,6 +60,48 @@ public class GridModel<T> {
     public List<T> getEntities() {
         return entities;
     }
+
+    public int getRowsPerPage() {
+        return rowsPerPage;
+    }
+
+    public void setRowsPerPage(int rowsPerPage) {
+        this.rowsPerPage = rowsPerPage;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public void setRow(int row) {
+        this.row = row;
+    }
+
+    public int getTotalRows() {
+        return totalRows;
+    }
+
+    public void setTotalRows(int totalRows) {
+        this.totalRows = totalRows;
+    }
+
+    public int getPage() {
+        return page;
+    }
+
+    public void setPage(int page) {
+        this.page = page;
+    }
+
+    public int getTotalPages() {
+        return totalPages;
+    }
+
+    public void setTotalPages(int totalPages) {
+        this.totalPages = totalPages;
+    }
+    
+    // ---
     
     public void reload() throws Exception {
         Filter filter = new Filter(formModel.getEntityClass());
