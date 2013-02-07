@@ -1,5 +1,6 @@
 package erp.infra.entity;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class EntityModel<T> {
     private T entity;
     private List<EntityModelListener> listeners 
             = new ArrayList<EntityModelListener>();
-    
+
     public T getEntity() {
         return entity;
     }

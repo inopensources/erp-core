@@ -790,7 +790,7 @@ public class LookupField extends Field {
                 if (e.getClickCount() != 2) {
                     return;
                 }
-                model.getEntityModel().setEntity(grid.getEntities().get(grid.getSelectedRow()));
+                model.getEntityModel().setEntity(grid.getGridModel().getEntities().get(grid.getSelectedRow()));
                 GridDialog.this.dispose();
             }
         }

@@ -1,19 +1,18 @@
 package erp.infra.button;
 
-import erp.infra.mode.ModeModel;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- * CancelButton class.
+ * NextButton class.
  *
  * @author Leonardo Ono (ono.leo@gmail.com)
- * @since 1.00.00 (06/02/2013 13:24)
+ * @since 1.00.00 (07/02/2013 09:37)
  */
-public class CancelButton extends GenericCrudButton {
+public class NextButton extends GenericNavigatorButton {
 
-    public CancelButton() {
+    public NextButton() {
         initComponents();
     }
 
@@ -26,7 +25,7 @@ public class CancelButton extends GenericCrudButton {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setIcon(new javax.swing.ImageIcon(getClass().getResource("/erp/infra/images/cancel16x16_2.png"))); // NOI18N
+        setIcon(new javax.swing.ImageIcon(getClass().getResource("/erp/infra/images/next16x16.png"))); // NOI18N
         addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 formActionPerformed(evt);
@@ -36,9 +35,9 @@ public class CancelButton extends GenericCrudButton {
 
     private void formActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_formActionPerformed
         try {
-            formModel.cancel();
+            gridModel.next();
         } catch (Exception ex) {
-            Logger.getLogger(CancelButton.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(NextButton.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }//GEN-LAST:event_formActionPerformed
@@ -48,9 +47,8 @@ public class CancelButton extends GenericCrudButton {
 
     @Override
     public void modeChanged() {
-        boolean enabled = formModel.getModeModel().getMode().equals(ModeModel.INSERT);
-        enabled = enabled || formModel.getModeModel().getMode().equals(ModeModel.UPDATE);
-        setEnabled(enabled);
+        //boolean enabled = formModel.getModeModel().getMode().equals(ModeModel.READY_ONLY);
+        //setEnabled(enabled);
     }
 
 }

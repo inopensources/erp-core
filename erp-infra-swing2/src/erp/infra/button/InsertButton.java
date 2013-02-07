@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.00.00 (06/02/2013 12:56)
  */
-public class InsertButton extends GenericButton {
+public class InsertButton extends GenericCrudButton {
 
     public InsertButton() {
         initComponents();
@@ -26,7 +26,7 @@ public class InsertButton extends GenericButton {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setIcon(new javax.swing.ImageIcon(getClass().getResource("/erp/infra/images/insert16x16.gif"))); // NOI18N
+        setIcon(new javax.swing.ImageIcon(getClass().getResource("/erp/infra/images/insert16x16.png"))); // NOI18N
         addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 formActionPerformed(evt);

@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.00.00 (06/02/2013 13:00)
  */
-public class ReloadButton extends GenericButton {
+public class ReloadButton extends GenericCrudButton {
 
     public ReloadButton() {
         initComponents();
@@ -26,7 +26,7 @@ public class ReloadButton extends GenericButton {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        setIcon(new javax.swing.ImageIcon(getClass().getResource("/erp/infra/images/reload16x16.gif"))); // NOI18N
+        setIcon(new javax.swing.ImageIcon(getClass().getResource("/erp/infra/images/reload16x16_2.png"))); // NOI18N
         addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 formActionPerformed(evt);

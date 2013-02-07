@@ -1,6 +1,6 @@
 package erp.infra.form;
 
-import erp.infra.button.GenericButton;
+import erp.infra.button.GenericCrudButton;
 import erp.infra.entity.EntityModelListener;
 import erp.infra.entity.GenericJpaDao;
 import erp.infra.field.Field;
@@ -271,7 +271,7 @@ public class Form extends JPanel implements EntityModelListener {
         System.out.println("entityChanged <---------- " + model.getEntityModel().getEntity());
     }
 
-    // --- Set FormModel automatically if added component is GenericButton ---
+    // --- Set FormModel automatically if added component is GenericCrudButton ---
 
     @Override
     public Component add(Component comp) {
@@ -286,8 +286,8 @@ public class Form extends JPanel implements EntityModelListener {
                 addFormModelToGenericButton(c);
             }
         }
-        if (comp instanceof GenericButton) {
-            GenericButton genericButton = (GenericButton) comp;
+        if (comp instanceof GenericCrudButton) {
+            GenericCrudButton genericButton = (GenericCrudButton) comp;
             genericButton.setFormModel(getModel());
             System.out.println("-------> ADICIONANDO FormModel no GenericButton " + genericButton);
         }

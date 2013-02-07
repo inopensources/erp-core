@@ -1,14 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package erp.infra.button;
 
 import javax.swing.JToolBar;
 
 /**
+ * CrudToolBar class.
  *
- * @author leonardo
+ * @author Leonardo Ono (ono.leo@gmail.com)
+ * @since 1.00.00 (07/02/2013 09:40)
  */
 public class CrudToolBar extends JToolBar {
 
@@ -32,23 +30,20 @@ public class CrudToolBar extends JToolBar {
         insertButton1 = new erp.infra.button.InsertButton();
         updateButton1 = new erp.infra.button.UpdateButton();
         deleteButton1 = new erp.infra.button.DeleteButton();
-        saveButton1 = new erp.infra.button.SaveButton();
+        saveButton2 = new erp.infra.button.SaveButton();
         cancelButton2 = new erp.infra.button.CancelButton();
 
         reloadButton1.setText("reloadButton1");
-        reloadButton1.setFocusable(false);
         reloadButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         reloadButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         add(reloadButton1);
 
         insertButton1.setText("insertButton1");
-        insertButton1.setFocusable(false);
         insertButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         insertButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         add(insertButton1);
 
         updateButton1.setText("updateButton1");
-        updateButton1.setFocusable(false);
         updateButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         updateButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         add(updateButton1);
@@ -58,14 +53,12 @@ public class CrudToolBar extends JToolBar {
         deleteButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         add(deleteButton1);
 
-        saveButton1.setText("saveButton1");
-        saveButton1.setFocusable(false);
-        saveButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        saveButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        add(saveButton1);
+        saveButton2.setText("saveButton2");
+        saveButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        saveButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        add(saveButton2);
 
         cancelButton2.setText("cancelButton2");
-        cancelButton2.setFocusable(false);
         cancelButton2.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         cancelButton2.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         add(cancelButton2);
@@ -75,7 +68,7 @@ public class CrudToolBar extends JToolBar {
     private erp.infra.button.DeleteButton deleteButton1;
     private erp.infra.button.InsertButton insertButton1;
     private erp.infra.button.ReloadButton reloadButton1;
-    private erp.infra.button.SaveButton saveButton1;
+    private erp.infra.button.SaveButton saveButton2;
     private erp.infra.button.UpdateButton updateButton1;
     // End of variables declaration//GEN-END:variables
 }

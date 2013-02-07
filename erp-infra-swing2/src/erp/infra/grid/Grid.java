@@ -1,5 +1,6 @@
 package erp.infra.grid;
 
+import erp.infra.entity.EntityModelListener;
 import erp.infra.field.Field;
 import erp.infra.filter.Filter;
 import erp.infra.form.Form;
@@ -22,9 +23,9 @@ import javax.swing.table.AbstractTableModel;
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.00.00 (28/01/2013 09:30)
  */
-public class Grid extends JTable {
+public class Grid extends JTable implements EntityModelListener {
     
-    private List<Object> entities;
+    private GridModel gridModel;
     private Form formModel;
 
     public Grid() {
@@ -32,6 +33,13 @@ public class Grid extends JTable {
         setAutoResizeMode(AUTO_RESIZE_OFF);
     }
 
+    public GridModel getGridModel() {
+        return gridModel;
+    }
+
+    public void setGridModel(GridModel gridModel) {
+        this.gridModel = gridModel;
+    }
 
     public Form getFormModel() {
         return formModel;
@@ -40,17 +48,14 @@ public class Grid extends JTable {
     public void setFormModel(Form formModel) {
         this.formModel = formModel;
         setModel(new FormTableModel(formModel));
+        gridModel = new GridModel();
+        gridModel.setEntityDao(formModel.getModel().getEntityDao());
+        gridModel.setEntityModel(formModel.getModel().getEntityModel());
+        gridModel.setFormModel(formModel);
+        gridModel.getEntityModel().addListener(this);
         updateUI();
     }
 
-    public List<Object> getEntities() {
-        return entities;
-    }
-
-    public void setEntities(List<Object> entities) {
-        this.entities = entities;
-    }
- 
     private class FormTableModel extends AbstractTableModel {
 
         private List<Field> fields = new ArrayList<Field>();
@@ -66,10 +71,10 @@ public class Grid extends JTable {
 
         @Override
         public int getRowCount() {
-            if (entities == null){
+            if (gridModel.getEntities() == null){
                 return 0;
             }
-            return entities.size();
+            return gridModel.getEntities().size();
         }
 
         @Override
@@ -86,10 +91,10 @@ public class Grid extends JTable {
         @Override
         public Object getValueAt(int rowIndex, int columnIndex) {
             try {
-                if (entities == null || entities.isEmpty()) {
+                if (gridModel.getEntities() == null || gridModel.getEntities().isEmpty()) {
                     return "";
                 }
-                Object entity = entities.get(rowIndex);
+                Object entity = gridModel.getEntities().get(rowIndex);
                 ScriptEngine se = new ScriptEngineManager().getEngineByName("JavaScript");
                 Field field = fields.get(columnIndex);
                 String value = "";
@@ -120,11 +125,11 @@ public class Grid extends JTable {
             return;
         }
         try {
-            Filter filter = new Filter(formModel.getEntityClass());
-            entities = formModel.getModel().getEntityDao().executeQuery(filter);
             if (formModel == null) {
                 return;
             }
+            Filter filter = new Filter(formModel.getEntityClass());
+            gridModel.reload();
             setModel(new FormTableModel(formModel));
             int i = 0;
             ScriptEngine se = new ScriptEngineManager().getEngineByName("JavaScript");
@@ -145,8 +150,17 @@ public class Grid extends JTable {
     @Override
     public void changeSelection(int rowIndex, int columnIndex, boolean toggle, boolean extend) {
         super.changeSelection(rowIndex, columnIndex, toggle, extend);
-        System.out.println("changeSelection rowIndex:" + rowIndex + " columnIndex: " + columnIndex);
-        formModel.getModel().getEntityModel().setEntity(entities.get(rowIndex));
+        // System.out.println("changeSelection rowIndex:" + rowIndex + " columnIndex: " + columnIndex);
+        formModel.getModel().getEntityModel().setEntity(gridModel.getEntities().get(rowIndex));
     }
 
+    // --- EntityModelListener implementation ---
+    
+    @Override
+    public void entityChanged() {
+        System.out.println("===========> entityChanged() " + gridModel.getEntities().indexOf(gridModel.getEntityModel().getEntity()));
+        setRowSelectionAllowed(true);
+        getSelectionModel().setLeadSelectionIndex(gridModel.getEntities().indexOf(gridModel.getEntityModel().getEntity()));
+    }
+    
 }

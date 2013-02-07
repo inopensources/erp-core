@@ -18,6 +18,7 @@ public class NewJFrame extends javax.swing.JFrame {
      */
     public NewJFrame() {
         initComponents();
+        
         lookupField1.getModel().setLookupProperty("descricao");
         lookupField1.setLabelText("Pais");
         lookupField1.getSplitPane().setDividerLocation(200);

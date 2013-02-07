@@ -2,20 +2,19 @@ package erp.infra.button;
 
 import erp.infra.form.FormModel;
 import erp.infra.mode.ModeListener;
-import java.awt.Dimension;
 import javax.swing.JButton;
 
 /**
- * GenericButton class.
+ * GenericCrudButton class.
  *
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.00.00 (06/02/2013 12:59)
  */
-public class GenericButton extends JButton implements ModeListener {
+public class GenericCrudButton extends JButton implements ModeListener {
     
     protected FormModel formModel;
     
-    public GenericButton() {
+    public GenericCrudButton() {
         initComponents();
     }
 

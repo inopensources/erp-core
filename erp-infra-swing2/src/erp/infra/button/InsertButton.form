@@ -3,7 +3,7 @@
 <Form version="1.2" maxVersion="1.8">
   <Properties>
     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-      <Image iconType="3" name="/erp/infra/images/insert16x16.gif"/>
+      <Image iconType="3" name="/erp/infra/images/insert16x16.png"/>
     </Property>
   </Properties>
   <Events>
