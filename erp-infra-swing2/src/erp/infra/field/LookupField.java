@@ -81,7 +81,7 @@ public class LookupField extends Field {
 
     public LookupField() {
         initComponents();
-        
+        setComponent(text);
         setModel(new Model());
 
         popupListItemRenderComponent.setFont(label.getFont());

@@ -5,6 +5,7 @@
 package erp.infra.test;
 
 import erp.infra.button.GenericNavigatorButton;
+import erp.infra.test.entity.Pais;
 import erp.infra.test.entity.PessoaFisica;
 import java.awt.BorderLayout;
 import java.awt.Component;
@@ -63,7 +64,7 @@ public class NewJFrame21 extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        form2 = new erp.infra.form.Form();
+        form2 = new erp.infra.form.FormDesignPanel();
         crudToolBar2 = new erp.infra.button.CrudToolBar();
         jPanel2 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
@@ -99,18 +100,17 @@ public class NewJFrame21 extends javax.swing.JFrame {
 
         jPanel7.setLayout(new java.awt.BorderLayout());
 
-        form2.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        form2.setEntityClass(PessoaFisica.class);
+        form2.setEntityClass(Pais.class);
 
         javax.swing.GroupLayout form2Layout = new javax.swing.GroupLayout(form2);
         form2.setLayout(form2Layout);
         form2Layout.setHorizontalGroup(
             form2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 444, Short.MAX_VALUE)
+            .addGap(0, 438, Short.MAX_VALUE)
         );
         form2Layout.setVerticalGroup(
             form2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 220, Short.MAX_VALUE)
+            .addGap(0, 136, Short.MAX_VALUE)
         );
 
         jScrollPane2.setViewportView(form2);
@@ -269,7 +269,7 @@ public class NewJFrame21 extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private erp.infra.button.CrudToolBar crudToolBar2;
-    private erp.infra.form.Form form2;
+    private erp.infra.form.FormDesignPanel form2;
     private erp.infra.grid.Grid grid1;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;

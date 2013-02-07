@@ -1,19 +1,32 @@
-package erp.infra.filter;
+package erp.infra.form;
 
 import erp.infra.form.Form;
 import java.awt.Color;
 import java.awt.Graphics;
 
 /**
- * FilterPanel class.
+ * FormDesignPanel class.
  *
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.00.00 (07/02/2013 15:48)
  */
-public class FilterPanel extends Form {
-
-    public FilterPanel() {
+public class FormDesignPanel extends Form {
+    
+    private int gridSize = 10;
+    
+    public FormDesignPanel() {
         initComponents();
+    }
+
+    public int getGridSize() {
+        return gridSize;
+    }
+
+    public void setGridSize(int gridSize) {
+        if (gridSize < 5) {
+            gridSize = 5;
+        }
+        this.gridSize = gridSize;
     }
 
     /**
@@ -42,9 +55,9 @@ public class FilterPanel extends Form {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        g.setColor(Color.DARK_GRAY);
-        for (int y=0; y<=getHeight(); y+=10) {
-            for (int x=0; x<=getWidth(); x+=10) {
+        g.setColor(Color.GRAY);
+        for (int y=0; y<=getHeight(); y+=gridSize) {
+            for (int x=0; x<=getWidth(); x+=gridSize) {
                 g.drawLine(x, y, x, y);
             }
         }

@@ -4,10 +4,14 @@ import erp.infra.mode.ModeListener;
 import erp.infra.mode.ModeModel;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -131,6 +135,14 @@ public abstract class Field extends JPanel implements ModeListener {
         return component;
     }
 
+    public void setComponent(Component component) {
+        this.component = component;
+        
+        // --- Allow user to drag this field when in edit mode ---
+        component.addMouseMotionListener(new FormEditMouseHandler());
+        component.addMouseListener(new FormEditMouseHandler());
+    }
+
     // --- Mode ---
     
     public ModeModel getModeModel() {
@@ -232,6 +244,33 @@ public abstract class Field extends JPanel implements ModeListener {
         Boolean editable = getEditableMap().get(modeModel.getMode());
         if (editable != null) {
             setEditable(editable);
+        }
+    }
+    
+    // --- Form edit mode drag this field ---
+    
+    private int xProv = 0;
+    private int yProv = 0;
+    private int xLoc = 0;
+    private int yLoc = 0;
+    private class FormEditMouseHandler extends MouseAdapter {
+
+        @Override
+        public void mousePressed(MouseEvent e) {
+            xProv = e.getXOnScreen();
+            yProv = e.getYOnScreen();
+            xLoc = getBounds().x;
+            yLoc = getBounds().y;
+        }
+        
+        @Override
+        public void mouseDragged(MouseEvent e) {
+            int novoX = e.getXOnScreen() + xLoc - xProv;
+            int novoY = e.getYOnScreen() + yLoc - yProv;
+            novoX = novoX - (novoX % 10);
+            novoY = novoY - (novoY % 10);
+            setLocation(novoX, novoY);
+            getParent().repaint();
         }
     }
     

@@ -27,7 +27,7 @@ public class TextField extends Field implements FocusListener {
     public TextField() {
         initComponents();
         text.addFocusListener(this);
-        component = text;
+        setComponent(text);
         
         // Set acceptable types for this field
         new ObjectTypeImplementation();
@@ -410,7 +410,6 @@ public class TextField extends Field implements FocusListener {
                 stringValue = stringValue.replace(".", "");
                 stringValue = stringValue.replace(",", ".");
                 ret = new BigDecimal(stringValue);
-                System.out.println("TextField getValue() BigDecimal=" + ret);
             } catch (Exception ex) {
             }
             return ret;

@@ -10,8 +10,8 @@ public class CheckField extends Field {
 
     public CheckField() {
         initComponents();
-        component = checkBox;
-        
+        setComponent(checkBox);
+
         // Set acceptable types for this field
         new BooleanTypeImplementation();
     }

@@ -26,39 +26,45 @@ public class NewJFrame3 extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        filterPanel1 = new erp.infra.filter.FilterPanel();
+        filterPanel1 = new erp.infra.form.FormDesignPanel();
         textField1 = new erp.infra.field.TextField();
+        lookupField1 = new erp.infra.field.LookupField();
+        dateField1 = new erp.infra.field.DateField();
+        checkField1 = new erp.infra.field.CheckField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        textField1.setLabelText("Aqui vai o label");
+        filterPanel1.setLayout(null);
 
-        javax.swing.GroupLayout filterPanel1Layout = new javax.swing.GroupLayout(filterPanel1);
-        filterPanel1.setLayout(filterPanel1Layout);
-        filterPanel1Layout.setHorizontalGroup(
-            filterPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(filterPanel1Layout.createSequentialGroup()
-                .addGap(145, 145, 145)
-                .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(405, Short.MAX_VALUE))
-        );
-        filterPanel1Layout.setVerticalGroup(
-            filterPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(filterPanel1Layout.createSequentialGroup()
-                .addGap(29, 29, 29)
-                .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(297, Short.MAX_VALUE))
-        );
+        textField1.setEnabled(false);
+        textField1.setLabelText("Aqui vai o label");
+        filterPanel1.add(textField1);
+        textField1.setBounds(145, 29, 100, 25);
+
+        lookupField1.setEnabled(false);
+        lookupField1.setLabelText("LookupField");
+        filterPanel1.add(lookupField1);
+        lookupField1.setBounds(145, 60, 100, 25);
+
+        dateField1.setEnabled(false);
+        dateField1.setLabelText("LabelField");
+        filterPanel1.add(dateField1);
+        dateField1.setBounds(145, 91, 100, 25);
+
+        checkField1.setEnabled(false);
+        checkField1.setLabelText("CheckField");
+        filterPanel1.add(checkField1);
+        checkField1.setBounds(145, 122, 100, 25);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(filterPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(filterPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(filterPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(filterPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
         );
 
         pack();
@@ -99,7 +105,10 @@ public class NewJFrame3 extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private erp.infra.filter.FilterPanel filterPanel1;
+    private erp.infra.field.CheckField checkField1;
+    private erp.infra.field.DateField dateField1;
+    private erp.infra.form.FormDesignPanel filterPanel1;
+    private erp.infra.field.LookupField lookupField1;
     private erp.infra.field.TextField textField1;
     // End of variables declaration//GEN-END:variables
 }
