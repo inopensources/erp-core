@@ -57,7 +57,7 @@ public class Filter {
         return condition;
     }
 
-    public Linker createLinker(Operation operation, ConditionContainer leftCondition, ConditionContainer rightCondition) {
+    public Linker createLinker(LogicOperation operation, ConditionContainer leftCondition, ConditionContainer rightCondition) {
         Linker linker = new Linker();
         linker.setOperation(operation);
         linker.setLeftContainer(leftCondition);

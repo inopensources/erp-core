@@ -148,7 +148,7 @@
                                               </Border>
                                             </Property>
                                             <Property name="entityClass" type="java.lang.Class" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-                                              <Connection code="Pais.class" type="code"/>
+                                              <Connection code="PessoaFisica.class" type="code"/>
                                             </Property>
                                           </Properties>
 

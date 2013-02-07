@@ -5,6 +5,11 @@
     <class>erp.infra.test.entity2.Pais2</class>
     <class>erp.infra.test.entity.Pais</class>
     <class>erp.infra.test.entity.Produto</class>
+    <class>erp.infra.test.entity.EmailParticipante</class>
+    <class>erp.infra.test.entity.EnderecoParticipante</class>
+    <class>erp.infra.test.entity.Participante</class>
+    <class>erp.infra.test.entity.PessoaFisica</class>
+    <class>erp.infra.test.entity.TelefoneParticipante</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/erp"/>
       <property name="javax.persistence.jdbc.password" value="erp"/>

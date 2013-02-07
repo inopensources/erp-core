@@ -5,7 +5,7 @@
 package erp.infra.test;
 
 import erp.infra.button.GenericNavigatorButton;
-import erp.infra.test.entity.Pais;
+import erp.infra.test.entity.PessoaFisica;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
@@ -14,12 +14,12 @@ import java.awt.Container;
  *
  * @author leo
  */
-public class NewJFrame2 extends javax.swing.JFrame {
+public class NewJFrame21 extends javax.swing.JFrame {
 
     /**
      * Creates new form NewJFrame2
      */
-    public NewJFrame2() {
+    public NewJFrame21() {
         initComponents();
         setSize(1000, 700);
         setLocationRelativeTo(null);
@@ -100,7 +100,7 @@ public class NewJFrame2 extends javax.swing.JFrame {
         jPanel7.setLayout(new java.awt.BorderLayout());
 
         form2.setBorder(javax.swing.BorderFactory.createEmptyBorder(10, 10, 10, 10));
-        form2.setEntityClass(Pais.class);
+        form2.setEntityClass(PessoaFisica.class);
 
         javax.swing.GroupLayout form2Layout = new javax.swing.GroupLayout(form2);
         form2.setLayout(form2Layout);
@@ -250,20 +250,20 @@ public class NewJFrame2 extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewJFrame21.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewJFrame21.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewJFrame21.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(NewJFrame2.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(NewJFrame21.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new NewJFrame2().setVisible(true);
+                new NewJFrame21().setVisible(true);
             }
         });
     }

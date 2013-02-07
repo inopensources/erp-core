@@ -7,7 +7,7 @@ package erp.infra.filter;
 public class Linker {
     
     private String name;
-    private Operation operation;
+    private LogicOperation operation;
     
     private Container leftContainer;
     private Container rightContainer;
@@ -24,7 +24,7 @@ public class Linker {
         return operation;
     }
 
-    public void setOperation(Operation operation) {
+    public void setOperation(LogicOperation operation) {
         this.operation = operation;
     }
 
