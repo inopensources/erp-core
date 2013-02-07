@@ -6,14 +6,14 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- * ReloadButton class.
+ * ReloadGridButton class.
  *
  * @author Leonardo Ono (ono.leo@gmail.com)
- * @since 1.00.00 (06/02/2013 13:00)
+ * @since 1.00.00 (07/02/2013 11:04)
  */
-public class ReloadButton extends GenericCrudButton {
+public class ReloadGridButton extends GenericNavigatorButton {
 
-    public ReloadButton() {
+    public ReloadGridButton() {
         initComponents();
     }
 
@@ -36,7 +36,7 @@ public class ReloadButton extends GenericCrudButton {
 
     private void formActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_formActionPerformed
         try {
-            formModel.reload();
+            gridModel.reload();
         } catch (Exception ex) {
             Logger.getLogger(CancelButton.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(this, ex.getMessage());
@@ -48,9 +48,9 @@ public class ReloadButton extends GenericCrudButton {
 
     @Override
     public void modeChanged() {
-        boolean enabled = formModel.getModeModel().getMode().equals(ModeModel.READY_ONLY);
-        enabled = enabled || formModel.getModeModel().getMode().equals(ModeModel.UPDATE);
-        setEnabled(enabled);
+        //boolean enabled = formModel.getModeModel().getMode().equals(ModeModel.READY_ONLY);
+        //enabled = enabled || formModel.getModeModel().getMode().equals(ModeModel.UPDATE);
+        //setEnabled(enabled);
     }
 
 }

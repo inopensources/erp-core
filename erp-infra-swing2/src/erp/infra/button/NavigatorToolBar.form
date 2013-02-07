@@ -16,9 +16,9 @@
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignBoxLayout"/>
   <SubComponents>
-    <Component class="erp.infra.button.ReloadButton" name="reloadButton1">
+    <Component class="erp.infra.button.ReloadGridButton" name="reloadGridButton1">
       <Properties>
-        <Property name="text" type="java.lang.String" value="reloadButton1"/>
+        <Property name="text" type="java.lang.String" value="reloadGridButton1"/>
         <Property name="horizontalTextPosition" type="int" value="0"/>
         <Property name="verticalTextPosition" type="int" value="3"/>
       </Properties>

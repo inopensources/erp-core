@@ -20,6 +20,8 @@ public class GridModel<T> {
     private EntityDao<T> entityDao;
     private EntityModel<T> entityModel;
     private List<T> entities = new ArrayList<T>();
+    private List<GridModelListener> listeners 
+            = new ArrayList<GridModelListener>();
 
     public Form getFormModel() {
         return formModel;
@@ -52,6 +54,7 @@ public class GridModel<T> {
     public void reload() throws Exception {
         Filter filter = new Filter(formModel.getEntityClass());
         entities = entityDao.executeQuery(filter);
+        fireEntitiesReloaded();
     }
     
     public void first() throws Exception {
@@ -72,4 +75,23 @@ public class GridModel<T> {
         entityModel.setEntity(entities.get(entities.size()-1));
     }
     
+    // --- Listener ---
+    
+    public void addListener(GridModelListener listener) {
+        if (listeners.contains(listener)) {
+            return;
+        }
+        listeners.add(listener);
+    }
+
+    public void removeListener(GridModelListener listener) {
+        listeners.remove(listener);
+    }
+
+    protected void fireEntitiesReloaded() {
+        for (GridModelListener listener : listeners) {
+            listener.entitiesReloaded();
+        }
+    }
+
 }

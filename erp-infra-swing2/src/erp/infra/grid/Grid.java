@@ -23,7 +23,7 @@ import javax.swing.table.AbstractTableModel;
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.00.00 (28/01/2013 09:30)
  */
-public class Grid extends JTable implements EntityModelListener {
+public class Grid extends JTable implements GridModelListener, EntityModelListener {
     
     private GridModel gridModel;
     private Form formModel;
@@ -53,6 +53,7 @@ public class Grid extends JTable implements EntityModelListener {
         gridModel.setEntityModel(formModel.getModel().getEntityModel());
         gridModel.setFormModel(formModel);
         gridModel.getEntityModel().addListener(this);
+        gridModel.addListener(this);
         updateUI();
     }
 
@@ -162,5 +163,15 @@ public class Grid extends JTable implements EntityModelListener {
         setRowSelectionAllowed(true);
         getSelectionModel().setLeadSelectionIndex(gridModel.getEntities().indexOf(gridModel.getEntityModel().getEntity()));
     }
+
+    // --- GridModelListener implementation ---
+    
+    @Override
+    public void entitiesReloaded() {
+        System.out.println("===========> entitiesReloaded()");
+        repaint();
+        updateUI();
+    }
+
     
 }

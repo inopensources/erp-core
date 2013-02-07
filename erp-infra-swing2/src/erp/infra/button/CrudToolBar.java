@@ -26,7 +26,7 @@ public class CrudToolBar extends JToolBar {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        reloadButton1 = new erp.infra.button.ReloadButton();
+        reloadButton1 = new erp.infra.button.ReloadCrudButton();
         insertButton1 = new erp.infra.button.InsertButton();
         updateButton1 = new erp.infra.button.UpdateButton();
         deleteButton1 = new erp.infra.button.DeleteButton();
@@ -67,7 +67,7 @@ public class CrudToolBar extends JToolBar {
     private erp.infra.button.CancelButton cancelButton2;
     private erp.infra.button.DeleteButton deleteButton1;
     private erp.infra.button.InsertButton insertButton1;
-    private erp.infra.button.ReloadButton reloadButton1;
+    private erp.infra.button.ReloadCrudButton reloadButton1;
     private erp.infra.button.SaveButton saveButton2;
     private erp.infra.button.UpdateButton updateButton1;
     // End of variables declaration//GEN-END:variables

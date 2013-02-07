@@ -26,7 +26,7 @@ public class NavigatorToolBar extends JToolBar {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        reloadButton1 = new erp.infra.button.ReloadButton();
+        reloadGridButton1 = new erp.infra.button.ReloadGridButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
         firstlButton1 = new erp.infra.button.FirstlButton();
         previousButton1 = new erp.infra.button.PreviousButton();
@@ -41,10 +41,10 @@ public class NavigatorToolBar extends JToolBar {
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
-        reloadButton1.setText("reloadButton1");
-        reloadButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        reloadButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        add(reloadButton1);
+        reloadGridButton1.setText("reloadGridButton1");
+        reloadGridButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        reloadGridButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        add(reloadGridButton1);
         add(jSeparator1);
 
         firstlButton1.setText("firstlButton1");
@@ -102,6 +102,6 @@ public class NavigatorToolBar extends JToolBar {
     private erp.infra.button.LastButton lastButton1;
     private erp.infra.button.NextButton nextButton1;
     private erp.infra.button.PreviousButton previousButton1;
-    private erp.infra.button.ReloadButton reloadButton1;
+    private erp.infra.button.ReloadGridButton reloadGridButton1;
     // End of variables declaration//GEN-END:variables
 }
