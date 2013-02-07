@@ -146,7 +146,7 @@ public class Grid extends JTable {
     public void changeSelection(int rowIndex, int columnIndex, boolean toggle, boolean extend) {
         super.changeSelection(rowIndex, columnIndex, toggle, extend);
         System.out.println("changeSelection rowIndex:" + rowIndex + " columnIndex: " + columnIndex);
-        // formModel.setEntity(entities.get(rowIndex));
+        formModel.getModel().getEntityModel().setEntity(entities.get(rowIndex));
     }
 
 }

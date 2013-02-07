@@ -5,7 +5,7 @@
 package erp.infra.test;
 
 import erp.infra.mode.ModeModel;
-import erp.infra.test.entity.Pais;
+import erp.infra.test.entity.Produto;
 
 /**
  *
@@ -22,6 +22,7 @@ public class NewJFrame extends javax.swing.JFrame {
         lookupField1.setLabelText("Pais");
         lookupField1.getSplitPane().setDividerLocation(200);
         lookupField1.setModeModel(form1.getModel().getModeModel());
+        lookupField1.setLabelExpression("'<html><body> : <strong>' + (entity.codigoInterno? entity.codigoInterno : '') + '</strong> ' + (entity.descricao ? entity.descricao : '') + '</body></html>'");
         
         lookupField1.getEnablingMap().put(ModeModel.EMPTY, Boolean.TRUE);
         lookupField1.getEnablingMap().put(ModeModel.READY_ONLY, Boolean.TRUE);
@@ -56,7 +57,7 @@ public class NewJFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         form1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
-        form1.setEntityClass(Pais.class);
+        form1.setEntityClass(Produto.class);
 
         jToolBar2.setRollover(true);
 
@@ -65,7 +66,7 @@ public class NewJFrame extends javax.swing.JFrame {
         crudToolBar1.setRollover(true);
         jToolBar2.add(crudToolBar1);
 
-        lookupField1.setEntityClass(Pais.class);
+        lookupField1.setEntityClass(Produto.class);
 
         javax.swing.GroupLayout form1Layout = new javax.swing.GroupLayout(form1);
         form1.setLayout(form1Layout);
@@ -82,7 +83,7 @@ public class NewJFrame extends javax.swing.JFrame {
                 .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lookupField1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 327, Short.MAX_VALUE))
+                .addGap(0, 325, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -110,7 +111,7 @@ public class NewJFrame extends javax.swing.JFrame {
          */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Windows".equals(info.getName())) {
+                if ("GTK+".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }

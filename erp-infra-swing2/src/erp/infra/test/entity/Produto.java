@@ -21,7 +21,7 @@ import javax.persistence.Temporal;
  */
 @Entity
 @Table(name="produto")
-@Form(id="produto", verticalPadding=5, layout="\n\n\n\n"
+@Form(id="produto", verticalPadding=5, layout="\n"
         + "              [id____]                                                             \n"
         + "              [codint____]                                                         \n"
         + "              [desc_______________________________]                                \n"
@@ -74,11 +74,11 @@ public class Produto implements Serializable {
     
     @Column(name="data_cadastro")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date dataCadastro;
+    private Date dataCadastro = new Date();
     
     @Column(name="data_ultima_atualizacao")
     @Temporal(javax.persistence.TemporalType.TIMESTAMP)
-    private Date dataUltimaAtualizacao;
+    private Date dataUltimaAtualizacao = new Date();
     
     @Field(id="id", label="Id", insertable=false, updatable=false)
     public Long getId() {
@@ -197,7 +197,7 @@ public class Produto implements Serializable {
         this.situacao = situacao;
     }
 
-    @Field(id="datacad", label="Data de cadastro")
+    @Field(id="datacad", label="Data de cadastro", insertable=false, updatable=false)
     public Date getDataCadastro() {
         return dataCadastro;
     }
@@ -206,7 +206,7 @@ public class Produto implements Serializable {
         this.dataCadastro = dataCadastro;
     }
 
-    @Field(id="dataultatu", label="Data últ. atualização")
+    @Field(id="dataultatu", label="Data últ. atualização", insertable=false, updatable=false)
     public Date getDataUltimaAtualizacao() {
         return dataUltimaAtualizacao;
     }
