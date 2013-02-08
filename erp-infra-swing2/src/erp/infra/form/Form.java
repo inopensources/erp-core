@@ -6,6 +6,7 @@ import erp.infra.entity.GenericJpaDao;
 import erp.infra.field.Field;
 import erp.infra.field.LookupField;
 import erp.infra.mode.ModeModel;
+import erp.infra.validation.ValidationException;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Cursor;
@@ -15,8 +16,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 /**
  * Form class.
@@ -31,8 +35,28 @@ public class Form extends JPanel implements EntityModelListener {
     private FormModelListener listener 
             = new FormModelListenerImpl();
 
+    // --- Validation ---
+    
+    private boolean validationEnabled = true;
+    
     public Form() {
         initComponents();
+    }
+
+    public JLabel getErrorLabel() {
+        return errorLabel;
+    }
+
+    public void setErrorLabel(JLabel errorLabel) {
+        this.errorLabel = errorLabel;
+    }
+
+    public JLabel getWarningLabel() {
+        return warningLabel;
+    }
+
+    public void setWarningLabel(JLabel warningLabel) {
+        this.warningLabel = warningLabel;
     }
 
     public Class getEntityClass() {
@@ -84,6 +108,14 @@ public class Form extends JPanel implements EntityModelListener {
         }
     }
 
+    public boolean isValidationEnabled() {
+        return validationEnabled;
+    }
+
+    public void setValidationEnabled(boolean validationEnabled) {
+        this.validationEnabled = validationEnabled;
+    }
+
     public void updateView() {
         // Fields
         try {
@@ -124,15 +156,12 @@ public class Form extends JPanel implements EntityModelListener {
                 }
             }
         }
+        
+        
     }
     
-    public void updateModel() {
-        try {
-            updateModelPrivate(model.getEntityModel().getEntity());
-        } catch (Exception ex) {
-            Logger.getLogger(Form.class.getName()).log(Level.SEVERE, null, ex);
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        }
+    public void updateModel() throws Exception {
+        updateModelPrivate(model.getEntityModel().getEntity());
     }
     
     private void updateModelPrivate(Object entityPrivate) throws Exception {
@@ -156,11 +185,56 @@ public class Form extends JPanel implements EntityModelListener {
                     continue;
                 } else {
                     Object value = field.getValue();
+                    //se.put("value", value);
+                    //se.eval("entity." + field.getProperty() + " = value");
+                    field.setProvisoryValue(value);
+                }
+            }
+        }
+        
+
+        // --- Validation ---
+        boolean validationOk = true;
+        for (Component c : getComponents()) {
+            if (c instanceof Field) {
+                Field field = (Field) c;
+                try {
+                    field.getValidator().validate(field.getProvisoryValue());
+                }
+                catch (ValidationException ve) {
+                    field.setInvalidationMessage(ve.getMessage());
+                    field.setValidValue(false);
+                    ((JComponent) field.getComponent()).setToolTipText(ve.getMessage());
+                    validationOk = false;
+                }
+            }
+        }
+        
+        if (!validationOk) {
+            repaint();
+            throw new ValidationException("Erro de validacao !");
+        }
+        
+        for (Component c : getComponents()) {
+            if (c instanceof Field) {
+                Field field = (Field) c;
+                se.put("entity", entityPrivate);
+                se.put("field", field);
+                if (field.getExpression() != null 
+                        && !field.getExpression().trim().isEmpty()) {
+                    
+                } else if (field.getProperty() == null 
+                        || field.getProperty().trim().isEmpty()) {
+                    
+                    continue;
+                } else {
+                    Object value = field.getProvisoryValue();
                     se.put("value", value);
                     se.eval("entity." + field.getProperty() + " = value");
                 }
             }
         }
+        
     }
 
     /**
@@ -171,6 +245,13 @@ public class Form extends JPanel implements EntityModelListener {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
+        errorLabel = new javax.swing.JLabel();
+        warningLabel = new javax.swing.JLabel();
+
+        errorLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erp/infra/images/error16x16.png"))); // NOI18N
+
+        warningLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/erp/infra/images/warning16x16.png"))); // NOI18N
 
         addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -229,6 +310,8 @@ public class Form extends JPanel implements EntityModelListener {
     }//GEN-LAST:event_formMouseMoved
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel errorLabel;
+    private javax.swing.JLabel warningLabel;
     // End of variables declaration//GEN-END:variables
 
     @Override
@@ -247,7 +330,7 @@ public class Form extends JPanel implements EntityModelListener {
 
     private class FormModelListenerImpl implements FormModelListener {
         @Override
-        public void updateModel() {
+        public void updateModel() throws Exception {
             Form.this.updateModel();
         }
 
@@ -268,7 +351,18 @@ public class Form extends JPanel implements EntityModelListener {
         else if (getModel() != null && model.getEntityModel().getEntity() != null && getModel().getModeModel().getMode().equals(ModeModel.EMPTY)) {
             getModel().getModeModel().setMode(ModeModel.READY_ONLY);
         }
-        System.out.println("entityChanged <---------- " + model.getEntityModel().getEntity());
+        
+        // --- Validation ---
+        
+        for (Component c : getComponents()) {
+            if (c instanceof Field) {
+                Field field = (Field) c;
+                field.setProvisoryValue(null);
+                field.setValidValue(true);
+                field.setInvalidationMessage("");
+            }
+        }
+        repaint();
     }
 
     // --- Set FormModel automatically if added component is GenericCrudButton ---
@@ -289,7 +383,6 @@ public class Form extends JPanel implements EntityModelListener {
         if (comp instanceof GenericCrudButton) {
             GenericCrudButton genericButton = (GenericCrudButton) comp;
             genericButton.setFormModel(getModel());
-            System.out.println("-------> ADICIONANDO FormModel no GenericButton " + genericButton);
         }
     }
     

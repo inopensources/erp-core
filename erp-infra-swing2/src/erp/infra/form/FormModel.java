@@ -163,7 +163,7 @@ public class FormModel<T> {
         }
     }
 
-    protected void fireUpdateModel() {
+    protected void fireUpdateModel() throws Exception {
         for (FormModelListener listener : listeners) {
             listener.updateModel();
         }

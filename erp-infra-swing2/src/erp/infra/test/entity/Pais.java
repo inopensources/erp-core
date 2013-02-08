@@ -2,6 +2,7 @@ package erp.infra.test.entity;
 
 import erp.infra.annotation.Field;
 import erp.infra.annotation.Form;
+import erp.infra.test.Sigla2Validator;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -84,7 +85,7 @@ public class Pais implements Serializable {
         this.nome = nome;
     }
 
-    @Field(id="s2", label="Sigla 2")
+    @Field(id="s2", label="Sigla 2", validatorClass=Sigla2Validator.class)
     public String getSigla2() {
         return sigla2;
     }

@@ -1,5 +1,7 @@
 package erp.infra.annotation;
 
+import erp.infra.validation.DefaultValidator;
+import erp.infra.validation.Validator;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
@@ -47,5 +49,10 @@ public @interface Field {
      * Permite alterar.
      */
     boolean updatable() default true;
+    
+    /**
+     * Classe de validacao.
+     */
+    Class<? extends Validator> validatorClass() default DefaultValidator.class;
     
 }

@@ -1,17 +1,17 @@
 package erp.infra.field;
 
+import erp.infra.form.Form;
 import erp.infra.mode.ModeListener;
 import erp.infra.mode.ModeModel;
+import erp.infra.validation.Validator;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -42,8 +42,16 @@ public abstract class Field extends JPanel implements ModeListener {
     protected TypeImplementation typeConfig;
     protected Map<Class, TypeImplementation> typeConfigs 
             = new HashMap<Class, TypeImplementation>();
+
+    // --- Validation ---
+    
+    protected Object provisoryValue;
+    protected Validator validator;
+    protected boolean validValue = true;
+    protected String invalidationMessage = "";
     
     // --- Mode ---
+    
     protected ModeModel modeModel;
     protected Map<String, Boolean> enablingMap 
             = new HashMap<String, Boolean>();
@@ -143,6 +151,41 @@ public abstract class Field extends JPanel implements ModeListener {
         component.addMouseListener(new FormEditMouseHandler());
     }
 
+    // --- Validation ---
+
+    public Object getProvisoryValue() {
+        return provisoryValue;
+    }
+
+    public void setProvisoryValue(Object provisoryValue) {
+        this.provisoryValue = provisoryValue;
+    }
+
+    public Validator getValidator() {
+        return validator;
+    }
+
+    public void setValidator(Validator validator) {
+        this.validator = validator;
+    }
+
+    public boolean isValidValue() {
+        return validValue;
+    }
+
+    public void setValidValue(boolean validValue) {
+        this.validValue = validValue;
+        repaint();
+    }
+
+    public String getInvalidationMessage() {
+        return invalidationMessage;
+    }
+
+    public void setInvalidationMessage(String invalidationMessage) {
+        this.invalidationMessage = invalidationMessage;
+    }
+
     // --- Mode ---
     
     public ModeModel getModeModel() {
@@ -230,6 +273,24 @@ public abstract class Field extends JPanel implements ModeListener {
             g.setColor(new Color(255, 100, 100));
             g.drawString("*", getBounds().x + getBounds().width + 3
                     , getBounds().y + (fontHeight / 2));
+        }
+        
+        // Paint error label
+        if (!validValue) {
+            Object parent = getParent();
+            if (parent instanceof Form) {
+                Form f = (Form) parent;
+                JLabel errorLabel = f.getErrorLabel();
+                errorLabel.setSize(errorLabel.getPreferredSize());
+
+                g2 = g.create(getBounds().x + getBounds().width 
+                        + 3, getBounds().y + (Math.abs(component.getHeight() 
+                        - errorLabel.getPreferredSize().height) / 2)
+                        , errorLabel.getPreferredSize().width
+                        , errorLabel.getPreferredSize().height);
+
+                errorLabel.paint(g2);
+            }
         }
     }
     

@@ -5,6 +5,7 @@ import erp.infra.field.DateField;
 import erp.infra.field.Field;
 import erp.infra.field.TextField;
 import erp.infra.mode.ModeModel;
+import erp.infra.validation.Validator;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
@@ -88,6 +89,18 @@ public class FormUtils {
                 System.out.println("encontrou id: " + id + " field: " + f);
                 
                 Field fv = createDefaultFieldFromType(types.get(id));
+                
+                // --- Validation ---
+                
+                try {
+                    Validator validator = (Validator) f.validatorClass().newInstance();
+                    fv.setValidator(validator);
+                }
+                catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                
+                // ---
                 
                 fv.setInsertable(f.insertable());
                 fv.setUpdatable(f.updatable());
