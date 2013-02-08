@@ -18,9 +18,6 @@ import java.util.Date;
  */
 public class TextField extends Field implements FocusListener {
 
-    // --- TextField specific properties ---
-
-    private String regex = "";
     private boolean selectAllOnFocus = true;
     private boolean editablePropertyModificable = true;
 
@@ -37,6 +34,14 @@ public class TextField extends Field implements FocusListener {
         new NumericTypeImplementation();
         new DateTypeImplementation();
         new BigDecimalTypeImplementation();
+    }
+
+    public String getRegex() {
+        return text.getRegex();
+    }
+
+    public void setRegex(String regex) {
+        text.setRegex(regex);
     }
     
     @Override

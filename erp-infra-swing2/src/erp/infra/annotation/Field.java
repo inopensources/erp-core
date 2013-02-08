@@ -37,6 +37,7 @@ public @interface Field {
     
     /**
      * Se a propriedade regex estiver null, sera considerado este valor.
+     * Valido somente para TextField.
      */
     String regex() default "";
 

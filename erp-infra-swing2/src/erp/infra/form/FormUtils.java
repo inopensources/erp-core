@@ -90,6 +90,12 @@ public class FormUtils {
                 
                 Field fv = createDefaultFieldFromType(types.get(id));
                 
+                // --- Regex ---
+                if (fv instanceof TextField && !f.regex().trim().isEmpty()) {
+                    TextField tf = (TextField) fv;
+                    tf.setRegex(f.regex());
+                }
+                
                 // --- Validation ---
                 
                 try {

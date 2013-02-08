@@ -67,7 +67,7 @@ public class Pais implements Serializable {
         this.id = id;
     }
 
-    @Field(id="codbc", label="Cód. BACEN")
+    @Field(id="codbc", label="Cód. BACEN", regex="[0-9]{5}")
     public String getCodigoBacen() {
         return codigoBacen;
     }
@@ -85,7 +85,7 @@ public class Pais implements Serializable {
         this.nome = nome;
     }
 
-    @Field(id="s2", label="Sigla 2", validatorClass=Sigla2Validator.class)
+    @Field(id="s2", label="Sigla 2", validatorClass=Sigla2Validator.class, regex="[A-Z]{2}")
     public String getSigla2() {
         return sigla2;
     }
