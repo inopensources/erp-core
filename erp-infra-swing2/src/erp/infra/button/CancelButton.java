@@ -48,8 +48,8 @@ public class CancelButton extends GenericCrudButton {
 
     @Override
     public void modeChanged() {
-        boolean enabled = formModel.getModeModel().getMode().equals(ModeModel.INSERT);
-        enabled = enabled || formModel.getModeModel().getMode().equals(ModeModel.UPDATE);
+        boolean enabled = formModel.getModeModel().getMode().equals(ModeModel.CrudMode.INSERT);
+        enabled = enabled || formModel.getModeModel().getMode().equals(ModeModel.CrudMode.UPDATE);
         setEnabled(enabled);
     }
 

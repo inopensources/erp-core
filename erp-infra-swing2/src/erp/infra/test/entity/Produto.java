@@ -143,7 +143,7 @@ public class Produto implements Serializable {
         this.codigoServico = codigoServico;
     }
 
-    @Field(id="aliqicms", label="Alíq. ICMS")
+    @Field(id="aliqicms", label="Alíq. ICMS", regex="[0-9]{1,12},[0-9]{2}")
     public BigDecimal getAliquotaIcms() {
         return aliquotaIcms;
     }
@@ -179,7 +179,7 @@ public class Produto implements Serializable {
         this.unidadeEstoque = unidadeEstoque;
     }
 
-    @Field(id="pesounit", label="Peso unitário")
+    @Field(id="pesounit", label="Peso unitário", regex="[0-9]{1,3},[0-9]{3}")
     public String getPesoUnitario() {
         return pesoUnitario;
     }

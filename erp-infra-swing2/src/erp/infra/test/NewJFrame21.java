@@ -2,6 +2,7 @@ package erp.infra.test;
 
 import erp.infra.button.GenericNavigatorButton;
 import erp.infra.test.entity.Pais;
+import erp.infra.test.entity.Produto;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
@@ -95,7 +96,7 @@ public class NewJFrame21 extends javax.swing.JFrame {
 
         jPanel7.setLayout(new java.awt.BorderLayout());
 
-        form2.setEntityClass(Pais.class);
+        form2.setEntityClass(Produto.class);
 
         javax.swing.GroupLayout form2Layout = new javax.swing.GroupLayout(form2);
         form2.setLayout(form2Layout);

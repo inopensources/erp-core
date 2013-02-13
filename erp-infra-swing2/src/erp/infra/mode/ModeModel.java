@@ -1,9 +1,7 @@
 package erp.infra.mode;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * ModeModel class.
@@ -13,21 +11,18 @@ import java.util.Map;
  */
 public class ModeModel {
     
-    public static final String EMPTY = "empty";
-    public static final String READY_ONLY = "readyOnly";
-    public static final String INSERT = "insert";
-    public static final String UPDATE = "update";
+    public static enum CrudMode { EMPTY, READY_ONLY, INSERT, UPDATE }
     
-    private String mode = EMPTY;
+    private Object mode = CrudMode.EMPTY;
     
     private List<ModeListener> listeners 
             = new ArrayList<ModeListener>();
 
-    public String getMode() {
+    public Object getMode() {
         return mode;
     }
 
-    public void setMode(String mode) {
+    public void setMode(Object mode) {
         this.mode = mode;
         fireModeChanged();
     }

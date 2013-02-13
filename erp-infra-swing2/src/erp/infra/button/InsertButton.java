@@ -48,8 +48,8 @@ public class InsertButton extends GenericCrudButton {
 
     @Override
     public void modeChanged() {
-        boolean enabled = formModel.getModeModel().getMode().equals(ModeModel.EMPTY);
-        enabled = enabled || formModel.getModeModel().getMode().equals(ModeModel.READY_ONLY);
+        boolean enabled = formModel.getModeModel().getMode().equals(ModeModel.CrudMode.EMPTY);
+        enabled = enabled || formModel.getModeModel().getMode().equals(ModeModel.CrudMode.READY_ONLY);
         setEnabled(enabled);
     }
 

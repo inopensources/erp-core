@@ -48,8 +48,8 @@ public class SaveButton extends GenericCrudButton {
 
     @Override
     public void modeChanged() {
-        boolean enabled = formModel.getModeModel().getMode().equals(ModeModel.UPDATE);
-        enabled = enabled || formModel.getModeModel().getMode().equals(ModeModel.INSERT);
+        boolean enabled = formModel.getModeModel().getMode().equals(ModeModel.CrudMode.UPDATE);
+        enabled = enabled || formModel.getModeModel().getMode().equals(ModeModel.CrudMode.INSERT);
         setEnabled(enabled);
     }
 

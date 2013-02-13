@@ -124,10 +124,10 @@ public class FormUtils {
                 fv.setProperty(property);
                 
                 // Mode
-                fv.getEnablingMap().put(ModeModel.INSERT, Boolean.TRUE);
-                fv.getEnablingMap().put(ModeModel.UPDATE, Boolean.TRUE);
-                fv.getEditableMap().put(ModeModel.INSERT, f.insertable());
-                fv.getEditableMap().put(ModeModel.UPDATE, f.updatable());
+                fv.getEnablingMap().put(ModeModel.CrudMode.INSERT, Boolean.TRUE);
+                fv.getEnablingMap().put(ModeModel.CrudMode.UPDATE, Boolean.TRUE);
+                fv.getEditableMap().put(ModeModel.CrudMode.INSERT, f.insertable());
+                fv.getEditableMap().put(ModeModel.CrudMode.UPDATE, f.updatable());
                 fv.setModeModel(form.getModel().getModeModel());
                 
                 form.add(fv);

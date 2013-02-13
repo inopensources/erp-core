@@ -68,7 +68,7 @@ public class Form extends JPanel implements EntityModelListener {
         FormModel formModel = createFormModel(entityClass);
         formModel.setEntityDao(createGenericDao(entityClass));
         setModel(formModel);
-        getModel().getModeModel().setMode(ModeModel.EMPTY);
+        getModel().getModeModel().setMode(ModeModel.CrudMode.EMPTY);
     }
     
     private <T> FormModel<T> createFormModel(Class<T> entityClass) {
@@ -345,11 +345,11 @@ public class Form extends JPanel implements EntityModelListener {
     @Override
     public void entityChanged() {
         updateView();
-        if (getModel() != null && model.getEntityModel().getEntity() == null && !getModel().getModeModel().getMode().equals(ModeModel.EMPTY)) {
-            getModel().getModeModel().setMode(ModeModel.EMPTY);
+        if (getModel() != null && model.getEntityModel().getEntity() == null && !getModel().getModeModel().getMode().equals(ModeModel.CrudMode.EMPTY)) {
+            getModel().getModeModel().setMode(ModeModel.CrudMode.EMPTY);
         }
-        else if (getModel() != null && model.getEntityModel().getEntity() != null && getModel().getModeModel().getMode().equals(ModeModel.EMPTY)) {
-            getModel().getModeModel().setMode(ModeModel.READY_ONLY);
+        else if (getModel() != null && model.getEntityModel().getEntity() != null && getModel().getModeModel().getMode().equals(ModeModel.CrudMode.EMPTY)) {
+            getModel().getModeModel().setMode(ModeModel.CrudMode.READY_ONLY);
         }
         
         // --- Validation ---

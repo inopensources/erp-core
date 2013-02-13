@@ -71,8 +71,8 @@ public class FormModel<T> {
     }
 
     public void update() throws Exception {
-        if (modeModel.getMode().equals(ModeModel.READY_ONLY)) {
-            modeModel.setMode(ModeModel.UPDATE);
+        if (modeModel.getMode().equals(ModeModel.CrudMode.READY_ONLY)) {
+            modeModel.setMode(ModeModel.CrudMode.UPDATE);
         }
         else {
             throw new Exception("Can't update in actual mode !");
@@ -80,13 +80,13 @@ public class FormModel<T> {
     }
 
     public void insert() throws Exception {
-        if ((modeModel.getMode().equals(ModeModel.EMPTY) 
-                || modeModel.getMode().equals(ModeModel.READY_ONLY)) 
+        if ((modeModel.getMode().equals(ModeModel.CrudMode.EMPTY) 
+                || modeModel.getMode().equals(ModeModel.CrudMode.READY_ONLY)) 
                 && entityDao != null) {
             
             T newInstance = entityDao.createNewInstance();
             entityModel.setEntity(newInstance);
-            modeModel.setMode(ModeModel.INSERT);
+            modeModel.setMode(ModeModel.CrudMode.INSERT);
         }
         else {
             throw new Exception("Can't insert in actual mode !");
@@ -94,7 +94,7 @@ public class FormModel<T> {
     }
 
     public void delete() throws Exception {
-        if (modeModel.getMode().equals(ModeModel.READY_ONLY) 
+        if (modeModel.getMode().equals(ModeModel.CrudMode.READY_ONLY) 
                 && entityModel.getEntity() != null && entityDao != null) {
             
             System.out.println("delete");
@@ -109,10 +109,10 @@ public class FormModel<T> {
     }
     
     public void cancel() throws Exception {
-        if (modeModel.getMode().equals(ModeModel.UPDATE)) {
-            modeModel.setMode(ModeModel.READY_ONLY);
+        if (modeModel.getMode().equals(ModeModel.CrudMode.UPDATE)) {
+            modeModel.setMode(ModeModel.CrudMode.READY_ONLY);
         }
-        else if (modeModel.getMode().equals(ModeModel.INSERT)) {
+        else if (modeModel.getMode().equals(ModeModel.CrudMode.INSERT)) {
             entityModel.setEntity(null);
         }
         else {
@@ -122,21 +122,21 @@ public class FormModel<T> {
     }    
  
     public void save() throws Exception {
-        if (modeModel.getMode().equals(ModeModel.UPDATE) && entityDao != null) {
+        if (modeModel.getMode().equals(ModeModel.CrudMode.UPDATE) && entityDao != null) {
             System.out.println("update");
             fireUpdateModel();
             List<T> ts = new ArrayList<T>();
             ts.add(entityModel.getEntity());
             entityDao.update(ts);
-            modeModel.setMode(ModeModel.READY_ONLY);
+            modeModel.setMode(ModeModel.CrudMode.READY_ONLY);
         }
-        else if (modeModel.getMode().equals(ModeModel.INSERT) && entityDao != null) {
+        else if (modeModel.getMode().equals(ModeModel.CrudMode.INSERT) && entityDao != null) {
             System.out.println("insert");
             fireUpdateModel();
             List<T> ts = new ArrayList<T>();
             ts.add(entityModel.getEntity());
             entityDao.insert(ts);
-            modeModel.setMode(ModeModel.READY_ONLY);
+            modeModel.setMode(ModeModel.CrudMode.READY_ONLY);
         }
         else {
             throw new Exception("Can't save in actual mode !");

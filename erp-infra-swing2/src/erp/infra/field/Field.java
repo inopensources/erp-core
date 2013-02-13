@@ -53,24 +53,24 @@ public abstract class Field extends JPanel implements ModeListener {
     // --- Mode ---
     
     protected ModeModel modeModel;
-    protected Map<String, Boolean> enablingMap 
-            = new HashMap<String, Boolean>();
+    protected Map<Object, Boolean> enablingMap 
+            = new HashMap<Object, Boolean>();
     
-    protected Map<String, Boolean> editableMap 
-            = new HashMap<String, Boolean>();
+    protected Map<Object, Boolean> editableMap 
+            = new HashMap<Object, Boolean>();
     
     public Field() {
         initComponents();
         
-        enablingMap.put(ModeModel.EMPTY, Boolean.FALSE);
-        enablingMap.put(ModeModel.READY_ONLY, Boolean.TRUE);
-        enablingMap.put(ModeModel.INSERT, Boolean.TRUE);
-        enablingMap.put(ModeModel.UPDATE, Boolean.TRUE);
+        enablingMap.put(ModeModel.CrudMode.EMPTY, Boolean.FALSE);
+        enablingMap.put(ModeModel.CrudMode.READY_ONLY, Boolean.TRUE);
+        enablingMap.put(ModeModel.CrudMode.INSERT, Boolean.TRUE);
+        enablingMap.put(ModeModel.CrudMode.UPDATE, Boolean.TRUE);
         
-        editableMap.put(ModeModel.EMPTY, Boolean.FALSE);
-        editableMap.put(ModeModel.READY_ONLY, Boolean.FALSE);
-        editableMap.put(ModeModel.INSERT, Boolean.TRUE);
-        editableMap.put(ModeModel.UPDATE, Boolean.TRUE);
+        editableMap.put(ModeModel.CrudMode.EMPTY, Boolean.FALSE);
+        editableMap.put(ModeModel.CrudMode.READY_ONLY, Boolean.FALSE);
+        editableMap.put(ModeModel.CrudMode.INSERT, Boolean.TRUE);
+        editableMap.put(ModeModel.CrudMode.UPDATE, Boolean.TRUE);
     }
 
     public String getProperty() {
@@ -197,19 +197,19 @@ public abstract class Field extends JPanel implements ModeListener {
         modeModel.addListener(this);
     }
 
-    public Map<String, Boolean> getEnablingMap() {
+    public Map<Object, Boolean> getEnablingMap() {
         return enablingMap;
     }
 
-    public void setEnablingMap(Map<String, Boolean> enablingMap) {
+    public void setEnablingMap(Map<Object, Boolean> enablingMap) {
         this.enablingMap = enablingMap;
     }
 
-    public Map<String, Boolean> getEditableMap() {
+    public Map<Object, Boolean> getEditableMap() {
         return editableMap;
     }
 
-    public void setEditableMap(Map<String, Boolean> editableMap) {
+    public void setEditableMap(Map<Object, Boolean> editableMap) {
         this.editableMap = editableMap;
     }
     

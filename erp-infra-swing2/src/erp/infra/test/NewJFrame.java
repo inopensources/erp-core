@@ -25,18 +25,18 @@ public class NewJFrame extends javax.swing.JFrame {
         lookupField1.setModeModel(form1.getModel().getModeModel());
         lookupField1.setLabelExpression("'<html><body> : <strong>' + (entity.codigoInterno? entity.codigoInterno : '') + '</strong> ' + (entity.descricao ? entity.descricao : '') + '</body></html>'");
         
-        lookupField1.getEnablingMap().put(ModeModel.EMPTY, Boolean.TRUE);
-        lookupField1.getEnablingMap().put(ModeModel.READY_ONLY, Boolean.TRUE);
-        lookupField1.getEnablingMap().put(ModeModel.INSERT, Boolean.FALSE);
-        lookupField1.getEnablingMap().put(ModeModel.UPDATE, Boolean.FALSE);
+        lookupField1.getEnablingMap().put(ModeModel.CrudMode.EMPTY, Boolean.TRUE);
+        lookupField1.getEnablingMap().put(ModeModel.CrudMode.READY_ONLY, Boolean.TRUE);
+        lookupField1.getEnablingMap().put(ModeModel.CrudMode.INSERT, Boolean.FALSE);
+        lookupField1.getEnablingMap().put(ModeModel.CrudMode.UPDATE, Boolean.FALSE);
 
-        lookupField1.getEditableMap().put(ModeModel.EMPTY, Boolean.TRUE);
-        lookupField1.getEditableMap().put(ModeModel.READY_ONLY, Boolean.TRUE);
-        lookupField1.getEditableMap().put(ModeModel.INSERT, Boolean.FALSE);
-        lookupField1.getEditableMap().put(ModeModel.UPDATE, Boolean.FALSE);
+        lookupField1.getEditableMap().put(ModeModel.CrudMode.EMPTY, Boolean.TRUE);
+        lookupField1.getEditableMap().put(ModeModel.CrudMode.READY_ONLY, Boolean.TRUE);
+        lookupField1.getEditableMap().put(ModeModel.CrudMode.INSERT, Boolean.FALSE);
+        lookupField1.getEditableMap().put(ModeModel.CrudMode.UPDATE, Boolean.FALSE);
         
         form1.getModel().setEntityModel(lookupField1.getModel().getEntityModel());
-        form1.getModel().getModeModel().setMode(ModeModel.EMPTY);
+        form1.getModel().getModeModel().setMode(ModeModel.CrudMode.EMPTY);
         
         setLocationRelativeTo(null);
     }

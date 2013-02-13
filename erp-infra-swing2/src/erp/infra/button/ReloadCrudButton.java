@@ -48,8 +48,8 @@ public class ReloadCrudButton extends GenericCrudButton {
 
     @Override
     public void modeChanged() {
-        boolean enabled = formModel.getModeModel().getMode().equals(ModeModel.READY_ONLY);
-        enabled = enabled || formModel.getModeModel().getMode().equals(ModeModel.UPDATE);
+        boolean enabled = formModel.getModeModel().getMode().equals(ModeModel.CrudMode.READY_ONLY);
+        enabled = enabled || formModel.getModeModel().getMode().equals(ModeModel.CrudMode.UPDATE);
         setEnabled(enabled);
     }
 
