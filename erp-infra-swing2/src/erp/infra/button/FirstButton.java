@@ -5,14 +5,14 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
- * FirstlButton class.
+ * FirstButton class.
  *
  * @author Leonardo Ono (ono.leo@gmail.com)
  * @since 1.00.00 (07/02/2013 09:35)
  */
-public class FirstlButton extends GenericNavigatorButton {
+public class FirstButton extends GenericNavigatorButton {
 
-    public FirstlButton() {
+    public FirstButton() {
         initComponents();
     }
 

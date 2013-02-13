@@ -28,7 +28,7 @@ public class NavigatorToolBar extends JToolBar {
 
         reloadGridButton1 = new erp.infra.button.ReloadGridButton();
         jSeparator1 = new javax.swing.JToolBar.Separator();
-        firstlButton1 = new erp.infra.button.FirstlButton();
+        firstlButton1 = new erp.infra.button.FirstButton();
         previousButton1 = new erp.infra.button.PreviousButton();
         nextButton1 = new erp.infra.button.NextButton();
         lastButton1 = new erp.infra.button.LastButton();
@@ -89,7 +89,7 @@ public class NavigatorToolBar extends JToolBar {
         add(jLabel2);
     }// </editor-fold>//GEN-END:initComponents
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private erp.infra.button.FirstlButton firstlButton1;
+    private erp.infra.button.FirstButton firstlButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

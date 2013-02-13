@@ -25,7 +25,7 @@
     </Component>
     <Component class="javax.swing.JToolBar$Separator" name="jSeparator1">
     </Component>
-    <Component class="erp.infra.button.FirstlButton" name="firstlButton1">
+    <Component class="erp.infra.button.FirstButton" name="firstlButton1">
       <Properties>
         <Property name="text" type="java.lang.String" value="firstlButton1"/>
         <Property name="horizontalTextPosition" type="int" value="0"/>
